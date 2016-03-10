@@ -1,4 +1,4 @@
-package com.myqueue.myqueue;
+package com.myqueue.myqueue.Activities;
 
 
 
@@ -23,6 +23,8 @@ import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.myqueue.myqueue.R;
+
 import net.yanzm.mth.MaterialTabHost;
 
 import java.util.List;
@@ -30,7 +32,7 @@ import java.util.Locale;
 /**
  * Created by leowirasanto on 3/6/2016.
  */
-public class tabActivity extends ActionBarActivity {
+public class HomeActivity extends ActionBarActivity {
     private Toolbar myActionBar;
 
 
@@ -45,8 +47,6 @@ public class tabActivity extends ActionBarActivity {
             getSupportActionBar().setElevation(0);
         }
 
-
-
         final MaterialTabHost tabHost = (MaterialTabHost)findViewById(android.R.id.tabhost);
         tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
 
@@ -54,13 +54,6 @@ public class tabActivity extends ActionBarActivity {
         for(int i = 0 ; i < pagerAdapter.getCount();i++){
             tabHost.addTab(pagerAdapter.getPageTitle(i));
         }
-
-
-
-
-
-
-        Log.d("Testestes","Test");
 
         final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);

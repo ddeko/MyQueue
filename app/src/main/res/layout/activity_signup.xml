@@ -45,7 +45,8 @@
                     android:textSize="24dp"
                     android:textColor="#FFFFFF"
                     android:textStyle="bold"
-                    android:gravity="center" />
+                    android:gravity="center"
+                    android:id="@+id/signup_title" />
 
                 <LinearLayout
                     android:orientation="vertical"
@@ -63,7 +64,7 @@
                         android:textColorHint="#FFFFFF">
 
                         <EditText
-                            android:id="@+id/signup_customer_email"
+                            android:id="@+id/signup_email"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textEmailAddress"
@@ -82,7 +83,7 @@
                         android:textColorHint="#ffffff">
 
                         <EditText
-                            android:id="@+id/signup_customer_password"
+                            android:id="@+id/signup_password"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
@@ -101,7 +102,7 @@
                         android:textColorHint="#FFFFFF">
 
                         <EditText
-                            android:id="@+id/signup_customer_confirm_pass"
+                            android:id="@+id/signup_confirm_pass"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="textPassword"
@@ -119,11 +120,11 @@
                         android:textColorHint="#FFFFFF">
 
                         <EditText
-                            android:id="@+id/signup_customer_name"
+                            android:id="@+id/signup_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
-                            android:hint="Fullname"
+                            android:hint="Name"
                             android:textColor="#ffffff"
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp" />
@@ -137,7 +138,7 @@
                         android:textColorHint="#FFFFFF">
 
                         <EditText
-                            android:id="@+id/signup_customer_phoneNumber"
+                            android:id="@+id/signup_phoneNumber"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -164,7 +165,7 @@
         android:id="@+id/linearLayout2">
 
         <LinearLayout
-            android:id="@+id/signup_customer_button"
+            android:id="@+id/signup_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -178,13 +179,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Sign Up Customer"
-                android:id="@+id/text_signUp"
+                android:id="@+id/signup_text"
                 android:textColor="#ffffff"
-                android:gravity="center" />
+                android:gravity="center"
+                android:autoText="false" />
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/signup_toShop_button"
+            android:id="@+id/signup_state_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -198,7 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="I&apos;m a Shop Owner !"
-                android:id="@+id/text_customer"
+                android:id="@+id/signup_state_text"
                 android:textColor="#ffffff"
                 android:gravity="center" />
         </LinearLayout>
