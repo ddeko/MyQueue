@@ -6,7 +6,7 @@
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/actionBarColor</item>
         <item name="colorPrimaryDark">@color/titleColor</item>
-        <item name="colorAccent">#FF0000</item>
+        <item name="colorAccent">@color/primary_button_active</item>
         <item name="windowActionBarOverlay">true</item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowContentOverlay">@null</item>

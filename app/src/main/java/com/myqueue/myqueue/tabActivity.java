@@ -2,6 +2,7 @@ package com.myqueue.myqueue;
 
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -128,6 +129,7 @@ public class tabActivity extends ActionBarActivity {
             btnAddNews = (FloatingActionButton) rootView.findViewById(R.id.btnCreatePost);
             relativeLayout = (RelativeLayout) rootView.findViewById(R.id.tab1screen);
             newsFeedList = (ListView) rootView.findViewById(R.id.listNewsFeed);
+
 
             if(getArguments().getInt(ARG_SECTION_NUMBER)>1)
             {

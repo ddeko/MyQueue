@@ -3,4 +3,25 @@
     <color name="white">#FFFF</color>
     <color name="titleColor">#db2b3b</color>
     <color name="actionBarColor">#DB293A</color>
+
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="actionbar_color">#db293a</color>
+    <color name="actionbar_dark_color">#c8242b</color>
+
+    <!-- navigation side menu -->
+    <color name="nav_item">#ffffff</color>
+    <color name="nav_line">#e62e2f</color>
+    <color name="nav_background">#b81818</color>
+
+    <color name="primary_button">#b81818</color>
+    <color name="primary_button_active">#a31b22</color>
+    <color name="transparent">#00000000</color>
+    <color name="button_grey1">#585570</color>
+    <color name="button_grey2">#444256</color>
+
+    <color name="black">#000000</color>
+
 </resources>
