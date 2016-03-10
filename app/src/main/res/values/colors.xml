@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#FFFF</color>
+    <color name="titleColor">#db2b3b</color>
+    <color name="actionBarColor">#DB293A</color>
+</resources>
