@@ -1,5 +1,6 @@
 package com.myqueue.myqueue.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,8 +8,16 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.myqueue.myqueue.APIs.TaskSignup;
+import com.myqueue.myqueue.Models.APIBaseResponse;
+import com.myqueue.myqueue.Models.APISignupRequest;
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by 高橋六羽 on 2016/03/10.
@@ -25,6 +34,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     TextView signupTitle;
     TextView signupText;
     TextView signupStateText;
+    SessionManager sessions;
+    Intent resultIntent;
 
     private final int USER_STATE =1;
     private final int OWNER_STATE =2;
@@ -36,6 +47,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+        sessions = new SessionManager(this);
 
         signupEmail = (EditText) findViewById(R.id.signup_email);
         signupPassword = (EditText) findViewById(R.id.signup_password);
@@ -61,14 +74,40 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         if(v == signupButton)
         {
-            if(signupState==USER_STATE) {
-                Intent i = new Intent(SignupActivity.this, HomeActivity.class);
-                startActivity(i);
-            }
-            else if(signupState==OWNER_STATE)
-            {
-                Intent i = new Intent(SignupActivity.this, HomeActivity.class);
-                startActivity(i);
+            if(formValidation()) {
+
+                APISignupRequest request = new APISignupRequest();
+                request.setEmail(signupEmail.getText().toString());
+                request.setPassword(signupPassword.getText().toString());
+                request.setName(signupName.getText().toString());
+                request.setPhone(signupPhone.getText().toString());
+
+                if (signupState == USER_STATE) {
+                    request.setIsowner("0");
+                } else if (signupState == OWNER_STATE) {
+                    request.setIsowner("1");
+                }
+
+                TaskSignup signup = new TaskSignup(this) {
+
+                    @Override
+                    public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+
+                        if(isSuccess)
+                        {
+                            resultIntent = new Intent();
+                            resultIntent.putExtra("email", signupEmail.getText().toString());
+                            setResult(Activity.RESULT_OK, resultIntent);
+                            finish();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(),statusMessage,Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                };
+                signup.execute(request);
             }
         }
         else if(v == stateButton)
@@ -101,5 +140,60 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         signupStateText.setText("I'm a Customer!");
         signupButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle_grey));
         stateButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle));
+    }
+
+    private boolean formValidation()
+    {
+        if(signupEmail.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(), "Please fill in your Email Address", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!isEmailValid(signupEmail.getText().toString()))
+        {
+            Toast.makeText(getApplicationContext(), "Please input a correct Email format", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(signupPassword.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(),"Please fill in your Password",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(signupConfirmPassword.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(),"Please fill in your Confirmation Password",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(signupName.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(),"Please fill in your Name",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(signupPhone.getText().toString().equals("")) {
+            Toast.makeText(getApplicationContext(),"Please fill in your Phone Number",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else if(!signupConfirmPassword.getText().toString().equals(signupPassword.getText().toString())) {
+            Toast.makeText(getApplicationContext(),"Password and Confirmation Password did not match",Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        else
+            return true;
+    }
+
+    /**
+     * method is used for checking valid email id format.
+     *
+     * @param email
+     * @return boolean true for valid false for invalid
+     */
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
     }
 }
