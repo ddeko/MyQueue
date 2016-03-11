@@ -1,8 +1,6 @@
 package com.myqueue.myqueue.Activities;
 
 
-
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,36 +8,37 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.SectionIndexer;
 import android.widget.TextView;
 
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
 import net.yanzm.mth.MaterialTabHost;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Locale;
 /**
  * Created by leowirasanto on 3/6/2016.
  */
 public class HomeActivity extends ActionBarActivity {
-    private Toolbar myActionBar;
 
+    private Toolbar myActionBar;
+    private static SessionManager sessions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_host);
+
+        sessions = new SessionManager(this);
+
         myActionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myActionBar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -135,12 +134,22 @@ public class HomeActivity extends ActionBarActivity {
         btnAddNews.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar sb = Snackbar.make(relativeLayout,"News Feed Success",Snackbar.LENGTH_LONG);
+                Snackbar sb = Snackbar.make(relativeLayout, "News Feed Success", Snackbar.LENGTH_LONG);
                 sb.show();
+
+                //LOGOUT USER
+                sessions.logoutUser();
+
             }
         });
 
-            tv.setText("Here is the page " + getArguments().getInt(ARG_SECTION_NUMBER));
+            //HOW TO FETCH LOGGED IN USER DATA FROM SHARED PREFERENCE
+            SessionManager session = new SessionManager(getContext());
+            HashMap<String, String> user = session.getUserDetails();
+
+            tv.setText(user.get(SessionManager.KEY_NAME));
+
+
             return rootView;
 
         }
