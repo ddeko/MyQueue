@@ -12,7 +12,7 @@
         <item name="material_drawer_background">@color/whopost_bar</item>
         <item name="material_drawer_primary_text">@color/material_drawer_dark_primary_text</item>
         <item name="material_drawer_primary_icon">@color/material_drawer_dark_primary_icon</item>
-        <item name="material_drawer_secondary_text">@color/material_drawer_dark_primary_icon
+        <item name="material_drawer_secondary_text">@color/material_drawer_dark_primary_text
         </item>
         <item name="material_drawer_selected">@color/whopost_bar</item>
         <item name="material_drawer_hint_text">@color/material_drawer_dark_hint_text</item>
