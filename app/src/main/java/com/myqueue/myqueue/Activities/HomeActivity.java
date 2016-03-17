@@ -1,6 +1,9 @@
 package com.myqueue.myqueue.Activities;
 
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -9,14 +12,34 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileSettingDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.model.interfaces.Nameable;
+import com.mikepenz.materialize.util.UIUtils;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
@@ -31,6 +54,8 @@ public class HomeActivity extends ActionBarActivity {
 
     private Toolbar myActionBar;
     private static SessionManager sessions;
+    private Drawer result = null;
+    private AccountHeader headerResult = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +66,8 @@ public class HomeActivity extends ActionBarActivity {
 
         myActionBar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(myActionBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
         if(getSupportActionBar()!= null){
             getSupportActionBar().setElevation(0);
         }
@@ -64,6 +90,83 @@ public class HomeActivity extends ActionBarActivity {
                     viewPager.setCurrentItem(position);
             }
         });
+
+        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(R.drawable.profile);
+
+        // Create the AccountHeader
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withCompactStyle(true)
+                .withHeightDp(90)
+                .withPaddingBelowHeader(true)
+                .withHeaderBackground(R.color.actionbar_color)
+                .addProfiles(
+                        profile,
+                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
+                        new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
+                )
+                .withSavedInstance(savedInstanceState)
+                .build();
+
+        result = new DrawerBuilder()
+                .withActivity(this)
+                .withTranslucentStatusBar(true)
+                .withAccountHeader(headerResult)
+                .withToolbar(myActionBar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
+                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            Intent intent = null;
+                            if (drawerItem.getIdentifier() == 1) {
+                                intent = new Intent(HomeActivity.this, BookScreenActivity.class);
+                                HomeActivity.this.startActivity(intent);
+                                Toast.makeText(HomeActivity.this, ((Nameable) drawerItem).getName().getText(HomeActivity.this), Toast.LENGTH_SHORT).show();
+                            } else if (drawerItem.getIdentifier() == 2) {
+                                intent = new Intent(HomeActivity.this, NewsFeedFormActivity.class);
+                                HomeActivity.this.startActivity(intent);
+                            }
+                            if (intent != null) {
+                                HomeActivity.this.startActivity(intent);
+                            }
+                        }
+                        return false;
+                    }
+                })
+                .withSelectedItem(-1)
+                .withSavedInstance(savedInstanceState)
+                .build();
+
+        //set the back arrow in the toolbar
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        //add the values which need to be saved from the drawer to the bundle
+        outState = result.saveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        //handle the back press :D close the drawer first and if the drawer is closed close the activity
+        if (result != null && result.isDrawerOpen()) {
+            result.closeDrawer();
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {

@@ -21,7 +21,20 @@
 
         <activity android:name=".Activities.LoginActivity"   android:theme="@style/Theme.MyThemeTrans"></activity>
         <activity android:name=".Activities.SignupActivity"   android:theme="@style/Theme.MyThemeTrans"></activity>
-        <activity android:name=".Activities.HomeActivity"></activity>
+        <activity android:name=".Activities.HomeActivity"  android:theme="@style/AppTheme"></activity>
+
+        <activity
+            android:name=".Activities.NewsFeedFormActivity"
+            android:label="" >
+        </activity>
+        <activity
+            android:name=".Activities.BookScreenActivity"
+            android:label="">
+        </activity>
+        <activity
+            android:name=".Activities.WaitingListActivity"
+            android:label="">
+        </activity>
 
     </application>
 

@@ -3,11 +3,12 @@
     xmlns:local="http://schemas.android.com/apk/res-auto"
     android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?actionBarSize"
     android:minHeight="?attr/actionBarSize"
     android:background="?attr/colorPrimary"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    local:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    style="@style/Base.Widget.AppCompat.ActionBar.Solid">
 
     <TextView
         android:layout_width="40dp"
@@ -25,13 +26,16 @@
 
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:gravity="center_vertical">
     <Button
         android:layout_width="29dp"
         android:layout_height="34dp"
         android:background="@drawable/logoclock"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="15dp"/>
+        android:layout_alignParentEnd="true"
+        style="@style/AppTheme" />
     </RelativeLayout>
 
 

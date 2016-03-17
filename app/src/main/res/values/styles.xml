@@ -7,9 +7,29 @@
         <item name="colorPrimary">@color/actionBarColor</item>
         <item name="colorPrimaryDark">@color/titleColor</item>
         <item name="colorAccent">@color/primary_button_active</item>
-        <item name="windowActionBarOverlay">true</item>
-        <item name="android:windowActionBarOverlay">true</item>
-        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+
+        <item name="material_drawer_background">@color/whopost_bar</item>
+        <item name="material_drawer_primary_text">@color/actionBarColor</item>
+        <item name="material_drawer_primary_icon">@color/actionBarColor</item>
+        <item name="material_drawer_secondary_text">@color/actionBarColor
+        </item>
+        <item name="material_drawer_selected">@color/whopost_bar</item>
+        <item name="material_drawer_hint_text">@color/material_drawer_dark_hint_text</item>
+        <item name="material_drawer_hint_icon">@color/material_drawer_dark_hint_icon</item>
+        <item name="material_drawer_divider">@color/material_drawer_dark_divider</item>
+        <item name="material_drawer_selected_text">@color/actionBarColor</item>
+        <item name="material_drawer_header_selection_text">
+            @color/material_drawer_header_selection_text
+        </item>
+    </style>
+
+    <style name="Widget.Styled.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="android:background">@color/actionBarColor</item>
+        <item name="android:backgroundStacked">@color/actionBarColor</item>
+        <item name="android:backgroundSplit">@color/actionBarColor</item>
+        <item name="android:actionBarDivider">@color/actionBarColor</item>
+        <item name="android:showDividers">none</item>
     </style>
 
 

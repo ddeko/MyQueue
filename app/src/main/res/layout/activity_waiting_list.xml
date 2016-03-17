@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/newsfeed_form_bg"
+    tools:context="mockupc.mockupc.WaitingListActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutActionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_waitinglist"
+            layout="@layout/toolbar_withoutalarm_queue"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/layoutActionBar"
+        android:id="@+id/layoutProfile"
+        android:background="@drawable/coverpics">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:id="@+id/ShopProfilePics"
+            android:background="@drawable/ic_yuzu"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"/>
+
+    </RelativeLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listQueue"
+        android:layout_below="@+id/layoutProfile" />
+
+</RelativeLayout>

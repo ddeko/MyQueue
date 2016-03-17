@@ -1,0 +1,140 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=""
+    android:background="@color/newsfeed_form_bg">
+
+    <LinearLayout
+        android:id="@+id/layoutActionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar_withoutalarm"
+            layout="@layout/toolbar_withoutalarm"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_below="@+id/layoutActionBar"
+        android:id="@+id/barWhoPost"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/whopost_bar"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="Post As  :"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@color/white"
+            android:id="@+id/postedas"/>
+
+        <ImageView
+            android:layout_toRightOf="@+id/postedas"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/kfclogo"
+            android:id="@+id/logoWhoPost"/>
+
+        <TextView
+            android:paddingLeft="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/logoWhoPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KFC SETURAN"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/barWhoPost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:layout_above="@+id/btnAddphoto">
+        <RelativeLayout
+            android:id="@+id/statuslayout"
+            android:layout_below="@+id/barWhoPost"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/btnAddphoto">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Describe your moment..."
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/feedStatus"
+                android:background="@android:color/transparent"/>
+
+            <ImageView
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/feedStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgFeed1"
+                android:background="@drawable/kfcpromo"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:layout_marginTop="50dp"
+                android:layout_below="@+id/imgFeed1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgFeed2"
+                android:background="@drawable/kfcpromo"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:paddingTop="50dp"
+                android:layout_below="@+id/imgFeed2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imgFeed3"
+                android:background="@drawable/kfcpromo"
+                android:visibility="gone"/>
+        </RelativeLayout>
+    </ScrollView>
+
+    <RelativeLayout
+        android:id="@+id/btnAddphoto"
+        android:onClick="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/btnaddphotoclick"
+        android:layout_alignParentBottom="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@drawable/logoaddphoto"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/txtAddPhotos"
+                android:id="@+id/logoaddphoto"/>
+
+            <TextView
+                android:paddingLeft="10dp"
+                android:id="@+id/txtAddPhotos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ADD PHOTOS"
+                android:textColor="@color/white"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+    </RelativeLayout>
+</RelativeLayout>
