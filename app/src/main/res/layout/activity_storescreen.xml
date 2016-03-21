@@ -1,0 +1,144 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.myqueue.myqueue.storescreen"
+    android:id="@+id/storelayout"
+    android:background="#1A252E"
+    >
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:paddingBottom="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/coverWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="200dip"
+                android:orientation="vertical"
+
+                android:weightSum="1"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true">
+
+                <include
+                    android:id="@+id/mapShop"
+                    layout="@layout/activity_shop_map"/>
+
+            </LinearLayout>
+
+
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/coverWrapper"
+                android:orientation="vertical"
+                android:id="@+id/textViewField">
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/storeNameWrapper"
+                    android:layout_width="300dip"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="30dp">
+
+                    <EditText
+                        android:id="@+id/txtstoreName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPersonName"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="Store Name"
+                        android:text="KFC Seturan"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/streetNameWrapper"
+                    android:layout_width="300dip"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="5dp">
+
+                    <EditText
+                        android:id="@+id/txtStreetName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:text="Jalan Raya Seturan"
+                        android:hint="Street Name"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/houseNumberWrapper"
+                    android:layout_width="300dip"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="5dp">
+                    <EditText
+                        android:id="@+id/txtHouseNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="House Number/Landmark"
+                        android:text="No. 123"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/cityWrapper"
+                    android:layout_width="300dip"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="5dp">
+                    <EditText
+                        android:id="@+id/txtCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="City"
+                        android:text="Yogyakarta"/>
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_below="@id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Update Store"
+        android:id="@+id/btnUpdateProfile"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>
