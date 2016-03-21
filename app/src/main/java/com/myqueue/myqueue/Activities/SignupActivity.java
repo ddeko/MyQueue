@@ -3,8 +3,12 @@ package com.myqueue.myqueue.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +40,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     TextView signupStateText;
     SessionManager sessions;
     Intent resultIntent;
+    TextInputLayout signupEmailInput;
+    TextInputLayout signupPasswordInput;
+    TextInputLayout signupConfirmPasswordInput;
+    TextInputLayout signupNameInput;
+    TextInputLayout signupPhoneInput;
 
     private final int USER_STATE =1;
     private final int OWNER_STATE =2;
@@ -60,7 +69,17 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         signupTitle = (TextView) findViewById(R.id.signup_title);
         signupText = (TextView) findViewById(R.id.signup_text);
         signupStateText = (TextView) findViewById(R.id.signup_state_text);
+        signupEmailInput = (TextInputLayout)findViewById(R.id.emailWrapper);
+        signupPasswordInput = (TextInputLayout)findViewById(R.id.passwordWrapper);
+        signupConfirmPasswordInput = (TextInputLayout)findViewById(R.id.confirmPasswordWrapper);
+        signupNameInput = (TextInputLayout)findViewById(R.id.shopNameWrapper);
+        signupPhoneInput = (TextInputLayout)findViewById(R.id.phoneWrapper);
 
+        signupEmail.addTextChangedListener(new MyTextWatcher(signupEmail));
+        signupPassword.addTextChangedListener(new MyTextWatcher(signupPassword));
+        signupConfirmPassword.addTextChangedListener(new MyTextWatcher(signupConfirmPassword));
+        signupName.addTextChangedListener(new MyTextWatcher(signupName));
+        signupPhone.addTextChangedListener(new MyTextWatcher(signupPhone));
 
         signupButton.setOnClickListener(this);
         stateButton.setOnClickListener(this);
@@ -74,7 +93,7 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         if(v == signupButton)
         {
-            if(formValidation()) {
+            if(submitForm()) {
 
                 APISignupRequest request = new APISignupRequest();
                 request.setEmail(signupEmail.getText().toString());
@@ -142,41 +161,6 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         stateButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle));
     }
 
-    private boolean formValidation()
-    {
-        if(signupEmail.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Please fill in your Email Address", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(!isEmailValid(signupEmail.getText().toString()))
-        {
-            Toast.makeText(getApplicationContext(), "Please input a correct Email format", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(signupPassword.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(),"Please fill in your Password",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(signupConfirmPassword.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(),"Please fill in your Confirmation Password",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(signupName.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(),"Please fill in your Name",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(signupPhone.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(),"Please fill in your Phone Number",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(!signupConfirmPassword.getText().toString().equals(signupPassword.getText().toString())) {
-            Toast.makeText(getApplicationContext(),"Password and Confirmation Password did not match",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else
-            return true;
-    }
-
     /**
      * method is used for checking valid email id format.
      *
@@ -195,5 +179,144 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
             isValid = true;
         }
         return isValid;
+    }
+
+    private boolean submitForm() {
+
+        if (!validateEmail()) {
+            return false;
+        }
+
+        if (!validatePassword()) {
+            return false;
+        }
+
+        if (!validateConfirmationPassword()) {
+            return false;
+        }
+
+        if (!validateName()) {
+            return false;
+        }
+
+        if (!validatePhone()) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private boolean validateEmail() {
+        if (signupEmail.getText().toString().trim().isEmpty()) {
+            signupEmailInput.setError("Please fill in your Email Address");
+            requestFocus(signupEmail);
+            return false;
+        }
+        else if(!isEmailValid(signupEmail.getText().toString())) {
+            signupEmailInput.setError("Please input a correct Email format");
+            requestFocus(signupEmail);
+            return false;
+        } else {
+            signupEmailInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword() {
+        if (signupPassword.getText().toString().trim().isEmpty()) {
+            signupPasswordInput.setError("Please fill in your Password");
+            requestFocus(signupPassword);
+            return false;
+        } else {
+            signupPasswordInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateConfirmationPassword() {
+        if (signupConfirmPassword.getText().toString().trim().isEmpty()) {
+            signupConfirmPasswordInput.setError("Please fill in your Confirmation Password");
+            requestFocus(signupConfirmPassword);
+            return false;
+        }
+        else if(!signupPassword.getText().toString().equals(signupConfirmPassword.getText().toString()))
+        {
+            signupConfirmPasswordInput.setError("Password and Confirmation Password did not match");
+            requestFocus(signupConfirmPassword);
+            return false;
+        }
+        else {
+            signupConfirmPasswordInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateName() {
+        if (signupName.getText().toString().trim().isEmpty()) {
+            signupNameInput.setError("Please fill in your Name");
+            requestFocus(signupName);
+            return false;
+        } else {
+            signupNameInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePhone() {
+        if (signupPhone.getText().toString().trim().isEmpty()) {
+            signupPhoneInput.setError("Please fill in your Phone Number");
+            requestFocus(signupPhone);
+            return false;
+        } else {
+            signupPhoneInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.signup_email:
+                    validateEmail();
+                    break;
+                case R.id.signup_password:
+                    validatePassword();
+                    break;
+                case R.id.signup_confirm_pass:
+                    validateConfirmationPassword();
+                    break;
+                case R.id.signup_name:
+                    validateName();
+                    break;
+                case R.id.signup_phoneNumber:
+                    validatePhone();
+                    break;
+            }
+        }
     }
 }

@@ -11,8 +11,7 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/toolbar_withoutalarm"
-            layout="@layout/toolbar_withoutalarm"/>
+            layout="@layout/view_default_actionbar"/>
     </LinearLayout>
 
     <RelativeLayout

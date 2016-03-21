@@ -3,8 +3,12 @@ package com.myqueue.myqueue.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -29,9 +33,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     LinearLayout loginButton;
     TextView signupButton;
     TextView forgotButton;
+    TextInputLayout loginEmailInput;
+    TextInputLayout loginPasswordInput;
     SessionManager sessions;
 
     private static final int SIGNUP_REQUEST_CODE = 1;
+    private static final int CONFIRMATION_REQUEST_CODE = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +52,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton = (LinearLayout) findViewById(R.id.login_button);
         signupButton = (TextView) findViewById(R.id.signUp_button);
         forgotButton = (TextView) findViewById(R.id.forgotPass_button);
+        loginEmailInput = (TextInputLayout)findViewById(R.id.emailWrapper);
+        loginPasswordInput = (TextInputLayout)findViewById(R.id.passwordWrapper);
+
+        loginEmail.addTextChangedListener(new MyTextWatcher(loginEmail));
+        loginPassword.addTextChangedListener(new MyTextWatcher(loginPassword));
 
         loginButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
@@ -56,7 +68,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         if(v == loginButton)
         {
-            if(formValidation()) {
+            submitForm();
+            if(submitForm()) {
 
                 APILoginRequest request = new APILoginRequest();
                 request.setEmail(loginEmail.getText().toString());
@@ -69,10 +82,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if(isSuccess)
                         {
-                            sessions.createLoginSession(response.getUser().get(0));
-                            Intent i = new Intent(LoginActivity.this, HomeActivity.class);
-                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(i);
+                            if(response.getUser().get(0).getIsverified().equalsIgnoreCase("1")) {
+                                sessions.createLoginSession(response.getUser().get(0));
+                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(i);
+                            }
+                            else if(response.getUser().get(0).getIsverified().equalsIgnoreCase("0"))
+                            {
+                                Intent i = new Intent(LoginActivity.this, ConfirmationActivity.class);
+                                i.putExtra("User",response.getUser().get(0));
+                                startActivityForResult(i, CONFIRMATION_REQUEST_CODE);
+                            }
                         }
                         else
                         {
@@ -82,7 +103,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 };
                 login.execute(request);
-            }
+           }
         }
         else if(v == signupButton)
         {
@@ -93,25 +114,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         {
             Toast.makeText(getApplicationContext(),"Implement Method",Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private boolean formValidation()
-    {
-        if(loginEmail.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(), "Please fill in your Email Address", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(!isEmailValid(loginEmail.getText().toString()))
-        {
-            Toast.makeText(getApplicationContext(), "Please input a correct Email format", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else if(loginPassword.getText().toString().equals("")) {
-            Toast.makeText(getApplicationContext(),"Please fill in your Password",Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        else
-            return true;
     }
 
     /**
@@ -150,6 +152,93 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     loginEmail.setText(Email);
                     loginPassword.setText("");
                 }
+            }
+        }
+        else if(requestCode==CONFIRMATION_REQUEST_CODE)
+        {
+            if(resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            else
+            {
+                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+            }
+        }
+    }
+
+    private boolean submitForm() {
+
+        if (!validateEmail()) {
+            return false;
+        }
+
+        if (!validatePassword()) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private boolean validateEmail() {
+        if (loginEmail.getText().toString().trim().isEmpty()) {
+            loginEmailInput.setError("Please fill in your Email Address");
+            requestFocus(loginEmail);
+            return false;
+        }
+        else if(!isEmailValid(loginEmail.getText().toString())) {
+            loginEmailInput.setError("Please input a correct Email format");
+            requestFocus(loginEmail);
+            return false;
+        } else {
+            loginEmailInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validatePassword() {
+        if (loginPassword.getText().toString().trim().isEmpty()) {
+            loginPasswordInput.setError("Please fill in your Password");
+            requestFocus(loginPassword);
+            return false;
+        } else {
+            loginPasswordInput.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.login_email:
+                    validateEmail();
+                    break;
+                case R.id.login_password:
+                    validatePassword();
+                    break;
             }
         }
     }

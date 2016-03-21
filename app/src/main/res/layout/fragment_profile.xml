@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/profilelayout"
+    android:background="#1A252E"
+  >
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:paddingBottom="15dp"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="200dip"
+                    android:id="@+id/coverPicture"
+                    android:scaleType="center"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/coverpics"/>
+
+                <LinearLayout
+                    android:id="@+id/coverWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dip"
+                    android:orientation="vertical"
+
+                    android:weightSum="1"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true">
+                    <ImageView
+                        android:id="@+id/profilepicture"
+                        android:layout_width="70dip"
+                        android:layout_height="70dip"
+                        android:layout_gravity="center"
+                        android:layout_alignParentTop="true"
+                        android:layout_centerHorizontal="true"
+
+                        android:layout_marginTop="75dp"
+                        android:background="@drawable/ic_yuzu" />
+
+                    <LinearLayout
+                        android:layout_marginTop="10dip"
+                        android:id="@+id/bagianTextChangePP"
+                        android:layout_width="104dp"
+                        android:layout_height="20dp"
+                        android:orientation="horizontal"
+                        android:layout_gravity="center">
+                        <TextView
+                            android:layout_gravity="center"
+                            android:id="@+id/txtBtnChangePP"
+                            android:layout_width="wrap_content"
+                            android:layout_height="26dp"
+                            android:text="Change Picture"
+                            android:textColor="@color/light_font"
+                            android:layout_below="@+id/profilepicture"
+                            android:shadowColor="@color/text_shadow"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="5"
+                            android:textSize="12dp"
+                            android:textIsSelectable="false" />
+                        <TextView
+                            android:id="@+id/logoedit"
+                            android:layout_width="14dip"
+                            android:layout_height="12dip"
+                            android:background="@drawable/editlogo"
+                            android:layout_marginLeft="5dp"
+                            android:shadowColor="@color/text_shadow"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="5"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_marginTop="5dip"
+                        android:id="@+id/bagianTextChangeCover"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_gravity="right">
+                        <TextView
+                            android:layout_gravity="center"
+                            android:id="@+id/txtBtnChangeCover"
+                            android:layout_width="wrap_content"
+                            android:layout_height="26dp"
+                            android:text="Change Cover"
+                            android:textColor="@color/light_font"
+                            android:layout_below="@+id/profilepicture"
+                            android:shadowColor="@color/text_shadow"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="5"
+                            android:textSize="12dp" />
+                        <TextView
+                            android:id="@+id/editcover"
+                            android:layout_width="14dip"
+                            android:layout_height="12dip"
+                            android:background="@drawable/editlogo"
+                            android:layout_marginLeft="5dp"
+                            android:shadowColor="@color/text_shadow"
+                            android:shadowDx="1"
+                            android:shadowDy="1"
+                            android:shadowRadius="5"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_below="@id/coverPicture"
+                    android:orientation="vertical"
+                    android:id="@+id/textViewField">
+
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/profileNameWrapper"
+                        android:layout_width="300dip"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:layout_marginTop="30dp">
+
+                        <EditText
+                            android:id="@+id/txtNamaProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textPersonName"
+                            android:textColor="#ffffff"
+                            android:textColorHint="#FFFFFF"
+                            android:textSize="16sp"
+                            android:hint="Name"
+                            android:text="Yuju Gfriend"
+                            android:singleLine="true" />
+
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/phoneNumberWrapper"
+                        android:layout_width="300dip"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:layout_marginTop="5dp">
+
+                        <EditText
+                        android:id="@+id/txtPhoneNumber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPhonetic"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:text="085260790111"
+                        android:hint="Phone Number"
+                            android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/emailWrapper"
+                        android:layout_width="300dip"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:layout_marginTop="5dp">
+                            <EditText
+                            android:id="@+id/txtEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:textColor="#ffffff"
+                            android:textColorHint="#FFFFFF"
+                            android:textSize="16sp"
+                            android:hint="Email Address"
+                                android:text="yujugfriend@gmail.com"
+                                android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
+
+                    <android.support.design.widget.TextInputLayout
+                        android:layout_gravity="center"
+                        android:id="@+id/storeaddwrapper"
+                        android:layout_width="300dip"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:layout_marginTop="5dp">
+                        <EditText
+                        android:id="@+id/txtStoreAdd"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                            android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="Store Address"
+                            android:text="Jl. Malioboro"
+                            android:editable="false"
+                            android:inputType="none"
+                            android:singleLine="true" />
+                    </android.support.design.widget.TextInputLayout>
+
+
+                </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <Button
+        android:layout_below="@id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="Update Profile"
+        android:id="@+id/btnUpdateProfile"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

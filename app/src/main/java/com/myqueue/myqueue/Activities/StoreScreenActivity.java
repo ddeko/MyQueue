@@ -1,19 +1,23 @@
 package com.myqueue.myqueue.Activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.Button;
 
-import com.myqueue.myqueue.Adapter.QueueListAdapter;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
-import com.myqueue.myqueue.Models.QueueListItem;
 import com.myqueue.myqueue.R;
 
-import java.util.ArrayList;
+/**
+ * Created by 高橋六羽 on 2016/03/22.
+ */
+public class StoreScreenActivity extends BaseActivity implements View.OnClickListener{
 
-public class WaitingListActivity extends BaseActivity {
+    private Button updatebtn;
 
-    private ListView queueListView;
+    private Intent resultIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,24 +25,9 @@ public class WaitingListActivity extends BaseActivity {
         setDefaultActionbarIcon();
         setRightIcon(0);
 
-        queueListView = (ListView) findViewById(R.id.listQueue);
+        updatebtn = (Button)findViewById(R.id.btnUpdateProfile);
 
-        ArrayList<QueueListItem> queueItems = new ArrayList<QueueListItem>();
-
-        QueueListItem queueListItem1 = new QueueListItem(0,"13");
-        QueueListItem queueListItem2 = new QueueListItem(0,"13");
-        QueueListItem queueListItem3 = new QueueListItem(0,"13");
-        QueueListItem queueListItem4 = new QueueListItem(0,"13");
-
-
-        queueItems.add(queueListItem1);
-        queueItems.add(queueListItem2);
-        queueItems.add(queueListItem3);
-        queueItems.add(queueListItem4);
-
-        QueueListAdapter queueListAdapter = new QueueListAdapter(getApplicationContext(), R.layout.item_queue, queueItems);
-
-        queueListView.setAdapter(queueListAdapter);
+        updatebtn.setOnClickListener(this);
     }
 
     @Override
@@ -64,11 +53,22 @@ public class WaitingListActivity extends BaseActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.activity_waiting_list;
+        return R.layout.activity_storescreen;
     }
 
     @Override
     public void updateUI() {
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == updatebtn)
+        {
+            resultIntent = new Intent();
+            resultIntent.putExtra("resultkey", "result");
+            setResult(Activity.RESULT_OK, resultIntent);
+            finish();
+        }
     }
 }

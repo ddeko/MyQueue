@@ -1,6 +1,8 @@
 package com.myqueue.myqueue.Activities;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,14 +13,12 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-
 import android.view.WindowManager;
-import android.widget.EditText;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.myqueue.myqueue.Base.ActivityInterface;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
@@ -50,6 +50,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
 
         setContentView(getLayout());
         initView();
+        setUICallbacks();
         showCustomActionBar();
 
     }
@@ -174,6 +175,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         tvBadge.setVisibility(View.VISIBLE);
     }
 
+
+
     public int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics metrics = new DisplayMetrics();
@@ -202,5 +205,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             fm.popBackStack();
         }
     }
+
 
 }

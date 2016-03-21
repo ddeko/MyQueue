@@ -36,12 +36,17 @@
             android:name=".Activities.NewsFeedFormActivity"
             android:label=""></activity>
         <activity
-            android:name=".Activities.BookScreenActivity"
+            android:name=".Activities.StoreScreenActivity"
             android:label=""></activity>
         <activity
             android:name=".Activities.WaitingListActivity"
             android:label=""></activity>
-
+        <activity
+            android:name=".Activities.BookActivity"
+            android:label=""></activity>
+        <activity
+            android:name=".Activities.ConfirmationActivity"
+            android:label=""></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
