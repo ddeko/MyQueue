@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="140dp"
+        android:gravity="center_vertical"
+        android:background="@android:drawable/dialog_holo_light_frame"
+        android:id="@+id/listfood_items">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="130dp"
+            android:orientation="vertical"
+            android:gravity="center_vertical"
+            android:layout_toRightOf="@+id/fotoMakanan">
+
+            <TextView
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/myDarkBg"
+                android:id="@+id/tvNama"
+                android:text="KCF SETURAN"
+                android:layout_marginLeft="20dip"
+                android:layout_marginBottom="15dip"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/myDarkBg"
+                android:id="@+id/tvLokasi"
+                android:text="Jalan Raya Seturan Blablabla"
+                android:layout_marginLeft="20dip"/>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:id="@+id/fotoMakanan"
+            android:background="@drawable/shoppic"/>
+
+    </RelativeLayout>
+</LinearLayout>

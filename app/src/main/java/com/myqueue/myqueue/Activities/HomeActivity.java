@@ -50,23 +50,19 @@ import java.util.Locale;
 /**
  * Created by leowirasanto on 3/6/2016.
  */
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends BaseActivity {
 
-    private Toolbar myActionBar;
     private static SessionManager sessions;
     private Drawer result = null;
     private AccountHeader headerResult = null;
 
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.tab_host);
 
         sessions = new SessionManager(this);
-
-        myActionBar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(myActionBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         if(getSupportActionBar()!= null){
             getSupportActionBar().setElevation(0);
@@ -112,7 +108,7 @@ public class HomeActivity extends ActionBarActivity {
                 .withActivity(this)
                 .withTranslucentStatusBar(true)
                 .withAccountHeader(headerResult)
-                .withToolbar(myActionBar)
+                .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
@@ -148,6 +144,33 @@ public class HomeActivity extends ActionBarActivity {
                 .build();
 
         //set the back arrow in the toolbar
+
+        // setup default activity action bar
+
+
+    }
+
+    @Override
+    public void initView() {
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setContentInsetsAbsolute(0, 0);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public void setUICallbacks() {
+
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.tab_host;
+    }
+
+    @Override
+    public void updateUI() {
 
     }
 
@@ -225,6 +248,8 @@ public class HomeActivity extends ActionBarActivity {
             relativeLayout = (RelativeLayout) rootView.findViewById(R.id.tab1screen);
             newsFeedList = (ListView) rootView.findViewById(R.id.listNewsFeed);
 
+            setupActionBar();
+
 
             if(getArguments().getInt(ARG_SECTION_NUMBER)>1)
             {
@@ -255,6 +280,11 @@ public class HomeActivity extends ActionBarActivity {
 
             return rootView;
 
+        }
+
+        private void setupActionBar() {
+            HomeActivity mainActivity = (HomeActivity)getActivity();
+            mainActivity.setDefaultActionbarIcon();
         }
     }
 }
