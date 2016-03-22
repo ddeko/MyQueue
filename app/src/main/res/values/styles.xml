@@ -7,7 +7,9 @@
         <item name="colorPrimary">@color/actionBarColor</item>
         <item name="colorPrimaryDark">@color/titleColor</item>
         <item name="colorAccent">@color/primary_button_active</item>
-        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+
+        <item name="windowActionModeOverlay">true</item>
+        <item name="android:itemBackground">@color/black</item>
 
         <item name="material_drawer_background">@color/whopost_bar</item>
         <item name="material_drawer_primary_text">@color/material_drawer_dark_primary_icon</item>
@@ -24,13 +26,10 @@
         </item>
     </style>
 
-    <style name="Widget.Styled.ActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
-        <item name="android:background">@color/actionBarColor</item>
-        <item name="android:backgroundStacked">@color/actionBarColor</item>
-        <item name="android:backgroundSplit">@color/actionBarColor</item>
-        <item name="android:actionBarDivider">@color/actionBarColor</item>
-        <item name="android:showDividers">none</item>
+    <style name="ActionBarThemeOverlay" parent="">
+        <item name="android:textColorPrimary">#fff</item>
+        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlHighlight">#3fff</item>
     </style>
-
 
 </resources>

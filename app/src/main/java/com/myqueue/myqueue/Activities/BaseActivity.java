@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,6 +51,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
 
         setContentView(getLayout());
         initView();
+        setUICallbacks();
         showCustomActionBar();
 
     }
@@ -130,6 +132,19 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
 
             leftIcon.setImageResource(drawableRes);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        int stackCount = getFragmentManager().getBackStackEntryCount();
+
+        if(stackCount > 0)
+            getFragmentManager().popBackStack();
+        else
+            super.onBackPressed();
+
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getWindowToken(), 0);
     }
 
     public void setRightIcon(int drawableRes) {

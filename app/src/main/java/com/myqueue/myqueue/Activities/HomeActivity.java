@@ -40,6 +40,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialize.util.UIUtils;
+import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
@@ -161,7 +162,16 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void setUICallbacks() {
+        setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+            }
 
+            @Override
+            public void onRightIconClick() {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -190,6 +200,7 @@ public class HomeActivity extends BaseActivity {
         } else {
             super.onBackPressed();
         }
+        Toast.makeText(this, "aaaaaaa", Toast.LENGTH_LONG).show();
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
