@@ -16,10 +16,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.myqueue.myqueue.Activities.HomeActivity;
-import com.myqueue.myqueue.Activities.SignupActivity;
 import com.myqueue.myqueue.Activities.StoreScreenActivity;
 import com.myqueue.myqueue.R;
-import com.myqueue.myqueue.RoundedImage;
+import com.myqueue.myqueue.Views.RoundedImage;
 
 /**
  * Created by 高橋六羽 on 2016/03/21.

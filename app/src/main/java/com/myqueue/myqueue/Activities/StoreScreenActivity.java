@@ -53,7 +53,7 @@ public class StoreScreenActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public int getLayout() {
-        return R.layout.activity_storescreen;
+        return R.layout.activity_store_location;
     }
 
     @Override

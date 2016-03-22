@@ -40,7 +40,7 @@
 
                 <include
                     android:id="@+id/mapShop"
-                    layout="@layout/activity_shop_map"/>
+                    layout="@layout/activity_store_location_map"/>
 
             </LinearLayout>
 

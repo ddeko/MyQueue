@@ -1,4 +1,4 @@
-package com.myqueue.myqueue;
+package com.myqueue.myqueue.Views;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
