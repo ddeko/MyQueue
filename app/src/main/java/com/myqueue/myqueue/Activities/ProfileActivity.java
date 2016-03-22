@@ -1,33 +1,30 @@
 package com.myqueue.myqueue.Activities;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Fragments.ProfileFragment;
 import com.myqueue.myqueue.R;
 
 /**
  * Created by 高橋六羽 on 2016/03/22.
  */
-public class StoreScreenActivity extends BaseActivity implements View.OnClickListener{
-
-    private Button updatebtn;
-
-    private Intent resultIntent;
-
+public class ProfileActivity extends BaseActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setDefaultActionbarIcon();
         setRightIcon(0);
 
-        updatebtn = (Button)findViewById(R.id.btnUpdateProfile);
+        ProfileFragment myf = new ProfileFragment();
 
-        updatebtn.setOnClickListener(this);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.add(R.id.fragment_container, myf);
+        transaction.commit();
+
     }
 
     @Override
@@ -53,22 +50,11 @@ public class StoreScreenActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public int getLayout() {
-        return R.layout.activity_store_location;
+        return R.layout.activity_profile;
     }
 
     @Override
     public void updateUI() {
 
-    }
-
-    @Override
-    public void onClick(View v) {
-        if(v == updatebtn)
-        {
-            resultIntent = new Intent();
-            resultIntent.putExtra("resultkey", "result");
-            setResult(Activity.RESULT_OK, resultIntent);
-            finish();
-        }
     }
 }

@@ -7,17 +7,6 @@
     android:background="#1A252E"
     >
 
-    <LinearLayout
-        android:id="@+id/layoutActionBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <include
-            layout="@layout/view_default_actionbar"/>/>
-    </LinearLayout>
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +29,7 @@
 
                 <include
                     android:id="@+id/mapShop"
-                    layout="@layout/activity_store_location_map"/>
+                    layout="@layout/fragment_store_location_map"/>
 
             </LinearLayout>
 

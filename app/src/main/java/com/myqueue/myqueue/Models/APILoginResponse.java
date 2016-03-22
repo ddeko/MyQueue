@@ -1,11 +1,13 @@
 package com.myqueue.myqueue.Models;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by 高橋六羽 on 2016/03/11.
  */
-public class APILoginResponse extends APIBaseResponse {
+@SuppressWarnings("serial")
+public class APILoginResponse extends APIBaseResponse implements Serializable{
     private List<User> user;
     private List<Shop> shop;
 

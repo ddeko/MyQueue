@@ -1,12 +1,11 @@
 package com.myqueue.myqueue.Fragments;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.myqueue.myqueue.Activities.HomeActivity;
-import com.myqueue.myqueue.Activities.StoreScreenActivity;
+import com.myqueue.myqueue.Activities.ProfileActivity;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.RoundedImage;
 
@@ -29,8 +27,6 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private EditText txtStore;
     private RoundedImage cropCircle;
     private Button updatebtn;
-
-    public static final int SHOPSCREEN_REQUEST_CODE = 2;
 
     @Nullable
     @Override
@@ -55,9 +51,9 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     }
 
     private void setupActionBar() {
-        HomeActivity mainActivity = (HomeActivity)getActivity();
+        ProfileActivity mainActivity = (ProfileActivity)getActivity();
         mainActivity.setDefaultActionbarIcon();
-        mainActivity.setLeftIcon(0);
+        mainActivity.setRightIcon(0);
     }
 
     @Override
@@ -68,22 +64,13 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }
         else if(v == txtStore)
         {
-            Intent i = new Intent(getActivity(), StoreScreenActivity.class);
-            startActivityForResult(i, SHOPSCREEN_REQUEST_CODE);
+            StoreScreenFragment myf = new StoreScreenFragment();
+
+            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.add(R.id.fragment_container, myf);
+            transaction.addToBackStack("Store");
+            transaction.commit();
         }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode== ProfileFragment.SHOPSCREEN_REQUEST_CODE)
-        {
-            if(resultCode != Activity.RESULT_OK) {
-                return;
-            }
-            else
-            {
-
-            }
-        }
-    }
 }

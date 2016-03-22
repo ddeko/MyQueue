@@ -10,8 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.myqueue.myqueue.APIs.TaskConfirm;
+import com.myqueue.myqueue.APIs.TaskResend;
 import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APIConfirmRequest;
+import com.myqueue.myqueue.Models.APILoginResponse;
+import com.myqueue.myqueue.Models.Shop;
 import com.myqueue.myqueue.Models.User;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
@@ -22,12 +25,16 @@ import com.myqueue.myqueue.R;
 public class ConfirmationActivity extends AppCompatActivity implements View.OnClickListener {
 
     private LinearLayout sendBtn;
+    private LinearLayout resendBtn;
     private EditText confirmationText;
 
     private Intent resultIntent;
 
-    private User userinfo;
+    private APILoginResponse responseInfo;
     SessionManager sessions;
+
+    User loginuser;
+    Shop loginshopdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,12 +44,14 @@ public class ConfirmationActivity extends AppCompatActivity implements View.OnCl
         sessions = new SessionManager(this);
 
         sendBtn = (LinearLayout)findViewById(R.id.send_button);
+        resendBtn = (LinearLayout)findViewById(R.id.resend_button);
         confirmationText = (EditText)findViewById(R.id.tvConfirm);
 
         sendBtn.setOnClickListener(this);
+        resendBtn.setOnClickListener(this);
 
         Intent i = getIntent();
-        userinfo = (User)i.getSerializableExtra("User");
+        responseInfo = (APILoginResponse)i.getSerializableExtra("Response");
     }
 
     @Override
@@ -51,7 +60,7 @@ public class ConfirmationActivity extends AppCompatActivity implements View.OnCl
         {
             APIConfirmRequest request = new APIConfirmRequest();
             request.setConfirmationcode(confirmationText.getText().toString());
-            request.setUserid(userinfo.getUser_id());
+            request.setUserid(responseInfo.getUser().get(0).getUser_id());
 
             TaskConfirm confirm = new TaskConfirm(this) {
 
@@ -59,7 +68,15 @@ public class ConfirmationActivity extends AppCompatActivity implements View.OnCl
                 public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
 
                     if(isSuccess) {
-                        sessions.createLoginSession(userinfo);
+
+                        loginuser = responseInfo.getUser().get(0);
+                        if(responseInfo.getShop().size()!=0)
+                            loginshopdata = responseInfo.getShop().get(0);
+
+                        sessions.createLoginSession(loginuser);
+                        if (loginuser.getIsowner().equalsIgnoreCase("1"))
+                            sessions.setShopData(loginshopdata);
+
                         resultIntent = new Intent();
                         setResult(Activity.RESULT_OK, resultIntent);
                         finish();
@@ -71,6 +88,24 @@ public class ConfirmationActivity extends AppCompatActivity implements View.OnCl
                 }
             };
             confirm.execute(request);
+        }
+        else if(v == resendBtn)
+        {
+            TaskResend resend = new TaskResend(this) {
+
+                @Override
+                public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+
+                    if(isSuccess) {
+                        Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                    }
+                    else
+                    {
+                        Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            };
+            resend.execute(responseInfo.getUser().get(0).getEmail());
         }
     }
 }

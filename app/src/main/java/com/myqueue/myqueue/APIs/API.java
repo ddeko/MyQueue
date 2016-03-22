@@ -30,4 +30,12 @@ public interface API {
     @POST("/APIv1/auth/confirmation.php")
     public APIBaseResponse Confirm(@Field("userid") String userid,
                                   @Field("confirmationcode") String confirmationcode);
+
+    @FormUrlEncoded
+    @POST("/APIv1/auth/resend.php")
+    public APIBaseResponse Resend(@Field("email") String email);
+
+    @FormUrlEncoded
+    @POST("/APIv1/auth/forgot.php")
+    public APIBaseResponse Forgot(@Field("email") String email);
 }

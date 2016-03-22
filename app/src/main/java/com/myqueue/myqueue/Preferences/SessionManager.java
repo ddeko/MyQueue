@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import com.myqueue.myqueue.Activities.LoginActivity;
+import com.myqueue.myqueue.Models.Shop;
 import com.myqueue.myqueue.Models.User;
 
 import java.util.HashMap;
@@ -28,27 +29,30 @@ public class SessionManager {
     private static final String PREF_NAME = "MyQueuePref";
 
     // All Shared Preferences Keys
+
+    //START USER-DATA
     private static final String IS_LOGIN = "IsLoggedIn";
-
     public static final String KEY_USERID = "user_id";
-
     public static final String KEY_EMAIL = "email";
-
     public static final String KEY_PASSWORD = "password";
-
     public static final String KEY_TOKEN = "token";
-
     public static final String KEY_NAME = "name";
-
     public static final String KEY_PHONE = "phone";
-
     public static final String KEY_PROFILEPHOTO = "profilephoto";
-
     public static final String KEY_COVERPHOTO = "coverphoto";
-
     public static final String KEY_ISOWNER = "isowner";
-
     public static final String KEY_ISVERIFIED = "isverified";
+    //END USER-DATA
+
+    //START SHOP-DATA
+    public static final String KEY_SHOPID = "shopid";
+    public static final String KEY_LATITUDE = "latitude";
+    public static final String KEY_LONGITUDE = "longitude";
+    public static final String KEY_ADDRESS = "address";
+    public static final String KEY_NUMBER = "number";
+    public static final String KEY_CATEGORY = "category";
+    public static final String KEY_ISFULL = "isfull";
+    //END SHOP-DATA
 
     // Constructor
     public SessionManager(Context context) {
@@ -77,6 +81,18 @@ public class SessionManager {
         editor.putString(KEY_ISVERIFIED, user.getIsverified());
 
         // commit changes
+        editor.commit();
+    }
+
+    public void setShopData(Shop shop){
+        editor.putString(KEY_SHOPID, shop.getShop_id());
+        editor.putString(KEY_LATITUDE, shop.getLatitude());
+        editor.putString(KEY_LONGITUDE, shop.getLongitude());
+        editor.putString(KEY_ADDRESS, shop.getAddress());
+        editor.putString(KEY_NUMBER, shop.getNumber());
+        editor.putString(KEY_CATEGORY, shop.getCategory());
+        editor.putString(KEY_ISFULL, shop.getIsfull());
+
         editor.commit();
     }
 
@@ -121,6 +137,22 @@ public class SessionManager {
 
         // return user
         return user;
+    }
+
+    public HashMap<String, String> getShopDetails() {
+        HashMap<String, String> shop = new HashMap<String, String>();
+
+        // shop data
+        shop.put(KEY_SHOPID, pref.getString(KEY_SHOPID, null));
+        shop.put(KEY_LATITUDE, pref.getString(KEY_LATITUDE, null));
+        shop.put(KEY_LONGITUDE, pref.getString(KEY_LONGITUDE, null));
+        shop.put(KEY_ADDRESS, pref.getString(KEY_ADDRESS, null));
+        shop.put(KEY_NUMBER, pref.getString(KEY_NUMBER, null));
+        shop.put(KEY_CATEGORY, pref.getString(KEY_CATEGORY, null));
+        shop.put(KEY_ISFULL, pref.getString(KEY_ISFULL, null));
+
+        // return shop
+        return shop;
     }
 
     /**

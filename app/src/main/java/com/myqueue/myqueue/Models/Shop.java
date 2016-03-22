@@ -1,9 +1,12 @@
 package com.myqueue.myqueue.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by 高橋六羽 on 2016/03/22.
  */
-public class Shop {
+@SuppressWarnings("serial")
+public class Shop implements Serializable {
     String shop_id;
     String user_id;
     String latitude;

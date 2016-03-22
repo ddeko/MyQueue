@@ -65,7 +65,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
         tabHost.setup();
 
-        String[] tabnames = {"NEWSFEED", "EXPLORE","PROFILE"};
+        String[] tabnames = {"NEWSFEED", "EXPLORE"};
 
         for(int i=0; i<tabnames.length; i++) {
             TabHost.TabSpec tabSpec;
@@ -80,7 +80,6 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         List<Fragment> listFragments = new ArrayList<Fragment>();
         listFragments.add(new NewsFeedFragment());
         listFragments.add(new ExploreFragment());
-        listFragments.add(new ProfileFragment());
 
         viewPager = (ViewPager)findViewById(R.id.pager);
         MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), listFragments);
@@ -123,7 +122,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                 .withToolbar(toolbar)
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_free_play).withIcon(FontAwesome.Icon.faw_gamepad).withIdentifier(2),
+                        new PrimaryDrawerItem().withName("Profile").withIcon(FontAwesome.Icon.faw_user).withIdentifier(2),
                         new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
                         new SectionDrawerItem().withName(R.string.drawer_item_section_header),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
@@ -137,7 +136,12 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem != null) {
                             Intent intent = null;
-                            if (drawerItem.getIdentifier() == 8) {
+                            if(drawerItem.getIdentifier() == 2)
+                            {
+                                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
+                                startActivity(i);
+                            }
+                            else if (drawerItem.getIdentifier() == 8) {
                                 sessions.logoutUser();
                             }
                             if (intent != null) {

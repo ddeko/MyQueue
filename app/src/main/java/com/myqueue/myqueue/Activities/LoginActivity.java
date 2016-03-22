@@ -14,9 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.myqueue.myqueue.APIs.TaskForgot;
 import com.myqueue.myqueue.APIs.TaskLogin;
+import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APILoginRequest;
 import com.myqueue.myqueue.Models.APILoginResponse;
+import com.myqueue.myqueue.Models.Shop;
+import com.myqueue.myqueue.Models.User;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
@@ -36,6 +40,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     TextInputLayout loginEmailInput;
     TextInputLayout loginPasswordInput;
     SessionManager sessions;
+    User loginuser;
+    Shop loginshopdata;
 
     private static final int SIGNUP_REQUEST_CODE = 1;
     private static final int CONFIRMATION_REQUEST_CODE = 5;
@@ -82,8 +88,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if(isSuccess)
                         {
-                            if(response.getUser().get(0).getIsverified().equalsIgnoreCase("1")) {
-                                sessions.createLoginSession(response.getUser().get(0));
+                            loginuser = response.getUser().get(0);
+                            if(response.getShop().size()!=0)
+                                loginshopdata = response.getShop().get(0);
+
+                            if(loginuser.getIsverified().equalsIgnoreCase("1")) {
+                                sessions.createLoginSession(loginuser);
+                                if(loginuser.getIsowner().equalsIgnoreCase("1"))
+                                    sessions.setShopData(loginshopdata);
+
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
@@ -91,7 +104,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             else if(response.getUser().get(0).getIsverified().equalsIgnoreCase("0"))
                             {
                                 Intent i = new Intent(LoginActivity.this, ConfirmationActivity.class);
-                                i.putExtra("User",response.getUser().get(0));
+                                i.putExtra("Response",response);
                                 startActivityForResult(i, CONFIRMATION_REQUEST_CODE);
                             }
                         }
@@ -112,7 +125,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         else if(v == forgotButton)
         {
-            Toast.makeText(getApplicationContext(),"Implement Method",Toast.LENGTH_SHORT).show();
+            if(validateEmail()) {
+                TaskForgot forgot = new TaskForgot(this) {
+
+                    @Override
+                    public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+
+                        if (isSuccess) {
+                            Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                };
+                forgot.execute(loginEmail.getText().toString());
+            }
         }
     }
 
