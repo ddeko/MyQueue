@@ -12,8 +12,7 @@
         android:orientation="vertical">
 
         <include
-            android:id="@+id/toolbar_waitinglist"
-            layout="@layout/toolbar_withoutalarm_queue"/>
+            layout="@layout/view_default_actionbar"/>/>
     </LinearLayout>
 
     <RelativeLayout

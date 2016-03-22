@@ -1,32 +1,20 @@
 package com.myqueue.myqueue.Activities;
 
 
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
+import android.widget.TabHost;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -38,24 +26,34 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+<<<<<<< HEAD
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialize.util.UIUtils;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+=======
+import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Fragments.ExploreFragment;
+import com.myqueue.myqueue.Fragments.NewsFeedFragment;
+import com.myqueue.myqueue.Fragments.ProfileFragment;
+>>>>>>> d91268209a6c692e3b02966635ce06d6c9029700
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
 import net.yanzm.mth.MaterialTabHost;
 
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Created by leowirasanto on 3/6/2016.
  */
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends BaseActivity implements ViewPager.OnPageChangeListener, TabHost.OnTabChangeListener{
 
     private static SessionManager sessions;
     private Drawer result = null;
     private AccountHeader headerResult = null;
+
+    private MaterialTabHost tabHost;
+    private ViewPager viewPager;
 
     private Toolbar toolbar;
 
@@ -65,30 +63,47 @@ public class HomeActivity extends BaseActivity {
 
         sessions = new SessionManager(this);
 
-        if(getSupportActionBar()!= null){
-            getSupportActionBar().setElevation(0);
-        }
+        //START TAB HOST CODE
 
-        final MaterialTabHost tabHost = (MaterialTabHost)findViewById(android.R.id.tabhost);
+        tabHost = (MaterialTabHost)findViewById(android.R.id.tabhost);
         tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
+        tabHost.setup();
 
-        SectionsPagerAdapter pagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        for(int i = 0 ; i < pagerAdapter.getCount();i++){
-            tabHost.addTab(pagerAdapter.getPageTitle(i));
+        String[] tabnames = {"NEWSFEED", "EXPLORE","PROFILE"};
+
+        for(int i=0; i<tabnames.length; i++) {
+            TabHost.TabSpec tabSpec;
+            tabSpec = tabHost.newTabSpec(tabnames[i]);
+            tabSpec.setIndicator(tabnames[i]);
+            tabSpec.setContent(new FakeContent(this));
+            tabHost.addTab(tabSpec);
         }
 
-        final ViewPager viewPager = (ViewPager)findViewById(R.id.pager);
-        viewPager.setAdapter(pagerAdapter);
+        tabHost.setOnTabChangedListener(this);
+
+        List<Fragment> listFragments = new ArrayList<Fragment>();
+        listFragments.add(new NewsFeedFragment());
+        listFragments.add(new ExploreFragment());
+        listFragments.add(new ProfileFragment());
+
+        viewPager = (ViewPager)findViewById(R.id.pager);
+        MyFragmentPagerAdapter myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), listFragments);
+        viewPager.setAdapter(myFragmentPagerAdapter);
         viewPager.setOnPageChangeListener(tabHost);
 
-        tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
-            @Override
-            public void onTabSelected(int position) {
-                    viewPager.setCurrentItem(position);
-            }
-        });
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            View v = tabHost.getTabWidget().getChildAt(i);
 
-        final IProfile profile = new ProfileDrawerItem().withName("Mike Penz").withEmail("mikepenz@gmail.com").withIcon(R.drawable.profile);
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+            tv.setTextColor(getResources().getColor(R.color.white));
+            tv.setTextSize(14);
+
+        }
+
+        //END TAB HOST CCODE
+
+
+        final IProfile profile = new ProfileDrawerItem().withName("Yuzu Gfriend").withEmail("yuzugfriend@gmail.com").withIcon(R.drawable.ic_yuzu);
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -118,23 +133,19 @@ public class HomeActivity extends BaseActivity {
                         new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7)
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
+                        new SecondaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem != null) {
                             Intent intent = null;
-                            if (drawerItem.getIdentifier() == 1) {
-                                intent = new Intent(HomeActivity.this, BookScreenActivity.class);
-                                HomeActivity.this.startActivity(intent);
-                                Toast.makeText(HomeActivity.this, ((Nameable) drawerItem).getName().getText(HomeActivity.this), Toast.LENGTH_SHORT).show();
-                            } else if (drawerItem.getIdentifier() == 2) {
-                                intent = new Intent(HomeActivity.this, NewsFeedFormActivity.class);
-                                HomeActivity.this.startActivity(intent);
+                            if (drawerItem.getIdentifier() == 8) {
+                                sessions.logoutUser();
                             }
                             if (intent != null) {
-                                HomeActivity.this.startActivity(intent);
+
                             }
                         }
                         return false;
@@ -143,12 +154,6 @@ public class HomeActivity extends BaseActivity {
                 .withSelectedItem(-1)
                 .withSavedInstance(savedInstanceState)
                 .build();
-
-        //set the back arrow in the toolbar
-
-        // setup default activity action bar
-
-
     }
 
     @Override
@@ -158,6 +163,7 @@ public class HomeActivity extends BaseActivity {
         toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
     }
 
     @Override
@@ -165,11 +171,20 @@ public class HomeActivity extends BaseActivity {
         setActionbarListener(new OnActionbarListener() {
             @Override
             public void onLeftIconClick() {
+<<<<<<< HEAD
             }
 
             @Override
             public void onRightIconClick() {
                 onBackPressed();
+=======
+                onBackPressed();
+            }
+            @Override
+            public void onRightIconClick() {
+                Intent i = new Intent(HomeActivity.this, WaitingListActivity.class);
+                startActivity(i);
+>>>>>>> d91268209a6c692e3b02966635ce06d6c9029700
             }
         });
     }
@@ -203,99 +218,72 @@ public class HomeActivity extends BaseActivity {
         Toast.makeText(this, "aaaaaaa", Toast.LENGTH_LONG).show();
     }
 
-    public class SectionsPagerAdapter extends FragmentPagerAdapter {
-        public SectionsPagerAdapter(FragmentManager fm){
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    @Override
+    public void onTabChanged(String tabId) {
+        int selectedItem  = tabHost.getCurrentTab();
+        viewPager.setCurrentItem(selectedItem);
+    }
+
+    public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+
+        List<Fragment> listFragment;
+
+        public MyFragmentPagerAdapter(FragmentManager fm, List<Fragment> listFragment) {
             super(fm);
+            this.listFragment = listFragment;
         }
-
-
 
         @Override
         public Fragment getItem(int position) {
-            return PlaceHolderFragment.newInstance(position + 1);
+            return listFragment.get(position);
         }
 
         @Override
         public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch (position){
-                case 0:
-                    return getString(R.string.tab_session1).toUpperCase(l);
-                case 1 :
-                    return getString(R.string.tab_session2).toUpperCase(l);
-                case 2 :
-                    return getString(R.string.tab_session3).toUpperCase(l);
-            }
-            return null;
+            return listFragment.size();
         }
     }
 
-    public static class PlaceHolderFragment extends Fragment{
-        private static final String ARG_SECTION_NUMBER = "section_number";
-        private FloatingActionButton btnAddNews;
-        private RelativeLayout relativeLayout;
-        private ListView newsFeedList;
 
-        public static PlaceHolderFragment newInstance(int sectionNumber){
-            PlaceHolderFragment fragment = new PlaceHolderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+    public class FakeContent implements TabHost.TabContentFactory
+    {
+        Context context;
+        public FakeContent(Context context)
+        {
+            this.context = context;
         }
 
-        public PlaceHolderFragment(){}
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_sample,container,false);
-            TextView tv = (TextView) rootView.findViewById(R.id.section_label);
-            btnAddNews = (FloatingActionButton) rootView.findViewById(R.id.btnCreatePost);
-            relativeLayout = (RelativeLayout) rootView.findViewById(R.id.tab1screen);
-            newsFeedList = (ListView) rootView.findViewById(R.id.listNewsFeed);
-
-            setupActionBar();
-
-
-            if(getArguments().getInt(ARG_SECTION_NUMBER)>1)
-            {
-                btnAddNews.setVisibility(View.INVISIBLE);
-
-                newsFeedList.setVisibility(View.INVISIBLE);
-            }
-
-
-        btnAddNews.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Snackbar sb = Snackbar.make(relativeLayout, "News Feed Success", Snackbar.LENGTH_LONG);
-                sb.show();
-
-                //LOGOUT USER
-                sessions.logoutUser();
-
-            }
-        });
-
-            //HOW TO FETCH LOGGED IN USER DATA FROM SHARED PREFERENCE
-            SessionManager session = new SessionManager(getContext());
-            HashMap<String, String> user = session.getUserDetails();
-
-            tv.setText(user.get(SessionManager.KEY_NAME));
-
-
-            return rootView;
-
-        }
-
-        private void setupActionBar() {
-            HomeActivity mainActivity = (HomeActivity)getActivity();
-            mainActivity.setDefaultActionbarIcon();
+        public View createTabContent(String s) {
+            View fakeView = new View(context);
+            fakeView.setMinimumHeight(0);
+            fakeView.setMinimumWidth(0);
+            return fakeView;
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+    }
+
+
 }

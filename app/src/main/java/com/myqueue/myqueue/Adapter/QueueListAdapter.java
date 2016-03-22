@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.myqueue.myqueue.Model.ListQueue;
+import com.myqueue.myqueue.Models.QueueListItem;
 import com.myqueue.myqueue.R;
 
 import java.util.List;
@@ -16,16 +16,16 @@ import java.util.List;
 /**
  * Created by 遥か連 on 3/16/2016.
  */
-public class ListQueue_Adapter extends ArrayAdapter<ListQueue> {
+public class QueueListAdapter extends ArrayAdapter<QueueListItem> {
 
     Context context;
     int resLayout;
-    List<ListQueue> listQueue;
+    List<QueueListItem> listQueue;
 
     TextView txtQueueNumber;
     ImageView imgShopLogo;
 
-    public ListQueue_Adapter(Context context,int resLayout,List<ListQueue> listQueue){
+    public QueueListAdapter(Context context, int resLayout, List<QueueListItem> listQueue){
         super(context,resLayout,listQueue);
         this.context=context;
         this.resLayout=resLayout;
@@ -39,10 +39,10 @@ public class ListQueue_Adapter extends ArrayAdapter<ListQueue> {
         txtQueueNumber = (TextView)v.findViewById(R.id.txtQueueNumber);
         imgShopLogo = (ImageView)v.findViewById(R.id.imgLogoShop);
 
-        ListQueue navLisQueue = listQueue.get(position);
+        QueueListItem navLisQueue = listQueue.get(position);
 
         txtQueueNumber.setText(navLisQueue.getTxtNumberQueue());
-        imgShopLogo.setImageBitmap(navLisQueue.getImgLogoShop());
+        imgShopLogo.setImageResource(navLisQueue.getImgLogoShop());
 
         return v;
     }

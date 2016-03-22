@@ -2,7 +2,6 @@ package com.myqueue.myqueue.APIs;
 
 import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APILoginResponse;
-import com.myqueue.myqueue.Models.User;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -26,4 +25,9 @@ public interface API {
     @POST("/APIv1/auth/login.php")
     public APILoginResponse Login(@Field("email") String email,
                                     @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST("/APIv1/auth/confirmation.php")
+    public APIBaseResponse Confirm(@Field("userid") String userid,
+                                  @Field("confirmationcode") String confirmationcode);
 }

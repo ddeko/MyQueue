@@ -1,42 +1,36 @@
 package com.myqueue.myqueue.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.R;
 
-public class NewsFeedFormActivity extends AppCompatActivity implements View.OnClickListener {
+public class NewsFeedFormActivity extends BaseActivity implements View.OnClickListener {
 
     private Toolbar myActionBar;
     TextView edfeedStatus;
     ImageView imgFeed1;
     ImageView imgFeed2;
     ImageView imgFeed3;
-    ImageButton btnSubmit;
 
     RelativeLayout btnAddPhoto;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_feed_form);
+    private Intent resultIntent;
 
-        myActionBar = (Toolbar) findViewById(R.id.toolbar_withoutalarm);
-        setSupportActionBar(myActionBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        if(getSupportActionBar()!= null){
-            getSupportActionBar().setElevation(0);
-        }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState){
+        super.onCreate(savedInstanceState);
+
         edfeedStatus = (TextView)findViewById(R.id.feedStatus);
         btnAddPhoto = (RelativeLayout)findViewById(R.id.btnAddphoto);
-        btnSubmit = (ImageButton)findViewById(R.id.btnSubmitFeed);
 
         //imageview untuk nampung foto abis Add Photos
         imgFeed1 = (ImageView)findViewById(R.id.imgFeed1);
@@ -48,7 +42,11 @@ public class NewsFeedFormActivity extends AppCompatActivity implements View.OnCl
 
         edfeedStatus.setOnClickListener(this);
         btnAddPhoto.setOnClickListener(this);
-        btnSubmit.setOnClickListener(this);
+
+        setDefaultActionbarIcon();
+        setActionBarTitle("Post Feed");
+        setRightIcon(R.drawable.submitfeed_pressed);
+
     }
 
     @Override
@@ -57,10 +55,41 @@ public class NewsFeedFormActivity extends AppCompatActivity implements View.OnCl
             edfeedStatus.setText("");
         }
         else if(v==btnAddPhoto){
-            startActivity(new Intent(this,BookScreenActivity.class));
+
         }
-        else if(v==btnSubmit){
-            startActivity(new Intent(this,WaitingListActivity.class));
-        }
+    }
+
+    @Override
+    public void initView() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setContentInsetsAbsolute(0, 0);
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public void setUICallbacks() {
+        setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+                onBackPressed();
+            }
+            @Override
+            public void onRightIconClick() {
+                resultIntent = new Intent();
+                resultIntent.putExtra("resultkey", "result");
+                setResult(Activity.RESULT_OK, resultIntent);
+                finish();
+            }
+        });
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.activity_news_feed_form;
+    }
+
+    @Override
+    public void updateUI() {
+
     }
 }

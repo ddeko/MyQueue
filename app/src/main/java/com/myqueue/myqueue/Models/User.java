@@ -1,9 +1,12 @@
 package com.myqueue.myqueue.Models;
 
+import java.io.Serializable;
+
 /**
  * Created by 高橋六羽 on 2016/03/11.
  */
-public class User{
+@SuppressWarnings("serial")
+public class User implements Serializable {
     String user_id;
     String email;
     String password;
@@ -13,6 +16,7 @@ public class User{
     String profilephoto;
     String coverphoto;
     String isowner;
+    String isverified;
 
     public String getUser_id() {
         return user_id;
@@ -84,5 +88,13 @@ public class User{
 
     public void setIsowner(String isowner) {
         this.isowner = isowner;
+    }
+
+    public String getIsverified() {
+        return isverified;
+    }
+
+    public void setIsverified(String isverified) {
+        this.isverified = isverified;
     }
 }

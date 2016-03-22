@@ -48,6 +48,8 @@ public class SessionManager {
 
     public static final String KEY_ISOWNER = "isowner";
 
+    public static final String KEY_ISVERIFIED = "isverified";
+
     // Constructor
     public SessionManager(Context context) {
         this._context = context;
@@ -72,6 +74,7 @@ public class SessionManager {
         editor.putString(KEY_PROFILEPHOTO, user.getProfilephoto());
         editor.putString(KEY_COVERPHOTO, user.getCoverphoto());
         editor.putString(KEY_ISOWNER, user.getIsowner());
+        editor.putString(KEY_ISVERIFIED, user.getIsverified());
 
         // commit changes
         editor.commit();
@@ -114,6 +117,7 @@ public class SessionManager {
         user.put(KEY_PROFILEPHOTO, pref.getString(KEY_PROFILEPHOTO, null));
         user.put(KEY_COVERPHOTO, pref.getString(KEY_COVERPHOTO, null));
         user.put(KEY_ISOWNER, pref.getString(KEY_ISOWNER, null));
+        user.put(KEY_ISVERIFIED, pref.getString(KEY_ISVERIFIED, null));
 
         // return user
         return user;

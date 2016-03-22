@@ -4,17 +4,7 @@
     android:background="@color/newsfeed_form_bg"
     tools:context="mockupc.mockupc.BookScreenActivity">
 
-    <LinearLayout
-        android:id="@+id/layoutActionBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
 
-        <include
-            android:id="@+id/toolbarBook"
-            layout="@layout/toolbar"/>
-    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

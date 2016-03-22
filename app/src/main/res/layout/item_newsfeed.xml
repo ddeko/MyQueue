@@ -27,7 +27,8 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="40dip"
                     android:layout_height="40dip"
-                    android:background="@drawable/iconpicnewsfeed"/>
+                    android:background="@drawable/iconpicnewsfeed"
+                    android:id="@+id/shoppic" />
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_marginLeft="15dip"
@@ -36,7 +37,7 @@
                     android:textSize="20dip"
                     android:textColor="@color/myDarkBg2"
                     android:text="KFC SETURAN"
-                    android:id="@+id/tvJudulNews" />
+                    android:id="@+id/tvshopname" />
             </LinearLayout>
             <RelativeLayout
                 android:id="@+id/news_img_wrapper"
@@ -46,7 +47,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/miekfc"/>
+                    android:background="@drawable/miekfc"
+                    android:id="@+id/newsfeedpic" />
 
                 <RelativeLayout
                     android:background="@color/myDarkBg2"
@@ -59,7 +61,8 @@
                         android:layout_height="wrap_content"
                         android:text="The navigation bar in Android houses the device navigation controls: Back, Home, and Overview. "
                         android:textSize="12dip"
-                        android:padding="5dip" />
+                        android:padding="5dip"
+                        android:id="@+id/tvdescription" />
                 </RelativeLayout>
 
             </RelativeLayout>

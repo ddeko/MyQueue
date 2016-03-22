@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:id="@+id/profilelayout"
     android:background="#1A252E"
-    tools:showIn="@layout/fragment_sample">
+  >
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
                 <ImageView
-                    android:layout_width="fill_parent"
+                    android:layout_width="match_parent"
                     android:layout_height="200dip"
                     android:id="@+id/coverPicture"
                     android:scaleType="center"
@@ -27,7 +27,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
-                    android:src="@drawable/covereunha"/>
+                    android:src="@drawable/coverpics"/>
 
                 <LinearLayout
                     android:id="@+id/coverWrapper"
@@ -46,7 +46,8 @@
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
 
-                        android:layout_marginTop="75dp" />
+                        android:layout_marginTop="75dp"
+                        android:background="@drawable/ic_yuzu" />
 
                     <LinearLayout
                         android:layout_marginTop="10dip"
@@ -145,7 +146,8 @@
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
                             android:hint="Name"
-                            android:text="Yuju Gfriend"/>
+                            android:text="Yuju Gfriend"
+                            android:singleLine="true" />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -167,7 +169,8 @@
                         android:textColorHint="#FFFFFF"
                         android:textSize="16sp"
                         android:text="085260790111"
-                        android:hint="Phone Number"/>
+                        android:hint="Phone Number"
+                            android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -187,7 +190,8 @@
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
                             android:hint="Email Address"
-                                android:text="yujugfriend@gmail.com"/>
+                                android:text="yujugfriend@gmail.com"
+                                android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -202,12 +206,14 @@
                         android:id="@+id/txtStoreAdd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:inputType="text"
-                        android:textColor="#ffffff"
+                            android:textColor="#ffffff"
                         android:textColorHint="#FFFFFF"
                         android:textSize="16sp"
                         android:hint="Store Address"
-                            android:text="Jl. Malioboro"/>
+                            android:text="Jl. Malioboro"
+                            android:editable="false"
+                            android:inputType="none"
+                            android:singleLine="true" />
                     </android.support.design.widget.TextInputLayout>
 
 

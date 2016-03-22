@@ -1,27 +1,27 @@
-package com.myqueue.myqueue.Model;
+package com.myqueue.myqueue.Models;
 
 import android.graphics.Bitmap;
 
 /**
  * Created by 遥か連 on 3/16/2016.
  */
-public class ListQueue {
+public class QueueListItem {
 
-    private Bitmap imgLogoShop;
+    private int imgLogoShop;
     private String txtNumberQueue;
 
-    public ListQueue(Bitmap imgLogoShop, String txtNumberQueue){
+    public QueueListItem(int imgLogoShop, String txtNumberQueue){
         super();
         this.setImgLogoShop(imgLogoShop);
         this.setTxtNumberQueue(txtNumberQueue);
     }
 
 
-    public Bitmap getImgLogoShop() {
+    public int getImgLogoShop() {
         return imgLogoShop;
     }
 
-    public void setImgLogoShop(Bitmap imgLogoShop) {
+    public void setImgLogoShop(int imgLogoShop) {
         this.imgLogoShop = imgLogoShop;
     }
 

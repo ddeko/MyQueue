@@ -15,7 +15,7 @@
             android:layout_height="130dp"
             android:orientation="vertical"
             android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/fotoMakanan">
+            android:layout_toRightOf="@+id/fotoLogo">
 
             <TextView
                 android:textSize="20sp"
@@ -40,7 +40,7 @@
         <ImageView
             android:layout_width="140dip"
             android:layout_height="wrap_content"
-            android:id="@+id/fotoMakanan"
+            android:id="@+id/fotoLogo"
             android:background="@drawable/shoppic"/>
 
     </RelativeLayout>
