@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -24,7 +25,7 @@ import com.myqueue.myqueue.Views.RoundedImage;
 public class ProfileFragment extends Fragment implements View.OnClickListener{
 
     private ImageView imgcover,profilePicture;
-    private EditText txtStore;
+    private TextInputLayout txtStore;
     private RoundedImage cropCircle;
     private Button updatebtn;
 
@@ -42,7 +43,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         cropCircle = new RoundedImage(bm);
         profilePicture.setImageDrawable(cropCircle);
         updatebtn = (Button)v.findViewById(R.id.btnUpdateProfile);
-        txtStore = (EditText)v.findViewById(R.id.txtStoreAdd);
+        txtStore = (TextInputLayout)v.findViewById(R.id.storeaddwrapper);
 
         updatebtn.setOnClickListener(this);
         txtStore.setOnClickListener(this);
@@ -64,7 +65,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }
         else if(v == txtStore)
         {
-            StoreScreenFragment myf = new StoreScreenFragment();
+            StoreLocationFragment myf = new StoreLocationFragment();
 
             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
             transaction.add(R.id.fragment_container, myf);

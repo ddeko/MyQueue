@@ -29,6 +29,7 @@ public class RoundedImage extends Drawable {
         mPaint.setDither(true);
         final BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mPaint.setShader(shader);
+        mPaint.setStrokeWidth(1);
 
         mBitmapWidth = mBitmap.getWidth();
         mBitmapHeight = mBitmap.getHeight();

@@ -112,6 +112,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                         //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
                         new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
+                .withProfileImagesClickable(false)
                 .withSavedInstance(savedInstanceState)
                 .build();
 

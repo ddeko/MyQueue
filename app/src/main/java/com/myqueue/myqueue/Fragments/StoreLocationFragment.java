@@ -15,7 +15,7 @@ import com.myqueue.myqueue.R;
 /**
  * Created by 高橋六羽 on 2016/03/22.
  */
-public class StoreScreenFragment extends Fragment implements View.OnClickListener{
+public class StoreLocationFragment extends Fragment implements View.OnClickListener{
 
     private Button updatebtn;
 
