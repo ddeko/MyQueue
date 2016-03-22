@@ -15,10 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-<<<<<<< HEAD
 import android.widget.EditText;
-=======
->>>>>>> d91268209a6c692e3b02966635ce06d6c9029700
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;

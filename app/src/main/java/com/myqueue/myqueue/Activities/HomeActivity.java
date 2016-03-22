@@ -26,16 +26,12 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-<<<<<<< HEAD
 import com.mikepenz.materialdrawer.model.interfaces.Nameable;
 import com.mikepenz.materialize.util.UIUtils;
-import com.myqueue.myqueue.Callbacks.OnActionbarListener;
-=======
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Fragments.ExploreFragment;
 import com.myqueue.myqueue.Fragments.NewsFeedFragment;
 import com.myqueue.myqueue.Fragments.ProfileFragment;
->>>>>>> d91268209a6c692e3b02966635ce06d6c9029700
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
@@ -158,12 +154,10 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void initView() {
-
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-
     }
 
     @Override
@@ -171,20 +165,13 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         setActionbarListener(new OnActionbarListener() {
             @Override
             public void onLeftIconClick() {
-<<<<<<< HEAD
+
             }
 
             @Override
             public void onRightIconClick() {
-                onBackPressed();
-=======
-                onBackPressed();
-            }
-            @Override
-            public void onRightIconClick() {
                 Intent i = new Intent(HomeActivity.this, WaitingListActivity.class);
                 startActivity(i);
->>>>>>> d91268209a6c692e3b02966635ce06d6c9029700
             }
         });
     }
@@ -215,7 +202,6 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         } else {
             super.onBackPressed();
         }
-        Toast.makeText(this, "aaaaaaa", Toast.LENGTH_LONG).show();
     }
 
     @Override
