@@ -156,7 +156,8 @@
                         android:paddingTop="45dp"
                         android:paddingLeft="28dp"
                         android:paddingRight="28dp"
-                    android:paddingBottom="50dp">
+                    android:paddingBottom="50dp"
+                    android:visibility="gone">
 
 
                         <android.support.design.widget.TextInputLayout
@@ -348,32 +349,39 @@
 
                     </android.support.design.widget.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
-                        android:layout_gravity="center"
-                        android:id="@+id/storeaddwrapper"
+                    <LinearLayout
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="#ffffff"
-                        android:textColorHint="#FFFFFF"
-                        android:layout_marginTop="7dp"
-                        android:theme="@style/Theme.MyThemeTrans"
-                        android:focusableInTouchMode="true">
+                        android:id="@+id/storeaddwrapper"
+                        android:layout_marginTop="7dp">
 
-                        <EditText
-                            android:id="@+id/txtStoreAdd"
+                        <android.support.design.widget.TextInputLayout
+                            android:layout_gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textColor="#ffffff"
                             android:textColorHint="#FFFFFF"
-                            android:textSize="16sp"
-                            android:hint="Store Address"
-                            android:text="Jl. Malioboro"
-                            android:editable="false"
-                            android:singleLine="true"
-                            android:focusableInTouchMode="true" />
-                    </android.support.design.widget.TextInputLayout>
+                            android:theme="@style/Theme.MyThemeTrans"
+                            android:focusableInTouchMode="true">
+
+                            <EditText
+                                android:id="@+id/txtStoreAdd"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textColor="#ffffff"
+                                android:textColorHint="#FFFFFF"
+                                android:textSize="16sp"
+                                android:hint="Store Address"
+                                android:text="Jl. Malioboro"
+                                android:editable="false"
+                                android:singleLine="true"
+                                android:focusableInTouchMode="true" />
+                        </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
+
+            </LinearLayout>
 
                 <Button
                     android:layout_width="200dp"

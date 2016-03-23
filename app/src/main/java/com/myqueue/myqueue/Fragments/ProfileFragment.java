@@ -1,5 +1,6 @@
 package com.myqueue.myqueue.Fragments;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,7 +30,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
     private LinearLayout shopOwnerContainer;
 
     private ImageView imgcover,profilePicture;
-    private TextInputLayout txtStore;
+    private LinearLayout txtStore;
     private RoundedImage cropCircle;
     private Button updatebtn;
 
@@ -47,10 +48,26 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         cropCircle = new RoundedImage(bm);
         profilePicture.setImageDrawable(cropCircle);
         updatebtn = (Button)v.findViewById(R.id.btnUpdateProfile);
-        txtStore = (TextInputLayout)v.findViewById(R.id.storeaddwrapper);
+        txtStore = (LinearLayout)v.findViewById(R.id.storeaddwrapper);
+        customerContainer = (LinearLayout)v.findViewById(R.id.customer_data_container);
+        shopOwnerContainer = (LinearLayout)v.findViewById(R.id.shop_data_container);
 
         updatebtn.setOnClickListener(this);
         txtStore.setOnClickListener(this);
+
+        ProfileActivity activity = (ProfileActivity) getActivity();
+
+        if(activity.getIsOwner()==true)
+        {
+            shopOwnerContainer.setVisibility(View.VISIBLE);
+            customerContainer.setVisibility(View.GONE);
+        }
+        else
+        {
+            customerContainer.setVisibility(View.VISIBLE);
+            shopOwnerContainer.setVisibility(View.GONE);
+        }
+
 
         return v;
     }
@@ -78,4 +95,8 @@ public class ProfileFragment extends Fragment implements View.OnClickListener{
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }
