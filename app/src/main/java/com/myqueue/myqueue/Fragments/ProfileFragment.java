@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.myqueue.myqueue.Activities.ProfileActivity;
@@ -23,6 +24,9 @@ import com.myqueue.myqueue.Views.RoundedImage;
  * Created by 高橋六羽 on 2016/03/21.
  */
 public class ProfileFragment extends Fragment implements View.OnClickListener{
+
+    private LinearLayout customerContainer;
+    private LinearLayout shopOwnerContainer;
 
     private ImageView imgcover,profilePicture;
     private TextInputLayout txtStore;
