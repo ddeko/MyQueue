@@ -16,7 +16,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.SplashActivity"
-            android:theme="@style/Theme.MyThemeTrans">
+            android:theme="@style/Theme.MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,16 +28,14 @@
             android:theme="@style/Theme.MyThemeTrans" />
         <activity
             android:name=".Activities.SignupActivity"
-            android:theme="@style/Theme.MyThemeTrans" />
+            android:label="" />
         <activity
             android:name=".Activities.HomeActivity"
-            android:theme="@style/AppTheme" />
+            android:label="" />
         <activity
             android:name=".Activities.NewsFeedFormActivity"
             android:label=""></activity>
-        <activity
-            android:name=".Activities.StoreScreenActivity"
-            android:label=""></activity>
+
         <activity
             android:name=".Activities.WaitingListActivity"
             android:label=""></activity>

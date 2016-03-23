@@ -36,11 +36,13 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 
         btnAddNews = (FloatingActionButton) v.findViewById(R.id.btnCreatePost);
+        btnAddNews.setElevation(2);
         btnAddNews.setOnClickListener(this);
 
         setupActionBar();
 
         newsListView = (ListView) v.findViewById(R.id.listViewNews);
+        newsListView.setElevation(1);
 
         ArrayList<NewsFeedListItem> feedItems = new ArrayList<NewsFeedListItem>();
 

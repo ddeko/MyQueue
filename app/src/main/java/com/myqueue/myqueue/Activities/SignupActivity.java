@@ -5,9 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -15,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myqueue.myqueue.APIs.TaskSignup;
+import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APISignupRequest;
 import com.myqueue.myqueue.Preferences.SessionManager;
@@ -26,7 +29,7 @@ import java.util.regex.Pattern;
 /**
  * Created by 高橋六羽 on 2016/03/10.
  */
-public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
+public class SignupActivity extends BaseActivity implements View.OnClickListener {
 
     EditText signupEmail;
     EditText signupPassword;
@@ -45,6 +48,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     TextInputLayout signupConfirmPasswordInput;
     TextInputLayout signupNameInput;
     TextInputLayout signupPhoneInput;
+    Toolbar toolbar;
+
+    private static View activityRoot;
 
     private final int USER_STATE =1;
     private final int OWNER_STATE =2;
@@ -55,9 +61,9 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup);
 
         sessions = new SessionManager(this);
+        activityRoot = findViewById(android.R.id.content);
 
         signupEmail = (EditText) findViewById(R.id.signup_email);
         signupPassword = (EditText) findViewById(R.id.signup_password);
@@ -85,6 +91,11 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         stateButton.setOnClickListener(this);
 
         startUserState();
+
+        setDefaultActionbarIcon();
+        setActionBarTitleCenter("Sign Up");
+        setRightIcon(0);
+        setActionBarColor(R.color.transparent);
 
     }
 
@@ -149,6 +160,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         signupStateText.setText("I'm a Shop Owner!");
         signupButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle));
         stateButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle_grey));
+        stateButton.setElevation(1);
+        signupButton.setElevation(-1);
     }
 
     private void startOwnerState()
@@ -159,6 +172,8 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         signupStateText.setText("I'm a Customer!");
         signupButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle_grey));
         stateButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle));
+        signupButton.setElevation(1);
+        stateButton.setElevation(-1);
     }
 
     /**
@@ -283,6 +298,52 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
         if (view.requestFocus()) {
             getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         }
+    }
+
+    @Override
+    public void initView() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setContentInsetsAbsolute(0, 0);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+    }
+
+    @Override
+    public void setUICallbacks() {
+        setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+                onBackPressed();
+            }
+            @Override
+            public void onRightIconClick() {
+
+            }
+        });
+    }
+
+    @Override
+    public int getLayout() {
+        return R.layout.activity_signup;
+    }
+
+    @Override
+    public void updateUI() {
+        activityRoot.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                // if more than 100 pixels, its probably a keyboard
+                int heightDiff = activityRoot.getRootView().getHeight() - activityRoot.getHeight();
+                if(heightDiff > 100) {
+                    toolbar.setVisibility(View.GONE);
+                }
+                else
+                {
+                    toolbar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
     }
 
     private class MyTextWatcher implements TextWatcher {

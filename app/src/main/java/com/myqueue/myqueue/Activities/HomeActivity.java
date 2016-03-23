@@ -63,6 +63,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
         tabHost = (MaterialTabHost)findViewById(android.R.id.tabhost);
         tabHost.setType(MaterialTabHost.Type.FullScreenWidth);
+        tabHost.setElevation(1);
         tabHost.setup();
 
         String[] tabnames = {"NEWSFEED", "EXPLORE"};
@@ -161,7 +162,11 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
     public void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
+        toolbar.setBackgroundColor(getResources().getColor(R.color.actionbar_color));
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setElevation(0);
+        }
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
     }
 

@@ -42,6 +42,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     private RelativeLayout actionRightContainer;
 
     private LinearLayout primaryLogo;
+    private LinearLayout leftContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         initView();
         setUICallbacks();
         showCustomActionBar();
+        tvActionBarTitleCenter.setText("MyQueue");
+
 
     }
 
@@ -70,6 +73,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     @Override
     protected void onResume() {
         super.onResume();
+        updateUI();
     }
 
     protected void showCustomActionBar() {
@@ -87,7 +91,9 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             toolbarBackground = (RelativeLayout) actionBarView.findViewById(R.id.toolbar_background);
             primaryLogo = (LinearLayout) actionBarView.findViewById(R.id.tv_primary_logo);
             actionRightContainer = (RelativeLayout) actionBarView.findViewById(R.id.action_right_container);
+            leftContainer = (LinearLayout) actionBarView.findViewById(R.id.left_icon_container);
 
+            actionBarView.setBackgroundResource(R.color.actionbar_color);
 
             actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
             actionBar.setDisplayShowHomeEnabled(false);
@@ -129,7 +135,7 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     public void setLeftIcon(int drawableRes) {
         if(leftIcon != null) {
             leftIcon.setVisibility(drawableRes == 0 ? View.GONE : View.VISIBLE);
-
+            leftContainer.setVisibility(drawableRes == 0 ? View.GONE : View.VISIBLE);
             leftIcon.setImageResource(drawableRes);
         }
     }
@@ -170,7 +176,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             tvActionBarTitle.setVisibility(View.GONE);
             tvActionBarTitleCenter.setText(title);
             tvActionBarTitleCenter.setVisibility(View.VISIBLE);
-            primaryLogo.setVisibility(View.GONE);
         }
     }
 
@@ -184,7 +189,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         actionRightContainer.setVisibility(View.VISIBLE);
         primaryLogo.setVisibility(View.VISIBLE);
         tvActionBarTitle.setVisibility(View.GONE);
-        tvActionBarTitleCenter.setVisibility(View.GONE);
         setRightIcon(R.drawable.logoclock);
         tvBadge.setVisibility(View.VISIBLE);
     }

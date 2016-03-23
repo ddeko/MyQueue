@@ -64,6 +64,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginEmail.addTextChangedListener(new MyTextWatcher(loginEmail));
         loginPassword.addTextChangedListener(new MyTextWatcher(loginPassword));
 
+        loginButton.setElevation(1);
+
         loginButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
         forgotButton.setOnClickListener(this);

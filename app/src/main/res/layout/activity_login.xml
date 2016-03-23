@@ -65,7 +65,7 @@
                     android:id="@+id/passwordWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="#ffffff"
                     android:textColorHint="#FFFFFF"
                     app:errorTextAppearance="@style/error_appearance">
@@ -122,9 +122,9 @@
                 android:text="Sign Up"
                 android:id="@+id/signUp_button"
                 android:layout_gravity="center"
-                android:layout_marginTop="12dp"
                 android:textSize="18sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:padding="12dp" />
 
         </LinearLayout>
 
