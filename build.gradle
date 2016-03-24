@@ -17,5 +17,8 @@ allprojects {
     repositories {
         jcenter()
         maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
+        maven {
+            url "https://jitpack.io"
+        }
     }
 }

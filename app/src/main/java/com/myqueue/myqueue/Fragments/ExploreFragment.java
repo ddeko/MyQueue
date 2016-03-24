@@ -10,15 +10,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.myqueue.myqueue.APIs.TaskExplore;
 import com.myqueue.myqueue.Activities.BookActivity;
 import com.myqueue.myqueue.Activities.HomeActivity;
 import com.myqueue.myqueue.Activities.WaitingListActivity;
 import com.myqueue.myqueue.Adapter.ExploreListAdapter;
-import com.myqueue.myqueue.Models.ExploreListItem;
+import com.myqueue.myqueue.Models.APIExploreResponse;
+import com.myqueue.myqueue.Models.ShopWithUser;
 import com.myqueue.myqueue.R;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * Created by 高橋六羽 on 2016/03/21.
@@ -27,6 +32,9 @@ public class ExploreFragment extends Fragment {
 
     private ListView exploreListView;
     private Fragment fragment;
+    private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
+
+    private List<ShopWithUser> exploreItems;
 
     public static final int BOOK_REQUEST_CODE = 3;
 
@@ -40,21 +48,17 @@ public class ExploreFragment extends Fragment {
 
         exploreListView = (ListView) v.findViewById(R.id.exploreList);
 
-        ArrayList<ExploreListItem> exploreItems = new ArrayList<ExploreListItem>();
+        fetchData();
 
-        ExploreListItem exploreListItem1 = new ExploreListItem("Pizza Hut","Jl.Babarsari Raya No 13B",0);
-        ExploreListItem exploreListItem2 = new ExploreListItem("Pizza Hut","Jl.Babarsari Raya No 13B",0);
-        ExploreListItem exploreListItem3 = new ExploreListItem("Pizza Hut","Jl.Babarsari Raya No 13B",0);
-        ExploreListItem exploreListItem4 = new ExploreListItem("Pizza Hut","Jl.Babarsari Raya No 13B",0);
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipe);
+        mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override public void onRefresh() {
+                // Do work to refresh the list here.
+                fetchData();
+            }
 
-        exploreItems.add(exploreListItem1);
-        exploreItems.add(exploreListItem2);
-        exploreItems.add(exploreListItem3);
-        exploreItems.add(exploreListItem4);
-
-        ExploreListAdapter exploreListAdapter = new ExploreListAdapter(getContext(), R.layout.item_explore, exploreItems);
-
-        exploreListView.setAdapter(exploreListAdapter);
+        });
 
         exploreListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -62,6 +66,7 @@ public class ExploreFragment extends Fragment {
                                     long id) {
 
                 Intent i = new Intent(fragment.getActivity(), BookActivity.class);
+                i.putExtra("ShopWithUserItem",(ShopWithUser) exploreitemcurrent.getItemAtPosition(position));
                 startActivityForResult(i, BOOK_REQUEST_CODE);
             }
         });
@@ -91,4 +96,38 @@ public class ExploreFragment extends Fragment {
         }
     }
 
+    public void fetchData()
+    {
+        TaskExplore explore = new TaskExplore(getActivity()) {
+
+            @Override
+            public void onResult(APIExploreResponse response, String statusMessage, boolean isSuccess) {
+
+                if(isSuccess) {
+                    exploreItems = response.getShop();
+
+                    ExploreListAdapter exploreListAdapter = new ExploreListAdapter(getContext(), R.layout.item_explore, exploreItems);
+
+                    exploreListView.setAdapter(exploreListAdapter);
+
+                    mWaveSwipeRefreshLayout.setRefreshing(false);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+
+                    mWaveSwipeRefreshLayout.setRefreshing(false);
+                }
+
+            }
+        };
+        explore.execute();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 }

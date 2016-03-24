@@ -7,7 +7,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.myqueue.myqueue.Models.NewsFeedListItem;
+import com.bumptech.glide.Glide;
+import com.myqueue.myqueue.Models.Feed;
 import com.myqueue.myqueue.R;
 
 import java.util.List;
@@ -15,18 +16,18 @@ import java.util.List;
 /**
  * Created by 高橋六羽 on 2016/03/22.
  */
-public class NewsFeedListAdapter extends ArrayAdapter<NewsFeedListItem> {
+public class NewsFeedListAdapter extends ArrayAdapter<Feed> {
 
     Context context;
     int resLayout;
-    List<NewsFeedListItem> listNewsFeed;
+    List<Feed> listNewsFeed;
 
     TextView txtShopName;
     TextView txtDescription;
     ImageView imgNewsFeed;
     ImageView imgShopLogoNews;
 
-    public NewsFeedListAdapter(Context context, int resLayout, List<NewsFeedListItem> listNewsFeed){
+    public NewsFeedListAdapter(Context context, int resLayout, List<Feed> listNewsFeed){
         super(context,resLayout,listNewsFeed);
         this.context=context;
         this.resLayout=resLayout;
@@ -42,12 +43,14 @@ public class NewsFeedListAdapter extends ArrayAdapter<NewsFeedListItem> {
         imgNewsFeed = (ImageView)v.findViewById(R.id.shoppic);
         imgShopLogoNews = (ImageView)v.findViewById(R.id.newsfeedpic);
 
-        NewsFeedListItem navLisExplore = listNewsFeed.get(position);
+        Feed navLisFeed = listNewsFeed.get(position);
 
-        txtShopName.setText(navLisExplore.getShopName());
-        txtDescription.setText(navLisExplore.getDescription());
-        imgNewsFeed.setImageResource(navLisExplore.getNewsPic());
-        imgShopLogoNews.setImageResource(navLisExplore.getShopPic());
+        txtShopName.setText(navLisFeed.getShop().get(0).getUser().get(0).getName());
+        txtDescription.setText(navLisFeed.getDescription());
+        Glide.with(getContext()).load(navLisFeed.getFeedpicture()).into(imgShopLogoNews);
+        Glide.with(getContext()).load(navLisFeed.getShop().get(0).getUser().get(0).getProfilephoto()).into(imgNewsFeed);
+
+        imgShopLogoNews.setScaleType(ImageView.ScaleType.FIT_XY);
 
         return v;
     }

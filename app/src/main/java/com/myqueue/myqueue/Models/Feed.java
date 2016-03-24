@@ -1,6 +1,7 @@
 package com.myqueue.myqueue.Models;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by 高橋六羽 on 2016/03/22.
@@ -12,6 +13,7 @@ public class Feed implements Serializable {
     String user_id;
     String description;
     String feedpicture;
+    List<ShopWithUser> shop;
 
     public String getFeed_id() {
         return feed_id;
@@ -43,5 +45,13 @@ public class Feed implements Serializable {
 
     public void setFeedpicture(String feedpicture) {
         this.feedpicture = feedpicture;
+    }
+
+    public List<ShopWithUser> getShop() {
+        return shop;
+    }
+
+    public void setShop(List<ShopWithUser> shop) {
+        this.shop = shop;
     }
 }

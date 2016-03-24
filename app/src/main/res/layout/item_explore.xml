@@ -41,7 +41,8 @@
             android:layout_width="140dip"
             android:layout_height="wrap_content"
             android:id="@+id/fotoLogo"
-            android:background="@drawable/shoppic"/>
+            android:src="@drawable/shoppic"
+            android:background="@color/button_grey1" />
 
     </RelativeLayout>
 </LinearLayout>

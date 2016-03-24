@@ -27,8 +27,9 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="40dip"
                     android:layout_height="40dip"
-                    android:background="@drawable/iconpicnewsfeed"
-                    android:id="@+id/shoppic" />
+                    android:id="@+id/shoppic"
+                    android:src="@drawable/iconpicnewsfeed"
+                    android:background="@color/button_grey1" />
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_marginLeft="15dip"
@@ -47,8 +48,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/miekfc"
-                    android:id="@+id/newsfeedpic" />
+                    android:id="@+id/newsfeedpic"
+                    android:src="@drawable/miekfc" />
 
                 <RelativeLayout
                     android:background="@color/myDarkBg2"

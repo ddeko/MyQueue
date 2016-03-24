@@ -7,7 +7,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.myqueue.myqueue.Models.ExploreListItem;
+import com.bumptech.glide.Glide;
+import com.myqueue.myqueue.Models.APIExploreResponse;
+import com.myqueue.myqueue.Models.ShopWithUser;
 import com.myqueue.myqueue.R;
 
 import java.util.List;
@@ -15,17 +17,17 @@ import java.util.List;
 /**
  * Created by leowirasanto on 3/18/2016.
  */
-public class ExploreListAdapter extends ArrayAdapter<ExploreListItem> {
+public class ExploreListAdapter extends ArrayAdapter<ShopWithUser> {
 
     Context context;
     int resLayout;
-    List<ExploreListItem> listExplore;
+    List<ShopWithUser> listExplore;
 
     TextView txtExploreName;
     TextView txtExploreAddress;
     ImageView imgShopLogoExplore;
 
-    public ExploreListAdapter(Context context, int resLayout, List<ExploreListItem> listExplore){
+    public ExploreListAdapter(Context context, int resLayout, List<ShopWithUser> listExplore){
         super(context,resLayout,listExplore);
         this.context=context;
         this.resLayout=resLayout;
@@ -40,11 +42,11 @@ public class ExploreListAdapter extends ArrayAdapter<ExploreListItem> {
         txtExploreAddress = (TextView)v.findViewById(R.id.tvLokasi);
         imgShopLogoExplore = (ImageView)v.findViewById(R.id.fotoLogo);
 
-        ExploreListItem navLisExplore = listExplore.get(position);
+        ShopWithUser navLisExplore = listExplore.get(position);
 
-        txtExploreName.setText(navLisExplore.getShopName());
-        txtExploreAddress.setText(navLisExplore.getShopAddress());
-        imgShopLogoExplore.setImageResource(navLisExplore.getPicture());
+        txtExploreName.setText(navLisExplore.getUser().get(0).getName());
+        txtExploreAddress.setText(navLisExplore.getAddress() +" "+ navLisExplore.getNumber());
+        Glide.with(getContext()).load(navLisExplore.getUser().get(0).getProfilephoto()).into(imgShopLogoExplore);
 
         return v;
     }
