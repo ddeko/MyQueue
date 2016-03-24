@@ -18,7 +18,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/include"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            app:colorTabIndicator="@color/actionbar_color"/>
 
         <include layout="@layout/view_default_actionbar"
             android:id="@+id/include" />

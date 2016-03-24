@@ -7,6 +7,8 @@ import android.support.v7.widget.Toolbar;
 
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Fragments.DetailShopFragment;
+import com.myqueue.myqueue.Models.Shop;
+import com.myqueue.myqueue.Models.ShopWithUser;
 import com.myqueue.myqueue.R;
 
 /**
@@ -14,10 +16,15 @@ import com.myqueue.myqueue.R;
  */
 public class BookActivity extends BaseActivity{
 
+    public ShopWithUser responseInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         DetailShopFragment myf = new DetailShopFragment();
+
+        Intent i = getIntent();
+        responseInfo = (ShopWithUser) i.getSerializableExtra("ShopWithUserItem");
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, myf);
@@ -56,5 +63,9 @@ public class BookActivity extends BaseActivity{
     @Override
     public void updateUI() {
 
+    }
+
+    public ShopWithUser getResponseInfo() {
+        return responseInfo;
     }
 }

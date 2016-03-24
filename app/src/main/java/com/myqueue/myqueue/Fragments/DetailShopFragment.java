@@ -1,22 +1,22 @@
 package com.myqueue.myqueue.Fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.Marker;
 import com.myqueue.myqueue.Activities.BookActivity;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.CustomMapView;
@@ -28,6 +28,9 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
 
     private FloatingActionButton toBookbtn;
     private CustomMapView mapView;
+    private ImageView coverImage;
+    private TextView addressText;
+    private TextView nameText;
 
     Bundle saveInstanceState;
 
@@ -41,8 +44,16 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
 
         setupActionBar();
 
+        coverImage = (ImageView)v.findViewById(R.id.shopdetailpic);
+        addressText = (TextView)v.findViewById(R.id.txtAlamatShop);
+        nameText = (TextView)v.findViewById(R.id.txtNamaShop);
         toBookbtn = (FloatingActionButton)v.findViewById(R.id.btnBook);
         toBookbtn.setOnClickListener(this);
+
+        addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() +" "+ ((BookActivity) getActivity()).getResponseInfo().getNumber());
+        nameText.setText(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getName());
+        Glide.with(getContext()).load(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getCoverphoto()).into(coverImage);
+        coverImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
         initMap(v);
 

@@ -10,14 +10,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import com.myqueue.myqueue.APIs.TaskFeed;
 import com.myqueue.myqueue.Activities.HomeActivity;
 import com.myqueue.myqueue.Activities.NewsFeedFormActivity;
 import com.myqueue.myqueue.Adapter.NewsFeedListAdapter;
-import com.myqueue.myqueue.Models.NewsFeedListItem;
+import com.myqueue.myqueue.Models.APIFeedResponse;
+import com.myqueue.myqueue.Models.Feed;
 import com.myqueue.myqueue.R;
 
-import java.util.ArrayList;
+import java.util.List;
+
+import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 /**
  * Created by 高橋六羽 on 2016/03/21.
@@ -26,6 +31,9 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
     private FloatingActionButton btnAddNews;
     private ListView newsListView;
+    private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
+
+    private List<Feed> feedItems;
 
     public static final int NEWSFEEDFORM_REQUEST_CODE = 4;
 
@@ -36,29 +44,24 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
         View v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
 
         btnAddNews = (FloatingActionButton) v.findViewById(R.id.btnCreatePost);
-        btnAddNews.setElevation(2);
         btnAddNews.setOnClickListener(this);
 
         setupActionBar();
 
         newsListView = (ListView) v.findViewById(R.id.listViewNews);
-        newsListView.setElevation(1);
 
-        ArrayList<NewsFeedListItem> feedItems = new ArrayList<NewsFeedListItem>();
+        fetchData();
 
-        NewsFeedListItem newsFeedListItem1 = new NewsFeedListItem(0,"Pizza Hut",0,"Special Discount");
-        NewsFeedListItem newsFeedListItem2 = new NewsFeedListItem(0,"Pizza Hut",0,"Special Discount");
-        NewsFeedListItem newsFeedListItem3 = new NewsFeedListItem(0,"Pizza Hut",0,"Special Discount");
-        NewsFeedListItem newsFeedListItem4 = new NewsFeedListItem(0,"Pizza Hut",0,"Special Discount");
+        mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipefeed);
+        mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
+        mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Do work to refresh the list here.
+                fetchData();
+            }
 
-        feedItems.add(newsFeedListItem1);
-        feedItems.add(newsFeedListItem2);
-        feedItems.add(newsFeedListItem3);
-        feedItems.add(newsFeedListItem4);
-
-        NewsFeedListAdapter feedListAdapter = new NewsFeedListAdapter(getContext(), R.layout.item_newsfeed, feedItems);
-
-        newsListView.setAdapter(feedListAdapter);
+        });
 
         return v;
     }
@@ -91,6 +94,35 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
             }
         }
+    }
+
+    public void fetchData()
+    {
+        TaskFeed feed = new TaskFeed(getActivity()) {
+
+            @Override
+            public void onResult(APIFeedResponse response, String statusMessage, boolean isSuccess) {
+
+                if(isSuccess) {
+                    feedItems = response.getFeed();
+
+                    NewsFeedListAdapter newsFeedListAdapter = new NewsFeedListAdapter(getContext(), R.layout.item_newsfeed, feedItems);
+
+                    newsListView.setAdapter(newsFeedListAdapter);
+
+                    mWaveSwipeRefreshLayout.setRefreshing(false);
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+
+                    mWaveSwipeRefreshLayout.setRefreshing(false);
+                }
+
+            }
+        };
+        feed.execute();
+
     }
 
 

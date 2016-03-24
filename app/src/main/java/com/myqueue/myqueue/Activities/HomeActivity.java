@@ -26,12 +26,9 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
-import com.mikepenz.materialdrawer.model.interfaces.Nameable;
-import com.mikepenz.materialize.util.UIUtils;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Fragments.ExploreFragment;
 import com.myqueue.myqueue.Fragments.NewsFeedFragment;
-import com.myqueue.myqueue.Fragments.ProfileFragment;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
@@ -87,13 +84,20 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         viewPager.setAdapter(myFragmentPagerAdapter);
         viewPager.setOnPageChangeListener(tabHost);
 
+        viewPager.setElevation(1);
+
+        int selectedItem  = tabHost.getCurrentTab();
+
         for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
             View v = tabHost.getTabWidget().getChildAt(i);
 
             TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
-            tv.setTextColor(getResources().getColor(R.color.white));
             tv.setTextSize(14);
 
+            if(i==selectedItem)
+                tv.setTextColor(getResources().getColor(R.color.white));
+            else
+                tv.setTextColor(getResources().getColor(R.color.actionbar_dark_color));
         }
 
         //END TAB HOST CCODE
@@ -232,6 +236,18 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void onTabChanged(String tabId) {
         int selectedItem  = tabHost.getCurrentTab();
+
+        for (int i = 0; i < tabHost.getTabWidget().getChildCount(); i++) {
+            View v = tabHost.getTabWidget().getChildAt(i);
+
+            TextView tv = (TextView) tabHost.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
+
+            if(i==selectedItem)
+                tv.setTextColor(getResources().getColor(R.color.white));
+            else
+                tv.setTextColor(getResources().getColor(R.color.actionbar_dark_color));
+        }
+
         viewPager.setCurrentItem(selectedItem);
     }
 

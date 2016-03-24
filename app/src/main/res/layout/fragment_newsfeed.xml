@@ -16,8 +16,14 @@
         android:src="@drawable/editlogo"
         app:backgroundTint="#DB293A" />
 
+    <jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/main_swipefeed">
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/listViewNews" />
+    </jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout>
+
 </RelativeLayout>

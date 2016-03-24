@@ -3,6 +3,7 @@
     <color name="white">#FFFF</color>
     <color name="titleColor">#db2b3b</color>
     <color name="actionBarColor">#DB293A</color>
+    <color name="actionBarColorARGB">#FFDB293A</color>
 
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
