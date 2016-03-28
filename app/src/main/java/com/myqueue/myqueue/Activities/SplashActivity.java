@@ -4,9 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
+import com.myqueue.myqueue.APIs.TaskGetUser;
+import com.myqueue.myqueue.Models.APILoginRequest;
+import com.myqueue.myqueue.Models.APILoginResponse;
+import com.myqueue.myqueue.Models.Shop;
+import com.myqueue.myqueue.Models.User;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
+
+import java.util.HashMap;
 
 
 /**
@@ -14,8 +22,10 @@ import com.myqueue.myqueue.R;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 0;
     private SessionManager sessions;
+    User loginuser;
+    Shop loginshopdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +51,52 @@ public class SplashActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    Intent i = new Intent(SplashActivity.this, HomeActivity.class);
-                    startActivity(i);
+                    getNewData();
                 }
 
-                // close this activity
-                finish();
             }
         }, SPLASH_TIME_OUT);
+    }
+
+    public void getNewData()
+    {
+        HashMap<String,String> userdata = sessions.getUserDetails();
+
+        APILoginRequest request = new APILoginRequest();
+        request.setEmail(userdata.get(SessionManager.KEY_EMAIL));
+        request.setPassword(userdata.get(SessionManager.KEY_PASSWORD));
+
+        TaskGetUser getUser = new TaskGetUser(this) {
+
+            @Override
+            public void onResult(APILoginResponse response, String statusMessage, boolean isSuccess) {
+
+                if(isSuccess)
+                {
+                    loginuser = response.getUser().get(0);
+                    if(response.getShop().size()!=0)
+
+                        loginshopdata = response.getShop().get(0);
+
+                        sessions.createLoginSession(loginuser);
+                        if(loginuser.getIsowner().equalsIgnoreCase("1"))
+                            sessions.setShopData(loginshopdata);
+
+
+                        Intent i = new Intent(SplashActivity.this, HomeActivity.class);
+                        startActivity(i);
+
+                        // close this activity
+                        finish();
+                }
+                else
+                {
+                    Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        getUser.execute(request);
     }
 
 }

@@ -50,8 +50,6 @@ public class NewsFeedListAdapter extends ArrayAdapter<Feed> {
         Glide.with(getContext()).load(navLisFeed.getFeedpicture()).into(imgShopLogoNews);
         Glide.with(getContext()).load(navLisFeed.getShop().get(0).getUser().get(0).getProfilephoto()).into(imgNewsFeed);
 
-        imgShopLogoNews.setScaleType(ImageView.ScaleType.FIT_XY);
-
         return v;
     }
 }

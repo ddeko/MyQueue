@@ -15,8 +15,14 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.myqueue.myqueue.Activities.BookActivity;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.CustomMapView;
@@ -27,14 +33,16 @@ import com.myqueue.myqueue.Views.CustomMapView;
 public class DetailShopFragment extends Fragment implements View.OnClickListener{
 
     private FloatingActionButton toBookbtn;
-    private CustomMapView mapView;
     private ImageView coverImage;
     private TextView addressText;
     private TextView nameText;
 
     Bundle saveInstanceState;
 
-    private GoogleMap gMap;
+    private GoogleMap gMap; // Might be null if Google Play services APK is not available.
+    private CustomMapView mapView;
+    private double currentLatitude;
+    private double currentLongitude;
 
     @Nullable
     @Override
@@ -50,15 +58,63 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
         toBookbtn = (FloatingActionButton)v.findViewById(R.id.btnBook);
         toBookbtn.setOnClickListener(this);
 
-        addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() +" "+ ((BookActivity) getActivity()).getResponseInfo().getNumber());
+        addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() + " " + ((BookActivity) getActivity()).getResponseInfo().getNumber());
         nameText.setText(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getName());
         Glide.with(getContext()).load(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getCoverphoto()).into(coverImage);
         coverImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
+        currentLatitude = Double.valueOf(((BookActivity) getActivity()).getResponseInfo().getLatitude());
+        currentLongitude = Double.valueOf(((BookActivity) getActivity()).getResponseInfo().getLongitude());
+
         initMap(v);
+
+        gMap.getUiSettings().setScrollGesturesEnabled(true);
+
+        if(currentLatitude != 0 && currentLongitude != 0) {
+            gMap.clear();
+
+            /*
+            Marker marker = gMap.addMarker(new MarkerOptions()
+                    .title("Shop Location")
+                    .position(new LatLng(currentLatitude, currentLongitude))
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.kfclogo)));
+            */
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(new LatLng(currentLatitude, currentLongitude))
+                    .zoom(14)
+                    .tilt(30)
+                    .build();
+
+            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+            Marker marker = gMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Shop Location"));
+
+            marker.showInfoWindow();
+        }
 
         return v;
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mapView.onPause();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mapView.onLowMemory();
+    }
+
+
 
     private void setupActionBar() {
         BookActivity mainActivity = (BookActivity)getActivity();
@@ -113,4 +169,5 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
                 Toast.makeText(getActivity(), GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity()), Toast.LENGTH_SHORT).show();
         }
     }
+
 }

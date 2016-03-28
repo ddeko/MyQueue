@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="180dip"
             android:src="@drawable/shoppic"
-            android:scaleType="center"
+            android:scaleType="fitXY"
             android:id="@+id/shopdetailpic" />
         <RelativeLayout
             android:layout_height="fill_parent"
