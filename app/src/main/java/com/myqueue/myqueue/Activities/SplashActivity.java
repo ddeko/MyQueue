@@ -73,18 +73,25 @@ public class SplashActivity extends AppCompatActivity {
 
                 if(isSuccess)
                 {
+                    Intent i = new Intent();
                     loginuser = response.getUser().get(0);
                     if(response.getShop().size()!=0)
 
                         loginshopdata = response.getShop().get(0);
 
                         sessions.createLoginSession(loginuser);
-                        if(loginuser.getIsowner().equalsIgnoreCase("1"))
+                        if(loginuser.getIsowner().equalsIgnoreCase("1")) {
                             sessions.setShopData(loginshopdata);
 
+                            if(loginshopdata==null)
+                                i = new Intent(SplashActivity.this, ProfileActivity.class);
+                            else
+                                i = new Intent(SplashActivity.this, HomeActivity.class);
+                        }
+                        else
+                            i = new Intent(SplashActivity.this, HomeActivity.class);
 
-                        Intent i = new Intent(SplashActivity.this, HomeActivity.class);
-                        startActivity(i);
+                    startActivity(i);
 
                         // close this activity
                         finish();

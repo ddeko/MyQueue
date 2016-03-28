@@ -35,6 +35,7 @@ import com.myqueue.myqueue.R;
 import net.yanzm.mth.MaterialTabHost;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 /**
  * Created by leowirasanto on 3/6/2016.
@@ -48,6 +49,9 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
     private MaterialTabHost tabHost;
     private ViewPager viewPager;
 
+    private Bundle savedInstanceState;
+    private HashMap<String,String> userdata;
+
     private Toolbar toolbar;
 
     @Override
@@ -55,6 +59,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onCreate(savedInstanceState);
 
         sessions = new SessionManager(this);
+        this.savedInstanceState = savedInstanceState;
 
         //START TAB HOST CODE
 
@@ -101,64 +106,10 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
         //END TAB HOST CCODE
 
+        userdata = sessions.getUserDetails();
 
-        final IProfile profile = new ProfileDrawerItem().withName("Yuzu Gfriend").withEmail("yuzugfriend@gmail.com").withIcon(R.drawable.ic_yuzu);
+        setNavigationBar();
 
-        // Create the AccountHeader
-        headerResult = new AccountHeaderBuilder()
-                .withActivity(this)
-                .withCompactStyle(true)
-                .withHeightDp(90)
-                .withPaddingBelowHeader(true)
-                .withHeaderBackground(R.color.actionbar_color)
-                .addProfiles(
-                        profile,
-                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
-                        new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
-                )
-                .withProfileImagesClickable(false)
-                .withSavedInstance(savedInstanceState)
-                .build();
-
-        result = new DrawerBuilder()
-                .withActivity(this)
-                .withTranslucentStatusBar(true)
-                .withAccountHeader(headerResult)
-                .withToolbar(toolbar)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Profile").withIcon(FontAwesome.Icon.faw_user).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
-                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
-                        new SecondaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            Intent intent = null;
-                            if(drawerItem.getIdentifier() == 2)
-                            {
-                                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
-                                startActivity(i);
-                            }
-                            else if (drawerItem.getIdentifier() == 8) {
-                                sessions.logoutUser();
-                            }
-                            if (intent != null) {
-
-                            }
-                        }
-                        return false;
-                    }
-                })
-                .withSelectedItem(-1)
-                .withSavedInstance(savedInstanceState)
-                .build();
     }
 
     @Override
@@ -193,7 +144,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Override
     public void updateUI() {
-
+        setNavigationBar();
     }
 
     @Override
@@ -293,5 +244,69 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
     }
 
+    public void setNavigationBar()
+    {
+        if(result!=null)
+            result.removeAllItems();
+
+        final IProfile profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL))
+                .withIcon(userdata.get(SessionManager.KEY_PROFILEPHOTO));
+
+        // Create the AccountHeader
+        headerResult = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withCompactStyle(true)
+                .withHeightDp(90)
+                .withPaddingBelowHeader(true)
+                .withHeaderBackground(R.color.actionbar_color)
+                .addProfiles(
+                        profile,
+                        //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
+                        new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
+                )
+                .withProfileImagesClickable(false)
+                .withSavedInstance(savedInstanceState)
+                .build();
+
+        result = new DrawerBuilder()
+                .withActivity(this)
+                .withTranslucentStatusBar(true)
+                .withAccountHeader(headerResult)
+                .withToolbar(toolbar)
+                .addDrawerItems(
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
+                        new PrimaryDrawerItem().withName("Profile").withIcon(FontAwesome.Icon.faw_user).withIdentifier(2),
+                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
+                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
+                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
+                        new SecondaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        if (drawerItem != null) {
+                            Intent intent = null;
+                            if(drawerItem.getIdentifier() == 2)
+                            {
+                                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
+                                startActivity(i);
+                            }
+                            else if (drawerItem.getIdentifier() == 8) {
+                                sessions.logoutUser();
+                            }
+                            if (intent != null) {
+
+                            }
+                        }
+                        return false;
+                    }
+                })
+                .withSelectedItem(-1)
+                .withSavedInstance(savedInstanceState)
+                .build();
+    }
 
 }

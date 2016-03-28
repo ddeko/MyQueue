@@ -1,11 +1,9 @@
 package com.myqueue.myqueue.Fragments;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
@@ -146,7 +144,11 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
             storePhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
             storeEmail.setText(activity.userData.get(SessionManager.KEY_EMAIL));
             storeCategory.setText(activity.shopData.get(SessionManager.KEY_CATEGORY));
+<<<<<<< HEAD
             storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS));
+=======
+            storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS) + activity.shopData.get(SessionManager.KEY_NUMBER));
+>>>>>>> db34b3ce314a75dc44f6d263fc0007e81d080bf5
         }
         else
         {

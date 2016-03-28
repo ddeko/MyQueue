@@ -89,22 +89,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                         if(isSuccess)
                         {
+                            Intent i = new Intent();
+
                             loginuser = response.getUser().get(0);
                             if(response.getShop().size()!=0)
                                 loginshopdata = response.getShop().get(0);
 
                             if(loginuser.getIsverified().equalsIgnoreCase("1")) {
                                 sessions.createLoginSession(loginuser);
-                                if(loginuser.getIsowner().equalsIgnoreCase("1"))
+                                if(loginuser.getIsowner().equalsIgnoreCase("1")) {
                                     sessions.setShopData(loginshopdata);
 
-                                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                                    if(loginshopdata==null)
+                                        i = new Intent(LoginActivity.this, ProfileActivity.class);
+                                    else
+                                        i = new Intent(LoginActivity.this, HomeActivity.class);
+                                }
+                                else
+                                    i = new Intent(LoginActivity.this, HomeActivity.class);
+
                                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivity(i);
                             }
                             else if(response.getUser().get(0).getIsverified().equalsIgnoreCase("0"))
                             {
-                                Intent i = new Intent(LoginActivity.this, ConfirmationActivity.class);
+                                i = new Intent(LoginActivity.this, ConfirmationActivity.class);
                                 i.putExtra("Response",response);
                                 startActivityForResult(i, CONFIRMATION_REQUEST_CODE);
                             }
@@ -189,7 +198,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
             else
             {
-                Intent i = new Intent(LoginActivity.this, HomeActivity.class);
+                Bundle extras = data.getExtras();
+                String isOwner = extras.get("isowner").toString();
+                Intent i = new Intent();
+
+                if(isOwner.equalsIgnoreCase("1"))
+                    i = new Intent(LoginActivity.this, ProfileActivity.class);
+                else if(isOwner.equalsIgnoreCase("0"))
+                    i = new Intent(LoginActivity.this, HomeActivity.class);
+
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
             }

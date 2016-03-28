@@ -281,7 +281,6 @@
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
                             android:hint="Name"
-                            android:text="Yuju Gfriend"
                             android:singleLine="true"
                             android:focusableInTouchMode="true" />
 
@@ -306,7 +305,6 @@
                             android:textColor="#ffffff"
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
-                            android:text="085260790111"
                             android:hint="Phone Number"
                             android:singleLine="true"
                             android:focusableInTouchMode="true" />
@@ -331,7 +329,6 @@
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
                             android:hint="Email Address"
-                            android:text="yujugfriend@gmail.com"
                             android:singleLine="true"
                             android:focusableInTouchMode="true" />
                     </android.support.design.widget.TextInputLayout>
@@ -356,7 +353,6 @@
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
                             android:hint="Category"
-                            android:text="Coffee Shop"
                             android:singleLine="true"
                             android:focusableInTouchMode="true" />
 
@@ -387,7 +383,6 @@
                                 android:textColorHint="#FFFFFF"
                                 android:textSize="16sp"
                                 android:hint="Store Address"
-                                android:text="Jl. Malioboro"
                                 android:editable="false"
                                 android:focusable="false"
                                 android:singleLine="true"

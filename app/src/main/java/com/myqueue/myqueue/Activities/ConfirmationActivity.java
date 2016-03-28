@@ -78,6 +78,7 @@ public class ConfirmationActivity extends AppCompatActivity implements View.OnCl
                             sessions.setShopData(loginshopdata);
 
                         resultIntent = new Intent();
+                        resultIntent.putExtra("isowner", loginuser.getIsowner().toString());
                         setResult(Activity.RESULT_OK, resultIntent);
                         finish();
                     }

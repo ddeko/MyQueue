@@ -15,7 +15,7 @@ public abstract class TaskFeed extends AsyncTask<Void, Void, Boolean> {
     private Context context;
     private RestAdapter restAdapter;
     private APIFeedResponse response;
-    private TaskBaseLoading mProgressTBD;
+    //private TaskBaseLoading mProgressTBD;
     private String errorMessage;
 
     public TaskFeed(Context context) {
@@ -23,13 +23,13 @@ public abstract class TaskFeed extends AsyncTask<Void, Void, Boolean> {
         this.response = null;
         this.errorMessage = "";
         this.context = context;
-        mProgressTBD = new TaskBaseLoading(context);
+        //mProgressTBD = new TaskBaseLoading(context);
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mProgressTBD.show();
+        //mProgressTBD.show();
     }
 
     @Override
@@ -53,8 +53,8 @@ public abstract class TaskFeed extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if (mProgressTBD.isShowing())
-            mProgressTBD.dismiss();
+        //if (mProgressTBD.isShowing())
+        //    mProgressTBD.dismiss();
 
         boolean success = response.getStatus()==1?true:false;
 
