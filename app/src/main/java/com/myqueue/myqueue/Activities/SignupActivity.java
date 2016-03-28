@@ -160,8 +160,8 @@ public class SignupActivity extends BaseActivity implements View.OnClickListener
         signupStateText.setText("I'm a Shop Owner!");
         signupButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle));
         stateButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle_grey));
-        stateButton.setElevation(1);
-        signupButton.setElevation(-1);
+
+
     }
 
     private void startOwnerState()
@@ -172,8 +172,7 @@ public class SignupActivity extends BaseActivity implements View.OnClickListener
         signupStateText.setText("I'm a Customer!");
         signupButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle_grey));
         stateButton.setBackground(getResources().getDrawable(R.drawable.selector_button_rectangle));
-        signupButton.setElevation(1);
-        stateButton.setElevation(-1);
+
     }
 
     /**

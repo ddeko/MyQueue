@@ -239,9 +239,12 @@
                                 android:textColorHint="#FFFFFF"
                                 android:textSize="16sp"
                                 android:hint="Email Address"
-                                    android:text="yujugfriend@gmail.com"
-                                    android:singleLine="true"
-                                    android:focusableInTouchMode="true" />
+                                android:text="yujugfriend@gmail.com"
+                                android:singleLine="true"
+                                android:focusableInTouchMode="true"
+                                android:editable="false"
+                                android:focusable="false"/>
+
                         </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
@@ -345,7 +348,7 @@
                         android:layout_marginTop="7dp">
 
                         <EditText
-                            android:id="@+id/txtCategoryProfileShop"
+                            android:id="@+id/txtCategoryShop"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:inputType="text"
@@ -396,7 +399,7 @@
             </LinearLayout>
 
                 <Button
-                    android:layout_width="200dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:text="Update Profile"
                     android:id="@+id/btnUpdateProfile"
@@ -405,7 +408,9 @@
                     android:focusable="false"
                     android:layout_below="@+id/textViewField"
                     android:layout_centerHorizontal="true"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:paddingLeft="45dp"
+                    android:paddingRight="45dp" />
             </LinearLayout>
 
         </RelativeLayout>

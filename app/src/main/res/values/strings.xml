@@ -8,6 +8,10 @@
     <string name="tab_session2">Explore</string>
     <string name="tab_session3">Profile</string>
 
+    <string name="search_street">Street Name, City (Example: Shibuya, Tokyo)</string>
+    <string name="pick_a_street">Use this location</string>
+    <string name="select_location">Select location</string>
+
 
     <string name="title_activity_book_screen">BookScreenActivity</string>
     <string name="title_activity_waiting_list">WaitingListActivity</string>

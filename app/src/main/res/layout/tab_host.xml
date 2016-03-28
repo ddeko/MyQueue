@@ -5,24 +5,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/homelayout">
 
-    <RelativeLayout
-        android:id="@+id/layoutActionBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <net.yanzm.mth.MaterialTabHost
+          <net.yanzm.mth.MaterialTabHost
             android:id="@android:id/tabhost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/include"
+            android:layout_below="@+id/top_nav_bar_layout"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            app:colorTabIndicator="@color/actionbar_color"/>
+            app:colorTabIndicator="@color/actionbar_color"
+              android:elevation="10dp" />
 
-        <include layout="@layout/view_default_actionbar"
-            android:id="@+id/include" />
+        <LinearLayout
+            android:id="@+id/top_nav_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:elevation="20dp">
+
+            <include layout="@layout/view_default_actionbar"
+                android:id="@+id/include" />
+
+        </LinearLayout>
 
 
         <android.support.v4.view.ViewPager
@@ -31,8 +36,8 @@
             android:layout_height="match_parent"
             android:layout_below="@android:id/tabhost"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-    </RelativeLayout>
-
+            android:layout_alignParentStart="true"
+            android:contextClickable="false"
+            android:elevation="10dp" />
 
 </RelativeLayout>
