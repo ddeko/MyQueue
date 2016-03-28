@@ -21,7 +21,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dip"
                     android:id="@+id/coverPicture"
-                    android:scaleType="center"
+                    android:scaleType="fitXY"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentRight="true"
@@ -40,10 +40,10 @@
                     android:layout_alignParentTop="true">
 
                     <RelativeLayout
-                        android:layout_width="99dp"
-                        android:layout_height="99dp"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="40dp"
+                        android:layout_marginTop="27dp"
                         android:layout_alignParentTop="true"
                         android:layout_centerHorizontal="true"
                         android:layout_alignParentRight="false"
@@ -58,8 +58,7 @@
                             android:layout_alignParentTop="false"
                             android:layout_alignParentBottom="false"
                             android:layout_centerInParent="true"
-                            android:adjustViewBounds="false"
-                            android:background="@drawable/ic_yuzu" />
+                            android:adjustViewBounds="false" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -70,7 +69,12 @@
                         android:layout_gravity="center"
                         android:layout_below="@+id/relativeLayout2"
                         android:layout_centerHorizontal="true"
-                        android:padding="3dp">
+                        android:background="@drawable/shape_oval_button_halftrans"
+                        android:layout_marginTop="3dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:paddingBottom="3dp"
+                        android:paddingTop="3dp">
 
                         <TextView
                             android:layout_gravity="center"
@@ -84,11 +88,11 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="5"
-                            android:textSize="12dp"
+                            android:textSize="10dp"
                             android:textIsSelectable="false" />
                         <TextView
                             android:id="@+id/logoedit"
-                            android:layout_width="14dip"
+                            android:layout_width="12dp"
                             android:layout_height="12dip"
                             android:background="@drawable/editlogo"
                             android:layout_marginLeft="5dp"
@@ -110,7 +114,13 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
                         android:gravity="center_vertical"
-                        android:padding="8dp">
+                        android:background="@drawable/shape_oval_button_halftrans"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="4dp"
+                        android:paddingRight="10dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginBottom="4dp"
+                        android:layout_marginRight="5dp">
                         <TextView
                             android:layout_gravity="center"
                             android:id="@+id/txtBtnChangeCover"
@@ -123,10 +133,10 @@
                             android:shadowDx="1"
                             android:shadowDy="1"
                             android:shadowRadius="5"
-                            android:textSize="12dp" />
+                            android:textSize="10dp" />
                         <TextView
                             android:id="@+id/editcover"
-                            android:layout_width="14dip"
+                            android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:background="@drawable/editlogo"
                             android:layout_marginLeft="5dp"
@@ -246,7 +256,7 @@
                     android:paddingLeft="28dp"
                     android:paddingRight="28dp"
                     android:layout_marginBottom="10dp"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
 
                     <android.support.design.widget.TextInputLayout
@@ -353,7 +363,6 @@
                         android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/storeaddwrapper"
                         android:layout_marginTop="7dp">
 
                         <android.support.design.widget.TextInputLayout
@@ -363,7 +372,9 @@
                             android:textColor="#ffffff"
                             android:textColorHint="#FFFFFF"
                             android:theme="@style/Theme.MyThemeTrans"
-                            android:focusableInTouchMode="true">
+                            android:focusableInTouchMode="false"
+                            android:id="@+id/storeaddwrapper"
+                            android:focusable="false">
 
                             <EditText
                                 android:id="@+id/txtStoreAdd"
@@ -375,8 +386,9 @@
                                 android:hint="Store Address"
                                 android:text="Jl. Malioboro"
                                 android:editable="false"
+                                android:focusable="false"
                                 android:singleLine="true"
-                                android:focusableInTouchMode="true" />
+                                android:focusableInTouchMode="false" />
                         </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>
