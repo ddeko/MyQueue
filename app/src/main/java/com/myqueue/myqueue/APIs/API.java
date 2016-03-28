@@ -8,7 +8,9 @@ import com.myqueue.myqueue.Models.APILoginResponse;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.PUT;
 
 /**
  * Created by 高橋六羽 on 2016/03/11.
@@ -43,11 +45,41 @@ public interface API {
     public APIBaseResponse Forgot(@Field("email") String email);
 
 
+    //USERS
+    @PUT("/APIv1/users/edit.php")
+    public APIBaseResponse EditUser(@Field("userid") String userid,
+                                    @Field("name") String name,
+                                    @Field("phone") String phone);
+
+    @PUT("/APIv1/users/editwithcategory.php")
+    public APIBaseResponse EditUserCategory(@Field("userid") String userid,
+                                    @Field("name") String name,
+                                    @Field("phone") String phone,
+                                    @Field("category") String category);
+
     //SHOPS
+    @Headers("Cache-Control: no-cache")
     @GET("/APIv1/shops/show.php")
     public APIExploreResponse Explore();
 
+    @FormUrlEncoded
+    @POST("/APIv1/shops/add.php")
+    public APIBaseResponse AddShop(@Field("userid") String userid,
+                                   @Field("latitude") String latitude,
+                                   @Field("longitude") String longitude,
+                                   @Field("address") String address,
+                                   @Field("number") String number);
+
+    @PUT("/APIv1/shops/edit.php")
+    public APIBaseResponse EditShop(@Field("userid") String userid,
+                                    @Field("latitude") String latitude,
+                                    @Field("longitude") String longitude,
+                                    @Field("address") String address,
+                                    @Field("number") String number,
+                                    @Field("isfull") String isfull);
+
     //FEEDS
+    @Headers("Cache-Control: no-cache")
     @GET("/APIv1/feeds/show.php")
     public APIFeedResponse Feed();
 }

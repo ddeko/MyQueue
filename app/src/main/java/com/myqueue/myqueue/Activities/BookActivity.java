@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.widget.Toast;
 
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Fragments.DetailShopFragment;
-import com.myqueue.myqueue.Models.Shop;
+import com.myqueue.myqueue.Fragments.ExploreFragment;
+import com.myqueue.myqueue.Fragments.NewsFeedFragment;
+import com.myqueue.myqueue.Models.Feed;
 import com.myqueue.myqueue.Models.ShopWithUser;
 import com.myqueue.myqueue.R;
 
@@ -17,6 +20,7 @@ import com.myqueue.myqueue.R;
 public class BookActivity extends BaseActivity{
 
     public ShopWithUser responseInfo;
+    public Feed responseTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +28,15 @@ public class BookActivity extends BaseActivity{
         DetailShopFragment myf = new DetailShopFragment();
 
         Intent i = getIntent();
-        responseInfo = (ShopWithUser) i.getSerializableExtra("ShopWithUserItem");
+        Bundle b = i.getExtras();
+        int requestcode = b.getInt("requestcode");
+
+        if(requestcode == NewsFeedFragment.BOOK_REQUEST_CODE_FEED) {
+            responseTemp = (Feed) i.getSerializableExtra("Feed");
+            responseInfo = responseTemp.getShop().get(0);
+        }
+        else if(requestcode == ExploreFragment.BOOK_REQUEST_CODE_EXPLORE)
+            responseInfo = (ShopWithUser) i.getSerializableExtra("ShopWithUserItem");
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.fragment_container, myf);

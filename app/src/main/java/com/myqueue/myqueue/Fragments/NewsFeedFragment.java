@@ -9,17 +9,21 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.myqueue.myqueue.APIs.TaskFeed;
+import com.myqueue.myqueue.Activities.BookActivity;
 import com.myqueue.myqueue.Activities.HomeActivity;
 import com.myqueue.myqueue.Activities.NewsFeedFormActivity;
+import com.myqueue.myqueue.Activities.WaitingListActivity;
 import com.myqueue.myqueue.Adapter.NewsFeedListAdapter;
 import com.myqueue.myqueue.Models.APIFeedResponse;
 import com.myqueue.myqueue.Models.Feed;
 import com.myqueue.myqueue.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
@@ -32,16 +36,20 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
     private FloatingActionButton btnAddNews;
     private ListView newsListView;
     private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
+    NewsFeedListAdapter newsFeedListAdapter;
 
-    private List<Feed> feedItems;
+    private List<Feed> feedItems = new ArrayList<Feed>();
+    private Fragment fragment;
 
     public static final int NEWSFEEDFORM_REQUEST_CODE = 4;
+    public static final int BOOK_REQUEST_CODE_FEED = 5;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
+        fragment = this;
 
         btnAddNews = (FloatingActionButton) v.findViewById(R.id.btnCreatePost);
         btnAddNews.setOnClickListener(this);
@@ -50,10 +58,18 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
         newsListView = (ListView) v.findViewById(R.id.listViewNews);
 
-        fetchData();
-
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipefeed);
         mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
+
+        mWaveSwipeRefreshLayout.setRefreshing(true);
+
+        newsFeedListAdapter = new NewsFeedListAdapter(getContext(), R.layout.item_newsfeed, feedItems);
+
+        newsListView.setAdapter(newsFeedListAdapter);
+
+        fetchData();
+
+
         mWaveSwipeRefreshLayout.setOnRefreshListener(new WaveSwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -61,6 +77,18 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
                 fetchData();
             }
 
+        });
+
+        newsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> newsitemcurrent, View v, int position,
+                                    long id) {
+
+                Intent i = new Intent(fragment.getActivity(), BookActivity.class);
+                i.putExtra("Feed", (Feed) newsitemcurrent.getItemAtPosition(position));
+                i.putExtra("requestcode", BOOK_REQUEST_CODE_FEED);
+                startActivityForResult(i, BOOK_REQUEST_CODE_FEED);
+            }
         });
 
         return v;
@@ -94,6 +122,17 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
             }
         }
+        else if(requestCode==NewsFeedFragment.BOOK_REQUEST_CODE_FEED)
+        {
+            if(resultCode != Activity.RESULT_OK) {
+                return;
+            }
+            else
+            {
+                Intent i = new Intent(getActivity(), WaitingListActivity.class);
+                startActivity(i);
+            }
+        }
     }
 
     public void fetchData()
@@ -104,11 +143,10 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
             public void onResult(APIFeedResponse response, String statusMessage, boolean isSuccess) {
 
                 if(isSuccess) {
-                    feedItems = response.getFeed();
+                    feedItems.clear();
+                    feedItems.addAll(response.getFeed());
 
-                    NewsFeedListAdapter newsFeedListAdapter = new NewsFeedListAdapter(getContext(), R.layout.item_newsfeed, feedItems);
-
-                    newsListView.setAdapter(newsFeedListAdapter);
+                    newsFeedListAdapter.notifyDataSetChanged();
 
                     mWaveSwipeRefreshLayout.setRefreshing(false);
                 }

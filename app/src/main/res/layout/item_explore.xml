@@ -42,7 +42,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/fotoLogo"
             android:src="@drawable/shoppic"
-            android:background="@color/button_grey1" />
+            android:background="@color/button_grey1"
+            android:scaleType="fitXY" />
 
     </RelativeLayout>
 </LinearLayout>

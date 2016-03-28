@@ -85,22 +85,24 @@ public class SessionManager {
     }
 
     public void setShopData(Shop shop){
-        if(shop.getShop_id()!=null)
-            editor.putString(KEY_SHOPID, shop.getShop_id());
-        if(shop.getLatitude()!=null)
-            editor.putString(KEY_LATITUDE, shop.getLatitude());
-        if(shop.getLongitude()!=null)
-            editor.putString(KEY_LONGITUDE, shop.getLongitude());
-        if(shop.getAddress()!=null)
-            editor.putString(KEY_ADDRESS, shop.getAddress());
-        if(shop.getNumber()!=null)
-            editor.putString(KEY_NUMBER, shop.getNumber());
-        if(shop.getCategory()!=null)
-            editor.putString(KEY_CATEGORY, shop.getCategory());
-        if(shop.getIsfull()!=null)
-            editor.putString(KEY_ISFULL, shop.getIsfull());
+        if(shop!=null) {
+            if (shop.getShop_id() != null)
+                editor.putString(KEY_SHOPID, shop.getShop_id());
+            if (shop.getLatitude() != null)
+                editor.putString(KEY_LATITUDE, shop.getLatitude());
+            if (shop.getLongitude() != null)
+                editor.putString(KEY_LONGITUDE, shop.getLongitude());
+            if (shop.getAddress() != null)
+                editor.putString(KEY_ADDRESS, shop.getAddress());
+            if (shop.getNumber() != null)
+                editor.putString(KEY_NUMBER, shop.getNumber());
+            if (shop.getCategory() != null)
+                editor.putString(KEY_CATEGORY, shop.getCategory());
+            if (shop.getIsfull() != null)
+                editor.putString(KEY_ISFULL, shop.getIsfull());
 
-        editor.commit();
+            editor.commit();
+        }
     }
 
     /**
