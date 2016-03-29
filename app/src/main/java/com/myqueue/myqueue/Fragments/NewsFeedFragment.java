@@ -167,8 +167,7 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-
-
+        fetchData();
     }
 
 
