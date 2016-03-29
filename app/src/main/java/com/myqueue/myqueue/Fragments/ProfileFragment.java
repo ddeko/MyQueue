@@ -13,8 +13,18 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.myqueue.myqueue.APIs.TaskEditUser;
+import com.myqueue.myqueue.APIs.TaskEditUserCategory;
+import com.myqueue.myqueue.APIs.TaskGetUser;
 import com.myqueue.myqueue.Activities.ProfileActivity;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Models.APIBaseResponse;
+import com.myqueue.myqueue.Models.APIEditUserCategoryRequest;
+import com.myqueue.myqueue.Models.APIEditUserRequest;
+import com.myqueue.myqueue.Models.APILoginRequest;
+import com.myqueue.myqueue.Models.APILoginResponse;
+import com.myqueue.myqueue.Models.Shop;
+import com.myqueue.myqueue.Models.User;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.RoundedImage;
@@ -40,6 +50,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private EditText userPhone;
     private EditText userEmail;
     private EditText userName;
+
+    User loginuser;
+    Shop loginshopdata;
 
 
     private RoundedImage cropCircle;
@@ -68,7 +81,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if (v == updatebtn) {
-            Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
+            updateProfile();
+
         } else if (v == storeAddress) {
             storeLocationFragment = new StoreLocationFragment();
 
@@ -84,6 +98,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     private void fetchData()
     {
+        activity.userData = activity.sessions.getUserDetails();
+        activity.shopData = activity.sessions.getShopDetails();
+
         Glide.with(activity).load(activity.userData.get(SessionManager.KEY_COVERPHOTO)).placeholder(R.drawable.coverpics).into(imgcover);
         Glide.with(activity).load(activity.userData.get(SessionManager.KEY_PROFILEPHOTO)).asBitmap()
                 .into(new SimpleTarget<Bitmap>(256, 256) {
@@ -95,7 +112,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
                 });
 
 
-        if(isOwner==1)
+        if(activity.userData.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("1"))
         {
             storeName.setText(activity.userData.get(SessionManager.KEY_NAME));
             storePhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
@@ -184,5 +201,100 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     @Override
     public int getFragmentLayout() {
         return R.layout.fragment_profile;
+    }
+
+    private void updateProfile()
+    {
+        if(activity.userData.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("0")) {
+            APIEditUserRequest request = new APIEditUserRequest();
+            request.setUserid(activity.userData.get(SessionManager.KEY_USERID));
+            request.setName(userName.getText().toString());
+            request.setPhone(userPhone.getText().toString());
+
+            TaskEditUser editUser = new TaskEditUser(getActivity()) {
+
+                @Override
+                public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+
+                    if (isSuccess) {
+
+                        redirectTo();
+
+                    } else {
+                        Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            };
+            editUser.execute(request);
+        }
+        else
+        {
+            APIEditUserCategoryRequest request = new APIEditUserCategoryRequest();
+            request.setUserid(activity.userData.get(SessionManager.KEY_USERID));
+            request.setName(storeName.getText().toString());
+            request.setPhone(storePhone.getText().toString());
+            request.setCategory(storeCategory.getText().toString());
+
+            TaskEditUserCategory editUserCategory = new TaskEditUserCategory(getActivity()) {
+
+                @Override
+                public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+
+                    if (isSuccess) {
+
+                        redirectTo();
+
+                    } else {
+                        Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+                    }
+
+                }
+            };
+            editUserCategory.execute(request);
+        }
+    }
+
+    private void redirectTo()
+    {
+        APILoginRequest request = new APILoginRequest();
+        request.setEmail(activity.userData.get(SessionManager.KEY_EMAIL));
+        request.setPassword(activity.userData.get(SessionManager.KEY_PASSWORD));
+
+        TaskGetUser getUser = new TaskGetUser(getActivity()) {
+
+            @Override
+            public void onResult(APILoginResponse response, String statusMessage, boolean isSuccess) {
+
+                if(isSuccess)
+                {
+                    Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
+                    loginuser = response.getUser().get(0);
+                    if(response.getShop().size()!=0)
+                        loginshopdata = response.getShop().get(0);
+
+                    activity.sessions.createLoginSession(loginuser);
+
+                    if(loginuser.getIsowner().equalsIgnoreCase("1")) {
+                        activity.sessions.setShopData(loginshopdata);
+
+                        }
+
+                    fetchData();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        getUser.execute(request);
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        fetchData();
     }
 }

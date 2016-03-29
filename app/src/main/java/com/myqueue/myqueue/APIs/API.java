@@ -10,7 +10,6 @@ import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
-import retrofit.http.PUT;
 
 /**
  * Created by 高橋六羽 on 2016/03/11.
@@ -47,13 +46,13 @@ public interface API {
 
     //USERS
     @FormUrlEncoded
-    @PUT("/APIv1/users/edit.php")
+    @POST("/APIv1/users/edit.php")
     public APIBaseResponse EditUser(@Field("userid") String userid,
                                     @Field("name") String name,
                                     @Field("phone") String phone);
 
     @FormUrlEncoded
-    @PUT("/APIv1/users/editwithcategory.php")
+    @POST("/APIv1/users/editwithcategory.php")
     public APIBaseResponse EditUserCategory(@Field("userid") String userid,
                                     @Field("name") String name,
                                     @Field("phone") String phone,
@@ -73,13 +72,13 @@ public interface API {
                                    @Field("number") String number);
 
     @FormUrlEncoded
-    @PUT("/APIv1/shops/edit.php")
-    public APIBaseResponse EditShop(@Field("HTTP_USERID") String userid,
-                                    @Field("HTTP_LATITUDE") String latitude,
-                                    @Field("HTTP_LONGITUDE") String longitude,
-                                    @Field("HTTP_ADDRESS") String address,
-                                    @Field("HTTP_NUMBER") String number,
-                                    @Field("HTTP_ISFULL") String isfull);
+    @POST("/APIv1/shops/edit.php")
+    public APIBaseResponse EditShop(@Field("userid") String userid,
+                                    @Field("latitude") String latitude,
+                                    @Field("longitude") String longitude,
+                                    @Field("address") String address,
+                                    @Field("number") String number,
+                                    @Field("isfull") String isfull);
 
     //FEEDS
     @Headers("Cache-Control: no-cache")

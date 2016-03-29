@@ -17,7 +17,7 @@ import java.util.HashMap;
  */
 public class ProfileActivity extends BaseActivity{
 
-    private static SessionManager sessions;
+    public static SessionManager sessions;
 
     public HashMap<String,String> userData;
     public HashMap<String,String> shopData;

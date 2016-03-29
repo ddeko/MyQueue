@@ -132,12 +132,12 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
                 else
                 {
                     APIEditShopRequest request = new APIEditShopRequest();
-                    request.setAddress(currentStreet);
+                    request.setAddress(streetName.getText().toString());
                     request.setLatitude(String.valueOf(currentLatitude));
                     request.setLongitude(String.valueOf(currentLongitude));
                     request.setNumber(number.getText().toString());
                     request.setUserid(userdata.get(SessionManager.KEY_USERID));
-                    request.setUserid(shopdata.get(SessionManager.KEY_ISFULL));
+                    request.setIsfull(shopdata.get(SessionManager.KEY_ISFULL));
 
                     TaskEditShop editShop = new TaskEditShop(getActivity()) {
 
@@ -391,6 +391,8 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
                 if(isSuccess)
                 {
+                    Toast.makeText(getActivity(), "Shop Address Updated", Toast.LENGTH_SHORT).show();
+
                     Intent i = new Intent();
                     loginuser = response.getUser().get(0);
                     if(response.getShop().size()!=0)
@@ -408,9 +410,6 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
                             startActivity(i);
                         }
                     }
-
-                    Toast.makeText(getActivity(), "Shop Address Updated", Toast.LENGTH_SHORT).show();
-
                 }
                 else
                 {
