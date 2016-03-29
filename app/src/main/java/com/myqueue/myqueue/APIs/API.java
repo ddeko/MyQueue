@@ -85,4 +85,11 @@ public interface API {
     @Headers("Cache-Control: no-cache")
     @GET("/APIv1/feeds/show.php")
     public APIFeedResponse Feed();
+
+    @FormUrlEncoded
+    @POST("/APIv1/feeds/add.php")
+    public APIBaseResponse PostFeed(@Field("userid") String userid,
+                                    @Field("urlPhoto") String urlPhoto,
+                                    @Field("photoFeed") String photoFeed,
+                                    @Field("description") String description);
 }

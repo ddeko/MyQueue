@@ -1,7 +1,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=""
-    android:background="@color/newsfeed_form_bg">
+    android:background="@color/newsfeed_form_bg"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true">
 
     <LinearLayout
         android:id="@+id/layoutActionBar"
@@ -36,13 +38,13 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_centerVertical="true"
-            android:background="@drawable/kfclogo"
             android:id="@+id/logoWhoPost"/>
 
         <TextView
             android:paddingLeft="10dp"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/logoWhoPost"
+            android:id="@+id/whoPostThis"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="KFC SETURAN"
@@ -65,7 +67,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Describe your moment..."
+                android:hint="Describe what you think..."
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -77,30 +79,23 @@
                 android:background="@android:color/transparent"/>
 
             <ImageView
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_below="@+id/feedStatus"
-                android:layout_width="match_parent"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/imgFeed1"
-                android:background="@drawable/kfcpromo"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
             <ImageView
-                android:layout_marginTop="50dp"
-                android:layout_below="@+id/imgFeed1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgFeed2"
-                android:background="@drawable/kfcpromo"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:paddingTop="50dp"
-                android:layout_below="@+id/imgFeed2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/imgFeed3"
-                android:background="@drawable/kfcpromo"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:id="@+id/deletePhoto"
+                android:onClick="true"
+                android:background="@drawable/ic_action_close"
+                android:layout_alignTop="@+id/imgFeed1"
+                android:layout_alignRight="@+id/imgFeed1"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:visibility="gone"/>
         </RelativeLayout>
     </ScrollView>

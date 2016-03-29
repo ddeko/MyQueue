@@ -99,66 +99,66 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onClick(View v) {
-        if(v == updatebtn)
-        {
-            if(checkFields()) {
-
-                if(isFirsttime) {
-
-                    APIAddShopRequest request = new APIAddShopRequest();
-                    request.setAddress(currentStreet);
-                    request.setLatitude(String.valueOf(currentLatitude));
-                    request.setLongitude(String.valueOf(currentLongitude));
-                    request.setNumber(number.getText().toString());
-                    request.setUserid(userdata.get(SessionManager.KEY_USERID));
-
-                    TaskAddShop addShop = new TaskAddShop(getActivity()) {
-
-                        @Override
-                        public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
-
-                            if (isSuccess) {
-
-                                redirectTo();
-
-                            } else {
-                                Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    };
-                    addShop.execute(request);
-                }
-                else
-                {
-                    APIEditShopRequest request = new APIEditShopRequest();
-                    request.setAddress(currentStreet);
-                    request.setLatitude(String.valueOf(currentLatitude));
-                    request.setLongitude(String.valueOf(currentLongitude));
-                    request.setNumber(number.getText().toString());
-                    request.setUserid(userdata.get(SessionManager.KEY_USERID));
-                    request.setUserid(shopdata.get(SessionManager.KEY_ISFULL));
-
-                    TaskEditShop editShop = new TaskEditShop(getActivity()) {
-
-                        @Override
-                        public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
-
-                            if (isSuccess) {
-
-                                redirectTo();
-
-                            } else {
-                                Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
-                            }
-
-                        }
-                    };
-                    editShop.execute(request);
-                }
-            }
-
-        }
+//        if(v == updatebtn)
+//        {
+//            if(checkFields()) {
+//
+//                if(isFirsttime) {
+//
+//                    APIAddShopRequest request = new APIAddShopRequest();
+//                    request.setAddress(currentStreet);
+//                    request.setLatitude(String.valueOf(currentLatitude));
+//                    request.setLongitude(String.valueOf(currentLongitude));
+//                    request.setNumber(number.getText().toString());
+//                    request.setUserid(userdata.get(SessionManager.KEY_USERID));
+//
+//                    TaskAddShop addShop = new TaskAddShop(getActivity()) {
+//
+//                        @Override
+//                        public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+//
+//                            if (isSuccess) {
+//
+//                                redirectTo();
+//
+//                            } else {
+//                                Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                        }
+//                    };
+//                    addShop.execute(request);
+//                }
+//                else
+//                {
+//                    APIEditShopRequest request = new APIEditShopRequest();
+//                    request.setAddress(currentStreet);
+//                    request.setLatitude(String.valueOf(currentLatitude));
+//                    request.setLongitude(String.valueOf(currentLongitude));
+//                    request.setNumber(number.getText().toString());
+//                    request.setUserid(userdata.get(SessionManager.KEY_USERID));
+//                    request.setUserid(shopdata.get(SessionManager.KEY_ISFULL));
+//
+//                    TaskEditShop editShop = new TaskEditShop(getActivity()) {
+//
+//                        @Override
+//                        public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+//
+//                            if (isSuccess) {
+//
+//                                redirectTo();
+//
+//                            } else {
+//                                Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+//                            }
+//
+//                        }
+//                    };
+//                    editShop.execute(request);
+//                }
+//            }
+//
+//        }
 
     }
 
