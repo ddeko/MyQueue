@@ -1,9 +1,13 @@
 package com.myqueue.myqueue.Activities;
 
+import android.content.Intent;
+import android.support.v4.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.bumptech.glide.Glide;
@@ -19,12 +23,14 @@ import com.myqueue.myqueue.Views.RoundedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class WaitingListActivity extends BaseActivity {
+public class WaitingListActivity extends BaseActivity implements View.OnClickListener{
 
     private ListView queueListView;
     private ImageView profilewait;
     private ImageView coverwait;
     private RoundedImage cropCircle;
+
+    private LinearLayout changeStatusButton;
 
     public SessionManager sessions;
     public HashMap<String,String> userdata;
@@ -34,6 +40,7 @@ public class WaitingListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setDefaultActionbarIcon();
         setRightIcon(0);
+        setActionBarTitle("Waiting List");
 
         sessions = new SessionManager(this);
 
@@ -63,10 +70,15 @@ public class WaitingListActivity extends BaseActivity {
 
     @Override
     public void initView() {
+
+        changeStatusButton = (LinearLayout) findViewById(R.id.changeStatusBtn);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        changeStatusButton.setOnClickListener(this);
     }
 
     @Override
@@ -105,5 +117,14 @@ public class WaitingListActivity extends BaseActivity {
                         profilewait.setImageDrawable(cropCircle);
                     }
                 });
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v==changeStatusButton)
+        {
+            Intent i = new Intent(this, SetFullActivity.class);
+            startActivity(i);
+        }
     }
 }

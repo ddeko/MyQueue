@@ -41,6 +41,8 @@ import com.myqueue.myqueue.Views.CustomMapView;
 
 import java.util.HashMap;
 
+import retrofit.http.HEAD;
+
 /**
  * Created by 高橋六羽 on 2016/03/22.
  */

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBar;
@@ -45,6 +46,9 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     private LinearLayout primaryLogo;
     private LinearLayout leftContainer;
 
+    private View actionRight;
+    private View actionLeft;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +87,9 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         if(actionBar != null) {
             LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             actionBarView = inflater.inflate(R.layout.view_custom_actionbar, null, false);
+
+            actionRight = actionBarView.findViewById(R.id.right_icon_container);
+            actionLeft = actionBarView.findViewById(R.id.left_icon_container);
             actionBarClickListener();
             tvActionBarTitle = (TextView) actionBarView.findViewById(R.id.tv_title);
             tvActionBarTitleCenter = (TextView) actionBarView.findViewById(R.id.tv_title_2);
@@ -93,6 +100,8 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             primaryLogo = (LinearLayout) actionBarView.findViewById(R.id.tv_primary_logo);
             actionRightContainer = (RelativeLayout) actionBarView.findViewById(R.id.action_right_container);
             leftContainer = (LinearLayout) actionBarView.findViewById(R.id.left_icon_container);
+
+
 
             actionBarView.setBackgroundResource(R.color.actionbar_color);
 
@@ -105,9 +114,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     }
 
     private void actionBarClickListener() {
-        View actionLeft = actionBarView.findViewById(R.id.left_icon_container);
-        View actionRight = actionBarView.findViewById(R.id.right_icon_container);
-
         actionLeft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -267,6 +273,16 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
 //        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
         ft.add(container, fragment);
         ft.commit();
+    }
+
+    public void setRightIconEnabled(boolean a){
+        actionRight.setEnabled(a);
+        if(a==false){
+            tvActionBarTitle.setTextColor(Color.parseColor("#D8D8D8"));
+
+        }else{
+            tvActionBarTitle.setTextColor(Color.WHITE);
+        }
     }
 
 

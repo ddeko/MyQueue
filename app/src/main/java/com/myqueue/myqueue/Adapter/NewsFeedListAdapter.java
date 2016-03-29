@@ -1,6 +1,7 @@
 package com.myqueue.myqueue.Adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -8,8 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.myqueue.myqueue.Models.Feed;
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
+import com.myqueue.myqueue.Views.RoundedImage;
 
 import java.util.List;
 
@@ -26,6 +31,7 @@ public class NewsFeedListAdapter extends ArrayAdapter<Feed> {
     TextView txtDescription;
     ImageView imgNewsFeed;
     ImageView imgShopLogoNews;
+    RoundedImage ProfPics;
 
     public NewsFeedListAdapter(Context context, int resLayout, List<Feed> listNewsFeed){
         super(context,resLayout,listNewsFeed);
@@ -48,8 +54,15 @@ public class NewsFeedListAdapter extends ArrayAdapter<Feed> {
         txtShopName.setText(navLisFeed.getShop().get(0).getUser().get(0).getName());
         txtDescription.setText(navLisFeed.getDescription());
         Glide.with(getContext()).load(navLisFeed.getFeedpicture()).into(imgShopLogoNews);
-        Glide.with(getContext()).load(navLisFeed.getShop().get(0).getUser().get(0).getProfilephoto()).into(imgNewsFeed);
 
+        Glide.with(getContext()).load(navLisFeed.getShop().get(0).getUser().get(0).getProfilephoto()).asBitmap()
+                .into(new SimpleTarget<Bitmap>(40, 40) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        ProfPics = new RoundedImage(resource);
+                        imgNewsFeed.setImageDrawable(ProfPics);
+                    }
+                });
         return v;
     }
 }
