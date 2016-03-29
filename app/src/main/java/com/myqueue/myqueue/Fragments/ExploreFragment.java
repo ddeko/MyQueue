@@ -53,8 +53,6 @@ public class ExploreFragment extends Fragment {
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipe);
         mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
 
-        mWaveSwipeRefreshLayout.setRefreshing(true);
-
         exploreListAdapter = new ExploreListAdapter(getContext(), R.layout.item_explore, exploreItems);
 
         exploreListView.setAdapter(exploreListAdapter);
@@ -108,6 +106,7 @@ public class ExploreFragment extends Fragment {
 
     public void fetchData()
     {
+        mWaveSwipeRefreshLayout.setRefreshing(true);
         TaskExplore explore = new TaskExplore(getActivity()) {
 
             @Override
@@ -137,6 +136,7 @@ public class ExploreFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
 
     }
 }

@@ -1,19 +1,33 @@
 package com.myqueue.myqueue.Activities;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.myqueue.myqueue.Adapter.QueueListAdapter;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Models.QueueListItem;
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
+import com.myqueue.myqueue.Views.RoundedImage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class WaitingListActivity extends BaseActivity {
 
     private ListView queueListView;
+    private ImageView profilewait;
+    private ImageView coverwait;
+    private RoundedImage cropCircle;
+
+    public SessionManager sessions;
+    public HashMap<String,String> userdata;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,7 +35,13 @@ public class WaitingListActivity extends BaseActivity {
         setDefaultActionbarIcon();
         setRightIcon(0);
 
+        sessions = new SessionManager(this);
+
         queueListView = (ListView) findViewById(R.id.listQueue);
+        profilewait = (ImageView) findViewById(R.id.profileWait);
+        coverwait = (ImageView) findViewById(R.id.coverWait);
+
+        fetchData();
 
         ArrayList<QueueListItem> queueItems = new ArrayList<QueueListItem>();
 
@@ -56,6 +76,7 @@ public class WaitingListActivity extends BaseActivity {
             public void onLeftIconClick() {
                 onBackPressed();
             }
+
             @Override
             public void onRightIconClick() {
             }
@@ -69,6 +90,20 @@ public class WaitingListActivity extends BaseActivity {
 
     @Override
     public void updateUI() {
+        fetchData();
+    }
 
+    public void fetchData()
+    {
+        userdata = sessions.getUserDetails();
+        Glide.with(this).load(this.userdata.get(SessionManager.KEY_COVERPHOTO)).placeholder(R.drawable.coverpics).into(coverwait);
+        Glide.with(this).load(this.userdata.get(SessionManager.KEY_PROFILEPHOTO)).asBitmap()
+                .into(new SimpleTarget<Bitmap>(256, 256) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        cropCircle = new RoundedImage(resource);
+                        profilewait.setImageDrawable(cropCircle);
+                    }
+                });
     }
 }

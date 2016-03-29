@@ -61,8 +61,6 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipefeed);
         mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
 
-        mWaveSwipeRefreshLayout.setRefreshing(true);
-
         newsFeedListAdapter = new NewsFeedListAdapter(getContext(), R.layout.item_newsfeed, feedItems);
 
         newsListView.setAdapter(newsFeedListAdapter);
@@ -137,6 +135,8 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
     public void fetchData()
     {
+        mWaveSwipeRefreshLayout.setRefreshing(true);
+
         TaskFeed feed = new TaskFeed(getActivity()) {
 
             @Override
@@ -160,6 +160,14 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
             }
         };
         feed.execute();
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
 
     }
 

@@ -3,6 +3,8 @@ package com.myqueue.myqueue.Activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,9 +12,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -26,6 +30,8 @@ import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Fragments.ExploreFragment;
 import com.myqueue.myqueue.Fragments.NewsFeedFragment;
@@ -108,6 +114,19 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         //END TAB HOST CCODE
 
         userdata = sessions.getUserDetails();
+
+        //initialize and create the image loader logic
+        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+            @Override
+            public void set(ImageView imageView, Uri uri, Drawable placeholder) {
+                Glide.with(imageView.getContext()).load(uri).placeholder(placeholder).into(imageView);
+            }
+
+            @Override
+            public void cancel(ImageView imageView) {
+                Glide.clear(imageView);
+            }
+        });
 
         setNavigationBar();
 
@@ -253,8 +272,13 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
         if(result!=null)
             result.removeAllItems();
 
-        final IProfile profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL))
+        final IProfile profile;
+
+        if(userdata.get(SessionManager.KEY_PROFILEPHOTO) != null)
+            profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL))
                 .withIcon(userdata.get(SessionManager.KEY_PROFILEPHOTO));
+        else
+            profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL));
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -268,8 +292,23 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                         //don't ask but google uses 14dp for the add account icon in gmail but 20dp for the normal icons (like manage account)
                         new ProfileSettingDrawerItem().withName("Manage Account").withIcon(GoogleMaterial.Icon.gmd_settings)
                 )
-                .withProfileImagesClickable(false)
+                .withProfileImagesClickable(true)
                 .withSavedInstance(savedInstanceState)
+                .withOnAccountHeaderProfileImageListener(new AccountHeader.OnAccountHeaderProfileImageListener() {
+                    @Override
+                    public boolean onProfileImageClick(View view, IProfile profile, boolean current) {
+                        Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
+                        startActivity(i);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onProfileImageLongClick(View view, IProfile profile, boolean current) {
+                        Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
+                        startActivity(i);
+                        return false;
+                    }
+                })
                 .build();
 
         result = new DrawerBuilder()
@@ -280,11 +319,11 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                 .addDrawerItems(
                         new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
                         new PrimaryDrawerItem().withName("Profile").withIcon(FontAwesome.Icon.faw_user).withIdentifier(2),
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
-                        new SectionDrawerItem().withName(R.string.drawer_item_section_header),
+                        //new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
+                        new SectionDrawerItem().withName("Others"),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
+                        //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
                         new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
                         new SecondaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
                 )
@@ -293,12 +332,10 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                     public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
                         if (drawerItem != null) {
                             Intent intent = null;
-                            if(drawerItem.getIdentifier() == 2)
-                            {
+                            if (drawerItem.getIdentifier() == 2) {
                                 Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
                                 startActivity(i);
-                            }
-                            else if (drawerItem.getIdentifier() == 8) {
+                            } else if (drawerItem.getIdentifier() == 8) {
                                 sessions.logoutUser();
                             }
                             if (intent != null) {
@@ -311,6 +348,10 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                 .withSelectedItem(-1)
                 .withSavedInstance(savedInstanceState)
                 .build();
+
+
     }
+
+
 
 }

@@ -123,6 +123,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
+        fetchData();
     }
 
     private void fetchData()
