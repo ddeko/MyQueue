@@ -3,12 +3,7 @@ package com.myqueue.myqueue.Fragments;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -106,7 +101,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
             storePhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
             storeEmail.setText(activity.userData.get(SessionManager.KEY_EMAIL));
             storeCategory.setText(activity.shopData.get(SessionManager.KEY_CATEGORY));
-            storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS) + activity.shopData.get(SessionManager.KEY_NUMBER));
+            if(activity.shopData.get(SessionManager.KEY_ADDRESS)!=null)
+                storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS) +" "+ activity.shopData.get(SessionManager.KEY_NUMBER));
 
         }
         else
@@ -164,8 +160,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     public void updateUI() {
 
         setupActionBar();
-
-
 
         if(activity.getIsOwner()==true)
         {

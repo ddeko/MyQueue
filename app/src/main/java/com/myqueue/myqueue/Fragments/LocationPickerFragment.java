@@ -290,7 +290,7 @@ public abstract class LocationPickerFragment extends BaseFragment {
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             mMap.getUiSettings().setZoomControlsEnabled(false);
 
-            if(!currentStreet.isEmpty()) {
+            if(currentStreet!=null) {
                 streetName.setText(currentStreet);
                 searchProgressBar.setVisibility(View.GONE);
                 streetName.setVisibility(View.VISIBLE);
