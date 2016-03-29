@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.myqueue.myqueue.Base.ActivityInterface;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Fragments.BaseFragment;
 import com.myqueue.myqueue.R;
 
 public abstract class BaseActivity extends ActionBarActivity implements ActivityInterface {
@@ -222,6 +223,50 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
+    }
+
+    public void replaceFragment(int container, BaseFragment fragment, boolean addBackToStack) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        if(addBackToStack)
+            ft.addToBackStack(fragment.getPageTitle());
+
+//        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.replace(container, fragment);
+        ft.commit();
+    }
+
+    public void replaceFragment(int container, Fragment fragment, boolean addBackToStack) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        if(addBackToStack)
+            ft.addToBackStack(fragment.getTag());
+
+//        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.replace(container, fragment);
+        ft.commit();
+    }
+
+    public void addFragment(int container, BaseFragment fragment, boolean addBackToStack) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        if (addBackToStack)
+            ft.addToBackStack(fragment.getPageTitle());
+
+//        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.add(container, fragment);
+        ft.commit();
+    }
+
+    public void addFragment(int container, Fragment fragment, boolean addBackToStack) {
+        FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+        if(addBackToStack)
+            ft.addToBackStack(fragment.getTag());
+
+//        ft.setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right);
+        ft.add(container, fragment);
+        ft.commit();
     }
 
 

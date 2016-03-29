@@ -48,7 +48,6 @@
         android:padding="5dp">
 
         <TextView
-            android:padding="6dp"
             android:id="@+id/tv_title"
             android:gravity="right"
             android:layout_width="wrap_content"
@@ -59,6 +58,8 @@
             android:textColor="@color/white"
             android:text="@string/hello_world"
             android:textStyle="bold"
+            android:padding="10dp"
+            android:textSize="18dp"
             android:visibility="gone" />
 
         <RelativeLayout

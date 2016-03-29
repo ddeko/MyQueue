@@ -17,62 +17,40 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/coverWrapper"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dip"
+                android:layout_height="280dp"
                 android:orientation="vertical"
+                android:id="@+id/map_wrapper">
 
-                android:weightSum="1"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true">
-
-                <include
-                    android:id="@+id/mapShop"
-                    layout="@layout/fragment_store_location_map"/>
-
-            </LinearLayout>
-
-
-
+                <com.myqueue.myqueue.Views.CustomMapView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/store_map"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
 
             <LinearLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_below="@id/coverWrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/map_wrapper"
                 android:orientation="vertical"
-                android:id="@+id/textViewField">
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_gravity="center"
-                    android:id="@+id/storeNameWrapper"
-                    android:layout_width="300dip"
-                    android:layout_height="wrap_content"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#FFFFFF"
-                    android:layout_marginTop="30dp">
-
-                    <EditText
-                        android:id="@+id/txtstoreName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:inputType="textPersonName"
-                        android:textColor="#ffffff"
-                        android:textColorHint="#FFFFFF"
-                        android:textSize="16sp"
-                        android:hint="Store Name" />
-
-                </android.support.design.widget.TextInputLayout>
+                android:id="@+id/textViewField"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:paddingTop="20dp">
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_gravity="center"
                     android:id="@+id/streetNameWrapper"
-                    android:layout_width="300dip"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
                     android:textColorHint="#FFFFFF"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:focusable="false"
+                    android:theme="@style/Theme.MyThemeTrans">
 
                     <EditText
                         android:id="@+id/txtStreetName"
@@ -82,17 +60,23 @@
                         android:textColor="#ffffff"
                         android:textColorHint="#FFFFFF"
                         android:textSize="16sp"
-                        android:hint="Street Name"/>
+                        android:text="Jalan Raya Seturan"
+                        android:hint="Street Name"
+                        android:editable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="true" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_gravity="center"
                     android:id="@+id/houseNumberWrapper"
-                    android:layout_width="300dip"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
                     android:textColorHint="#FFFFFF"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="12dp"
+
+                    android:theme="@style/Theme.MyThemeTrans">
                     <EditText
                         android:id="@+id/txtHouseNumber"
                         android:layout_width="match_parent"
@@ -101,17 +85,21 @@
                         android:textColor="#ffffff"
                         android:textColorHint="#FFFFFF"
                         android:textSize="16sp"
-                        android:hint="House Number/Landmark" />
+                        android:hint="House Number/Landmark"
+                        android:text="No. 123"
+                          />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_gravity="center"
                     android:id="@+id/cityWrapper"
-                    android:layout_width="300dip"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
                     android:textColorHint="#FFFFFF"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="12dp"
+
+                    android:theme="@style/Theme.MyThemeTrans">
                     <EditText
                         android:id="@+id/txtCity"
                         android:layout_width="match_parent"
@@ -120,21 +108,30 @@
                         android:textColor="#ffffff"
                         android:textColorHint="#FFFFFF"
                         android:textSize="16sp"
-                        android:hint="City" />
+                        android:hint="City"
+                        android:text="Yogyakarta"
+                          />
                 </android.support.design.widget.TextInputLayout>
 
 
             </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Update Shop Address"
+                android:id="@+id/btnUpdateStore"
+                android:background="@drawable/shape_oval_button"
+                android:textColor="#1A252E"
+                android:focusable="false"
+                android:layout_below="@+id/textViewField"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" />
+
         </RelativeLayout>
     </ScrollView>
-
-    <Button
-        android:layout_below="@id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="Update Store"
-        android:id="@+id/btnUpdateProfile"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
