@@ -204,7 +204,7 @@
                             android:textColorHint="#FFFFFF"
                             android:layout_marginTop="20dp"
                             android:theme="@style/Theme.MyThemeTrans"
-                            android:focusableInTouchMode="true">
+                             >
 
                             <EditText
                             android:id="@+id/txtPhoneNumber"
@@ -217,7 +217,7 @@
                             android:text="085260790111"
                             android:hint="Phone Number"
                                 android:singleLine="true"
-                                android:focusableInTouchMode="true" />
+                                  />
                         </android.support.design.widget.TextInputLayout>
 
                         <android.support.design.widget.TextInputLayout
@@ -229,7 +229,7 @@
                             android:textColorHint="#FFFFFF"
                             android:layout_marginTop="20dp"
                             android:theme="@style/Theme.MyThemeTrans"
-                            android:focusableInTouchMode="true">
+                             >
                                 <EditText
                                 android:id="@+id/txtEmail"
                                 android:layout_width="match_parent"
@@ -241,7 +241,7 @@
                                 android:hint="Email Address"
                                 android:text="yujugfriend@gmail.com"
                                 android:singleLine="true"
-                                android:focusableInTouchMode="true"
+
                                 android:editable="false"
                                 android:focusable="false"/>
 
@@ -295,7 +295,7 @@
                         android:textColorHint="#FFFFFF"
                         android:layout_marginTop="7dp"
                         android:theme="@style/Theme.MyThemeTrans"
-                        android:focusableInTouchMode="true">
+                         >
 
                         <EditText
                             android:id="@+id/txtPhoneNumberShop"
@@ -307,7 +307,7 @@
                             android:textSize="16sp"
                             android:hint="Phone Number"
                             android:singleLine="true"
-                            android:focusableInTouchMode="true" />
+                             />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -319,7 +319,7 @@
                         android:textColorHint="#FFFFFF"
                         android:layout_marginTop="7dp"
                         android:theme="@style/Theme.MyThemeTrans"
-                        android:focusableInTouchMode="true">
+                         >
                         <EditText
                             android:id="@+id/txtEmailShop"
                             android:layout_width="match_parent"
@@ -330,7 +330,7 @@
                             android:textSize="16sp"
                             android:hint="Email Address"
                             android:singleLine="true"
-                            android:focusableInTouchMode="true" />
+                              />
                     </android.support.design.widget.TextInputLayout>
 
                     <android.support.design.widget.TextInputLayout
@@ -341,7 +341,7 @@
                         android:textColor="#ffffff"
                         android:textColorHint="#FFFFFF"
                         android:theme="@style/Theme.MyThemeTrans"
-                        android:focusableInTouchMode="true"
+
                         android:layout_marginTop="7dp">
 
                         <EditText
@@ -354,7 +354,7 @@
                             android:textSize="16sp"
                             android:hint="Category"
                             android:singleLine="true"
-                            android:focusableInTouchMode="true" />
+                              />
 
                     </android.support.design.widget.TextInputLayout>
 
@@ -371,7 +371,7 @@
                             android:textColor="#ffffff"
                             android:textColorHint="#FFFFFF"
                             android:theme="@style/Theme.MyThemeTrans"
-                            android:focusableInTouchMode="false"
+
                             android:id="@+id/storeaddwrapper"
                             android:focusable="false">
 
@@ -386,7 +386,7 @@
                                 android:editable="false"
                                 android:focusable="false"
                                 android:singleLine="true"
-                                android:focusableInTouchMode="false" />
+                                  />
                         </android.support.design.widget.TextInputLayout>
 
                 </LinearLayout>

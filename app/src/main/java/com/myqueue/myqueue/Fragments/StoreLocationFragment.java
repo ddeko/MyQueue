@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.myqueue.myqueue.Activities.BookActivity;
 import com.myqueue.myqueue.Activities.ProfileActivity;
+import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.CustomMapView;
 
@@ -31,6 +32,9 @@ import com.myqueue.myqueue.Views.CustomMapView;
  * Created by 高橋六羽 on 2016/03/22.
  */
 public class StoreLocationFragment extends BaseFragment implements View.OnClickListener{
+
+
+    private boolean isBackFromLocationPicker;
 
     private Button updatebtn;
 
@@ -46,15 +50,19 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
     private CustomMapView mapView;
     private double currentLatitude;
     private double currentLongitude;
+    private String currentCity;
+    private String currentStreet;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-
+        super.onCreate(savedInstanceState);
         currentLatitude = -7.7663509;
         currentLongitude = 110.405084;
 
-
+        isBackFromLocationPicker = false;
+        currentCity = "";
+        currentStreet = "";
 
     }
 
@@ -70,23 +78,9 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
         if(v == updatebtn)
         {
             Toast.makeText(getActivity(), "Shop Address Updated", Toast.LENGTH_SHORT).show();
-//            LocationPickerFragment locPic = new LocationPickerFragment() {
-//                @Override
-//                protected void onLocationSelected(String street, String country, Double latitude, Double longitude) {
-//                    lastCountry = currentCountry;
-//                    currentCountry = country;
-//
-//                    currentStreet = street;
-//                    currentLongitude = longitude;
-//                    currentLatitude = latitude;
-//                    isBackFromLocationPicker = true;
-//                }
-//            };
-//
-//            replaceFragment(R.id.fragment_container, locPic, true);
-//            getFragmentManager().executePendingTransactions();
-//            locPic.setInitialLocation(currentStreet, currentCountry, currentLatitude, currentLongitude);
+            Toast.makeText(getActivity(), currentStreet + currentCity + currentLatitude, Toast.LENGTH_SHORT).show();
         }
+
     }
 
     @Override
@@ -161,15 +155,49 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
         initMap(view);
 
+        streetName = (EditText)view.findViewById(R.id.txtStreetName);
+        number = (EditText)view.findViewById(R.id.txtHouseNumber);
+        city = (EditText)view.findViewById(R.id.txtCity);
+
         updatebtn = (Button)view.findViewById(R.id.btnUpdateStore);
 
         updatebtn.setOnClickListener(this);
+        streetName.setOnClickListener(this);
 
     }
 
     @Override
     public void setUICallbacks() {
+        streetName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LocationPickerFragment locPic = new LocationPickerFragment() {
+                    @Override
+                    protected void onLocationSelected(String street, String city, Double latitude, Double longitude) {
+                        currentStreet = street;
+                        currentLongitude = longitude;
+                        currentLatitude = latitude;
+                        currentCity = city;
+                        isBackFromLocationPicker = true;
+                    }
+                };
 
+                replaceFragment(R.id.fragment_container, locPic, true);
+                getFragmentManager().executePendingTransactions();
+                locPic.setInitialLocation(currentStreet, currentCity, currentLatitude, currentLongitude);
+            }
+        });
+        getBaseActivity().setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+                getActivity().onBackPressed();
+            }
+
+            @Override
+            public void onRightIconClick() {
+
+            }
+        });
     }
 
     @Override
@@ -191,13 +219,19 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(currentLatitude, currentLongitude))
-                    .zoom(14)
+                    .zoom(15)
                     .tilt(30)
                     .build();
 
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
             marker.showInfoWindow();
+
+            if(isBackFromLocationPicker==true) {
+                isBackFromLocationPicker = false;
+                city.setText(currentCity);
+                streetName.setText(currentStreet);
+            }
         }
     }
 

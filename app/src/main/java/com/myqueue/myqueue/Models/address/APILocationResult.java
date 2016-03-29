@@ -10,6 +10,7 @@ public class APILocationResult {
     LatLng location;
     String formattedAddress;
     String country_name;
+    String city;
     String info;
 
     public String getFormattedAddress() {
@@ -50,5 +51,13 @@ public class APILocationResult {
 
     public void setCountry_name(String country_name) {
         this.country_name = country_name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 }

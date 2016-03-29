@@ -20,12 +20,14 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.myqueue.myqueue.APIs.TaskGetReverseRoute;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Fragments.Dialogs.SearchLocationDialog;
+import com.myqueue.myqueue.Models.address.APILocationResult;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.CustomMapView;
 
 
 /**
- * Created by dedeeko on 8/6/15.
+ * Created by dedeeko on 3/29/26.
  */
 public abstract class LocationPickerFragment extends BaseFragment {
     private CustomMapView mapView;
@@ -37,16 +39,16 @@ public abstract class LocationPickerFragment extends BaseFragment {
     private ProgressBar searchProgressBar;
 
     private LatLng currentLocation;
-    private String currentCountry;
+    private String currentCity;
     private String currentStreet;
     private boolean isMapDrag;
     private boolean isFirstTime;
 
     private AsyncTask<Void, Void, Void> dragTask;
 
-    public void setInitialLocation(String street, String country, Double latitude, Double longitude){
+    public void setInitialLocation(String street, String city, Double latitude, Double longitude){
         this.currentStreet = street;
-        this.currentCountry = country;
+        this.currentCity = city;
         this.currentLocation = new LatLng(latitude, longitude);
         this.isFirstTime = false;
 
@@ -131,7 +133,7 @@ public abstract class LocationPickerFragment extends BaseFragment {
                 if(!currentStreet.isEmpty()) {
                     if(searchProgressBar.getVisibility() == View.GONE) {
                         currentLocation = mMap.getCameraPosition().target;
-                        onLocationSelected(currentStreet, currentCountry, currentLocation.latitude, currentLocation.longitude);
+                        onLocationSelected(currentStreet, currentCity, currentLocation.latitude, currentLocation.longitude);
                         getActivity().onBackPressed();
                     }
                     else
@@ -148,7 +150,7 @@ public abstract class LocationPickerFragment extends BaseFragment {
                 if(!currentStreet.isEmpty()) {
                     if(searchProgressBar.getVisibility() == View.GONE) {
                         currentLocation = mMap.getCameraPosition().target;
-                        onLocationSelected(currentStreet, currentCountry, currentLocation.latitude, currentLocation.longitude);
+                        onLocationSelected(currentStreet, currentCity, currentLocation.latitude, currentLocation.longitude);
                         getActivity().onBackPressed();
                     }
                     else
@@ -164,32 +166,35 @@ public abstract class LocationPickerFragment extends BaseFragment {
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if(actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if(!searchStreetTxt.getText().toString().isEmpty()) {
-//                        SearchLocationDialog addressSelector = new SearchLocationDialog() {
-//                            @Override
-//                            protected void setLocation(APILocationResult model) {
-//                                currentLocation = model.getLocation();
-//
-//                                CameraPosition cameraPosition = new CameraPosition.Builder()
-//                                        .target(currentLocation)
-//                                        .zoom(18)
-//                                        .tilt(30)
-//                                        .build();
-//
-//                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-//
-//                                currentCountry = model.getCountry_name();
-//                                currentStreet = model.getStreetName();
-//
-//                                if(!currentStreet.isEmpty()) {
-//                                    searchProgressBar.setVisibility(View.GONE);
-//                                    streetName.setVisibility(View.VISIBLE);
-//                                    streetName.setText(currentStreet);
-//                                }
-//                                else
-//                                    onSearchLocation(currentLocation.latitude, currentLocation.longitude);
-//                            }
-//                        };
+                        SearchLocationDialog addressSelector = new SearchLocationDialog() {
+                            @Override
+                            protected void setLocation(APILocationResult model) {
+                                currentLocation = model.getLocation();
 
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(currentLocation)
+                                        .zoom(18)
+                                        .tilt(30)
+                                        .build();
+
+                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+                                currentCity = model.getCity();
+                                currentStreet = model.getStreetName();
+
+                                if(!currentStreet.isEmpty()) {
+
+                                    searchProgressBar.setVisibility(View.GONE);
+                                    streetName.setVisibility(View.VISIBLE);
+                                    streetName.setText(currentStreet);
+                                }
+                                else
+                                    onSearchLocation(currentLocation.latitude, currentLocation.longitude);
+                            }
+                        };
+
+                        addressSelector.setData(searchStreetTxt.getText().toString());
+                        addressSelector.show(getBaseActivity().getSupportFragmentManager(), null);
                     }
 
                     return true;
@@ -300,11 +305,13 @@ public abstract class LocationPickerFragment extends BaseFragment {
 
     private void onSearchLocation(final double latitude, final double longitude){
 
+
         new TaskGetReverseRoute(getActivity()) {
             @Override
-            protected void onSearchSuccess(String routeName, String countryName) {
-                currentCountry = countryName;
+            protected void onSearchSuccess(String routeName, String city) {
+                currentCity = city;
                 currentStreet = routeName;
+
 
                 searchProgressBar.setVisibility(View.GONE);
                 streetName.setVisibility(View.VISIBLE);
@@ -330,5 +337,5 @@ public abstract class LocationPickerFragment extends BaseFragment {
         getBaseActivity().setActionBarTitle(getPageTitle());
     }
 
-    protected abstract void onLocationSelected(String street,String country,Double latitude,Double longitude);
+    protected abstract void onLocationSelected(String street,String city,Double latitude,Double longitude);
 }

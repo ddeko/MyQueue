@@ -24,6 +24,8 @@ public class ProfileActivity extends BaseActivity{
 
     public boolean isOwner = false;
 
+    ProfileFragment profileFragment;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,9 @@ public class ProfileActivity extends BaseActivity{
         setDefaultActionbarIcon();
         setRightIcon(0);
 
-        ProfileFragment myf = new ProfileFragment();
+        profileFragment = new ProfileFragment();
 
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.fragment_container, myf);
-        transaction.commit();
+        replaceFragment(R.id.fragment_container, profileFragment, false);
 
     }
 

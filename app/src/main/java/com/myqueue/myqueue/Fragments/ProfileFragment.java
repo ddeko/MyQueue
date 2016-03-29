@@ -19,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.myqueue.myqueue.Activities.ProfileActivity;
+import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.RoundedImage;
@@ -26,7 +27,7 @@ import com.myqueue.myqueue.Views.RoundedImage;
 /**
  * Created by 高橋六羽 on 2016/03/21.
  */
-public class ProfileFragment extends Fragment implements View.OnClickListener {
+public class ProfileFragment extends BaseFragment implements View.OnClickListener {
 
     private int isOwner = 0;
 
@@ -51,13 +52,72 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
     ProfileActivity activity;
 
-    @Nullable
+    StoreLocationFragment storeLocationFragment;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_profile, container, false);
+        activity = (ProfileActivity) getActivity();
 
-        setupActionBar();
+
+    }
+
+    private void setupActionBar() {
+        ProfileActivity mainActivity = (ProfileActivity) getActivity();
+        mainActivity.setDefaultActionbarIcon();
+        mainActivity.setRightIcon(0);
+        mainActivity.setActionBarTitle(getPageTitle());
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == updatebtn) {
+            Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
+        } else if (v == storeAddress) {
+            storeLocationFragment = new StoreLocationFragment();
+
+            replaceFragment(R.id.fragment_container, storeLocationFragment, true);
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    private void fetchData()
+    {
+        Glide.with(activity).load(activity.userData.get(SessionManager.KEY_COVERPHOTO)).placeholder(R.drawable.coverpics).into(imgcover);
+        Glide.with(activity).load(activity.userData.get(SessionManager.KEY_PROFILEPHOTO)).asBitmap()
+                .into(new SimpleTarget<Bitmap>(256, 256) {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        cropCircle = new RoundedImage(resource);
+                        profilePicture.setImageDrawable(cropCircle);
+                    }
+                });
+
+
+        if(isOwner==1)
+        {
+            storeName.setText(activity.userData.get(SessionManager.KEY_NAME));
+            storePhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
+            storeEmail.setText(activity.userData.get(SessionManager.KEY_EMAIL));
+            storeCategory.setText(activity.shopData.get(SessionManager.KEY_CATEGORY));
+            storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS) + activity.shopData.get(SessionManager.KEY_NUMBER));
+
+        }
+        else
+        {
+            userName.setText(activity.userData.get(SessionManager.KEY_NAME));
+            userPhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
+            userEmail.setText(activity.userData.get(SessionManager.KEY_EMAIL));
+        }
+    }
+
+    @Override
+    public void initView(View v) {
 
         imgcover = (ImageView) v.findViewById(R.id.coverPicture);
         profilePicture = (ImageView) v.findViewById(R.id.profilepicture);
@@ -81,8 +141,30 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         updatebtn.setOnClickListener(this);
         storeAddress.setOnClickListener(this);
+    }
 
-        activity = (ProfileActivity) getActivity();
+    @Override
+    public void setUICallbacks() {
+        getBaseActivity().setActionbarListener(new OnActionbarListener() {
+            @Override
+            public void onLeftIconClick() {
+                getActivity().onBackPressed();
+            }
+
+            @Override
+            public void onRightIconClick() {
+
+            }
+        });
+
+    }
+
+    @Override
+    public void updateUI() {
+
+        setupActionBar();
+
+
 
         if(activity.getIsOwner()==true)
         {
@@ -97,65 +179,15 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
 
         fetchData();
 
-        return v;
-    }
-
-    private void setupActionBar() {
-        ProfileActivity mainActivity = (ProfileActivity) getActivity();
-        mainActivity.setDefaultActionbarIcon();
-        mainActivity.setRightIcon(0);
     }
 
     @Override
-    public void onClick(View v) {
-        if (v == updatebtn) {
-            Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
-        } else if (v == storeAddress) {
-            StoreLocationFragment myf = new StoreLocationFragment();
-
-            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container, myf);
-            transaction.addToBackStack("Store");
-            transaction.commit();
-        }
+    public String getPageTitle() {
+        return "Profile";
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public int getFragmentLayout() {
+        return R.layout.fragment_profile;
     }
-
-    private void fetchData()
-    {
-        Glide.with(getContext()).load(activity.userData.get(SessionManager.KEY_COVERPHOTO)).placeholder(R.drawable.coverpics).into(imgcover);
-        Glide.with(getContext()).load(activity.userData.get(SessionManager.KEY_PROFILEPHOTO)).asBitmap()
-                .into(new SimpleTarget<Bitmap>(256, 256) {
-                    @Override
-                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        cropCircle = new RoundedImage(resource);
-                        profilePicture.setImageDrawable(cropCircle);
-                    }
-                });
-
-
-        if(isOwner==1)
-        {
-            storeName.setText(activity.userData.get(SessionManager.KEY_NAME));
-            storePhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
-            storeEmail.setText(activity.userData.get(SessionManager.KEY_EMAIL));
-            storeCategory.setText(activity.shopData.get(SessionManager.KEY_CATEGORY));
-<<<<<<< HEAD
-            storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS));
-=======
-            storeAddress.setText(activity.shopData.get(SessionManager.KEY_ADDRESS) + activity.shopData.get(SessionManager.KEY_NUMBER));
->>>>>>> db34b3ce314a75dc44f6d263fc0007e81d080bf5
-        }
-        else
-        {
-            userName.setText(activity.userData.get(SessionManager.KEY_NAME));
-            userPhone.setText(activity.userData.get(SessionManager.KEY_PHONE));
-            userEmail.setText(activity.userData.get(SessionManager.KEY_EMAIL));
-        }
-    }
-
 }
