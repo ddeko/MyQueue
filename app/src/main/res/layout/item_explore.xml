@@ -41,7 +41,7 @@
             android:layout_width="140dip"
             android:layout_height="wrap_content"
             android:id="@+id/fotoLogo"
-            android:src="@drawable/shoppic"
+            android:src="@drawable/no_user"
             android:background="@color/button_grey1"
             android:scaleType="fitXY" />
 

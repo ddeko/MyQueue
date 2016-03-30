@@ -27,8 +27,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_width="40dip"
                     android:layout_height="40dip"
-                    android:id="@+id/shoppic"
-                    android:src="@drawable/iconpicnewsfeed" />
+                    android:id="@+id/shoppic" />
                 <TextView
                     android:gravity="center_vertical"
                     android:layout_marginLeft="15dip"
