@@ -21,9 +21,11 @@ import com.myqueue.myqueue.Activities.WaitingListActivity;
 import com.myqueue.myqueue.Adapter.NewsFeedListAdapter;
 import com.myqueue.myqueue.Models.APIFeedResponse;
 import com.myqueue.myqueue.Models.Feed;
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
@@ -41,6 +43,9 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
     private List<Feed> feedItems = new ArrayList<Feed>();
     private Fragment fragment;
 
+    private SessionManager sessions;
+    private HashMap<String,String> userdata;
+
     public static final int NEWSFEEDFORM_REQUEST_CODE = 4;
     public static final int BOOK_REQUEST_CODE_FEED = 5;
 
@@ -50,9 +55,16 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
         View v = inflater.inflate(R.layout.fragment_newsfeed, container, false);
         fragment = this;
+        sessions = new SessionManager(getActivity());
+        userdata = sessions.getUserDetails();
 
         btnAddNews = (FloatingActionButton) v.findViewById(R.id.btnCreatePost);
         btnAddNews.setOnClickListener(this);
+
+        if(userdata.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("0"))
+            btnAddNews.setVisibility(View.GONE);
+        else
+            btnAddNews.setVisibility(View.VISIBLE);
 
         setupActionBar();
 
@@ -117,7 +129,7 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
             }
             else
             {
-
+                fetchData();
             }
         }
         else if(requestCode==NewsFeedFragment.BOOK_REQUEST_CODE_FEED)
@@ -167,7 +179,8 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
-        fetchData();
+        mWaveSwipeRefreshLayout.setRefreshing(true);
+        mWaveSwipeRefreshLayout.setRefreshing(false);
     }
 
 

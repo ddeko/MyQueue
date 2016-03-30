@@ -136,7 +136,7 @@ public class ExploreFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        fetchData();
-
+        mWaveSwipeRefreshLayout.setRefreshing(true);
+        mWaveSwipeRefreshLayout.setRefreshing(false);
     }
 }
