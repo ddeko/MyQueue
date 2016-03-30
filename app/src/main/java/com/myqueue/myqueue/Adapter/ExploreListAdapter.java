@@ -46,7 +46,9 @@ public class ExploreListAdapter extends ArrayAdapter<ShopWithUser> {
 
         txtExploreName.setText(navLisExplore.getUser().get(0).getName());
         txtExploreAddress.setText(navLisExplore.getAddress() +" "+ navLisExplore.getNumber());
-        Glide.with(getContext()).load(navLisExplore.getUser().get(0).getProfilephoto()).into(imgShopLogoExplore);
+        Glide.with(getContext()).load(navLisExplore.getUser().get(0).getProfilephoto())
+                .placeholder(R.drawable.no_user)
+                .into(imgShopLogoExplore);
 
         return v;
     }

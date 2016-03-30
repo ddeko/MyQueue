@@ -1,10 +1,12 @@
 package com.myqueue.myqueue.Fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,7 +62,7 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
 
         addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() + " " + ((BookActivity) getActivity()).getResponseInfo().getNumber());
         nameText.setText(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getName());
-        Glide.with(getContext()).load(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getCoverphoto()).into(coverImage);
+        Glide.with(getContext()).load(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getCoverphoto()).placeholder(R.drawable.coverpics).into(coverImage);
         coverImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
         currentLatitude = Double.valueOf(((BookActivity) getActivity()).getResponseInfo().getLatitude());
@@ -73,12 +75,10 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
         if(currentLatitude != 0 && currentLongitude != 0) {
             gMap.clear();
 
-            /*
             Marker marker = gMap.addMarker(new MarkerOptions()
-                    .title("Shop Location")
+                    .title("Detail Shop")
                     .position(new LatLng(currentLatitude, currentLongitude))
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.kfclogo)));
-            */
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.pin_red)));
 
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(new LatLng(currentLatitude, currentLongitude))
@@ -88,8 +88,7 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
 
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-            Marker marker = gMap.addMarker(new MarkerOptions().position(new LatLng(currentLatitude, currentLongitude)).title("Shop Location"));
-
+            
             marker.showInfoWindow();
         }
 
@@ -153,6 +152,20 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
                     gMap = mapView.getMap();
                     gMap.getUiSettings().setMyLocationButtonEnabled(false);
                     gMap.setMyLocationEnabled(false);
+
+                    gMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+                        @Override
+                        public View getInfoWindow(Marker marker) {
+                            ContextThemeWrapper cw = new ContextThemeWrapper(getActivity(), R.style.marker_style);
+                            LayoutInflater inflater = (LayoutInflater) cw.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+                            return inflater.inflate(R.layout.marker_layout, null);
+                        }
+
+                        @Override
+                        public View getInfoContents(Marker marker) {
+                            return null;
+                        }
+                    });
 
                 }
                 break;

@@ -47,7 +47,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="180dip"
-            android:src="@drawable/shoppic"
+            android:src="@drawable/coverpics"
             android:scaleType="fitXY"
             android:id="@+id/shopdetailpic" />
         <RelativeLayout

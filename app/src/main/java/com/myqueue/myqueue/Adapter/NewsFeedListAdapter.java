@@ -2,6 +2,7 @@ package com.myqueue.myqueue.Adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -49,13 +50,17 @@ public class NewsFeedListAdapter extends ArrayAdapter<Feed> {
         imgNewsFeed = (ImageView)v.findViewById(R.id.shoppic);
         imgShopLogoNews = (ImageView)v.findViewById(R.id.newsfeedpic);
 
+        Bitmap bm = BitmapFactory.decodeResource(getContext().getResources(), R.drawable.no_user);
+        ProfPics = new RoundedImage(bm);
+        imgNewsFeed.setImageDrawable(ProfPics);
+
         Feed navLisFeed = listNewsFeed.get(position);
 
         txtShopName.setText(navLisFeed.getShop().get(0).getUser().get(0).getName());
         txtDescription.setText(navLisFeed.getDescription());
         Glide.with(getContext()).load(navLisFeed.getFeedpicture()).into(imgShopLogoNews);
 
-        Glide.with(getContext()).load(navLisFeed.getShop().get(0).getUser().get(0).getProfilephoto()).asBitmap()
+        Glide.with(getContext()).load(navLisFeed.getShop().get(0).getUser().get(0).getProfilephoto()).asBitmap().placeholder(R.drawable.no_user)
                 .into(new SimpleTarget<Bitmap>(40, 40) {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
