@@ -156,9 +156,13 @@ public class NewsFeedFragment extends Fragment implements View.OnClickListener{
 
                 if(isSuccess) {
                     feedItems.clear();
-                    feedItems.addAll(response.getFeed());
+                    List<Feed> feedResponseItems = response.getFeed();
 
-                    newsFeedListAdapter.notifyDataSetChanged();
+                    for(Feed feedResponseItem : feedResponseItems)
+                    {
+                        feedItems.add(feedResponseItem);
+                        newsFeedListAdapter.notifyDataSetChanged();
+                    }
 
                     mWaveSwipeRefreshLayout.setRefreshing(false);
                 }

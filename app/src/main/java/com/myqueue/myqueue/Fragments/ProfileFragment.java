@@ -257,6 +257,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
     private void redirectTo()
     {
+        Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
         APILoginRequest request = new APILoginRequest();
         request.setEmail(activity.userData.get(SessionManager.KEY_EMAIL));
         request.setPassword(activity.userData.get(SessionManager.KEY_PASSWORD));
@@ -268,7 +269,6 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
                 if(isSuccess)
                 {
-                    Toast.makeText(getActivity(), "Profile Updated", Toast.LENGTH_SHORT).show();
                     loginuser = response.getUser().get(0);
                     if(response.getShop().size()!=0)
                         loginshopdata = response.getShop().get(0);

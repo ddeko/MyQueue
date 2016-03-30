@@ -85,7 +85,8 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
         userdata = sessions.getUserDetails();
 
         currentLatitude = shopdata.get(SessionManager.KEY_LATITUDE)!=null? Double.valueOf(shopdata.get(SessionManager.KEY_LATITUDE)) : 0;
-        currentLongitude = shopdata.get(SessionManager.KEY_LATITUDE)!=null? Double.valueOf(shopdata.get(SessionManager.KEY_LATITUDE)) : 0;
+        currentLongitude = shopdata.get(SessionManager.KEY_LONGITUDE)!=null? Double.valueOf(shopdata.get(SessionManager.KEY_LONGITUDE)) : 0;
+        currentStreet = shopdata.get(SessionManager.KEY_ADDRESS)!=null?shopdata.get(SessionManager.KEY_ADDRESS) : null;
 
         isBackFromLocationPicker = false;
         isFirsttime = shopdata.get(SessionManager.KEY_ADDRESS)==null;
@@ -233,7 +234,6 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void initView(View view) {
-        initMap(view);
 
         streetName = (EditText)view.findViewById(R.id.txtStreetNameStore);
         number = (EditText)view.findViewById(R.id.txtHouseNumberStore);
@@ -250,6 +250,9 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
             streetName.setText(shopdata.get(SessionManager.KEY_ADDRESS));
         if(shopdata.get(SessionManager.KEY_NUMBER)!=null)
             number.setText(shopdata.get(SessionManager.KEY_NUMBER));
+
+
+        initMap(view);
 
     }
 
@@ -382,6 +385,7 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
     private void redirectTo()
     {
+        Toast.makeText(getActivity(), "Shop Address Updated", Toast.LENGTH_SHORT).show();
         APILoginRequest request = new APILoginRequest();
         request.setEmail(userdata.get(SessionManager.KEY_EMAIL));
         request.setPassword(userdata.get(SessionManager.KEY_PASSWORD));
@@ -393,8 +397,6 @@ public class StoreLocationFragment extends BaseFragment implements View.OnClickL
 
                 if(isSuccess)
                 {
-                    Toast.makeText(getActivity(), "Shop Address Updated", Toast.LENGTH_SHORT).show();
-
                     Intent i = new Intent();
                     loginuser = response.getUser().get(0);
                     if(response.getShop().size()!=0)

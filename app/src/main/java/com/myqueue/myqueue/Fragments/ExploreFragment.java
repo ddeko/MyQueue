@@ -114,9 +114,12 @@ public class ExploreFragment extends Fragment {
 
                 if(isSuccess) {
                     exploreItems.clear();
-                    exploreItems.addAll(response.getShop());
+                    List<ShopWithUser> exploreResponseItems = response.getShop();
 
-                    exploreListAdapter.notifyDataSetChanged();
+                    for(ShopWithUser exploreResponseItem : exploreResponseItems) {
+                        exploreItems.add(exploreResponseItem);
+                        exploreListAdapter.notifyDataSetChanged();
+                    }
 
                     mWaveSwipeRefreshLayout.setRefreshing(false);
                 }
