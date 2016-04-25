@@ -105,6 +105,18 @@ public class SessionManager {
         }
     }
 
+    public void setCurrentToken(String Token)
+    {
+        editor.putString(KEY_TOKEN, Token);
+
+        editor.commit();
+    }
+
+    public String getCurrentToken()
+    {
+        return pref.getString(KEY_TOKEN, null);
+    }
+
     /**
      * Check login method wil check user login status
      * If false it will redirect user to login page

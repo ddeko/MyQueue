@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -41,6 +42,8 @@ dependencies {
     compile('com.mikepenz:materialdrawer:5.1.3@aar') {
         transitive = true
     }
+
+    compile 'com.github.iammert:FastGCM:1.1'
 }
 
 
