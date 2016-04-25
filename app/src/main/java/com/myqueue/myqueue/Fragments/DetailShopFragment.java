@@ -88,7 +88,7 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
 
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-            
+
             marker.showInfoWindow();
         }
 
