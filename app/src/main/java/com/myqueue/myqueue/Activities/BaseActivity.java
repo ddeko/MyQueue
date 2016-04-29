@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,18 +18,31 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.myqueue.myqueue.APIs.TaskEditToken;
 import com.myqueue.myqueue.Base.ActivityInterface;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Fragments.BaseFragment;
+import com.myqueue.myqueue.Models.APIBaseResponse;
+import com.myqueue.myqueue.Models.APIEditTokenRequest;
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 
-public abstract class BaseActivity extends ActionBarActivity implements ActivityInterface {
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
+
+import co.mobiwise.fastgcm.GCMListener;
+import co.mobiwise.fastgcm.GCMManager;
+
+public abstract class BaseActivity extends ActionBarActivity implements ActivityInterface, GCMListener {
 
     private final Handler handler = new Handler();
 
@@ -49,6 +64,12 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     private View actionRight;
     private View actionLeft;
 
+    private SessionManager sessions;
+    private HashMap<String,String> userdata;
+    private HashMap<String,String> shopdata;
+
+    protected static boolean isVisible = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +82,36 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         showCustomActionBar();
         tvActionBarTitleCenter.setText("MyQueue");
 
-
+        //GCM Listener
+        //GCMManager.getInstance(this).registerListener(this);
     }
+
+    //GCM Listener Override Functions
+    @Override
+    public void onDeviceRegisted(String token) {
+        sessions = new SessionManager(this);
+        userdata = sessions.getUserDetails();
+
+        if(userdata.get(SessionManager.KEY_USERID)!=null) {
+            if(userdata.get(SessionManager.KEY_TOKEN)!=null) {
+                if (!token.equals(userdata.get(SessionManager.KEY_TOKEN))) {
+                    ReplaceToken(token);
+                    sessions.setCurrentToken(token);
+                }
+            }
+            else {
+                ReplaceToken(token);
+                sessions.setCurrentToken(token);
+            }
+        }
+    }
+
+    @Override
+    public void onMessage(String from, Bundle bundle) {
+    }
+
+    @Override
+    public void onPlayServiceError() {}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -79,6 +128,24 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     protected void onResume() {
         super.onResume();
         updateUI();
+        setVisible(true);
+    }
+
+    @Override
+    protected void onDestroy()
+    {
+        super.onDestroy();
+        setVisible(false);
+    }
+
+    public void unregisterGCM()
+    {
+        GCMManager.getInstance(this).unRegisterListener();
+    }
+
+    public void registerGCM()
+    {
+        GCMManager.getInstance(this).registerListener(this);
     }
 
     protected void showCustomActionBar() {
@@ -284,6 +351,46 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             tvActionBarTitle.setTextColor(Color.WHITE);
         }
     }
+
+    public Bitmap getBitmapFromURL(String strURL) {
+        try {
+            URL url = new URL(strURL);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void ReplaceToken(String token)
+    {
+        //replace token to database
+        APIEditTokenRequest request = new APIEditTokenRequest();
+        request.setToken(token);
+        request.setUserid(userdata.get(SessionManager.KEY_USERID));
+
+        TaskEditToken editToken = new TaskEditToken(this) {
+
+            @Override
+            public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+
+                if (isSuccess) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        };
+        editToken.execute(request);
+    }
+
+
 
 
 }

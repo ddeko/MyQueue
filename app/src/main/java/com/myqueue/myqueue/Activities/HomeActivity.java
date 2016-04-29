@@ -43,6 +43,9 @@ import net.yanzm.mth.MaterialTabHost;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import co.mobiwise.fastgcm.GCMManager;
+
 /**
  * Created by leowirasanto on 3/6/2016.
  */
@@ -164,6 +167,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     public void updateUI() {
         setNavigationBar();
+        registerGCM();
     }
 
     @Override
@@ -274,7 +278,8 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
             profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL))
                 .withIcon(userdata.get(SessionManager.KEY_PROFILEPHOTO));
         else
-            profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL));
+            profile = new ProfileDrawerItem().withName(userdata.get(SessionManager.KEY_NAME)).withEmail(userdata.get(SessionManager.KEY_EMAIL))
+                    .withIcon(R.drawable.no_user);
 
         // Create the AccountHeader
         headerResult = new AccountHeaderBuilder()
@@ -333,6 +338,7 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                                 startActivity(i);
                             } else if (drawerItem.getIdentifier() == 8) {
                                 sessions.logoutUser();
+                                unregisterGCM();
                             }
                             if (intent != null) {
 

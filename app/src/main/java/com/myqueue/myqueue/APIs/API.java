@@ -58,6 +58,11 @@ public interface API {
                                     @Field("phone") String phone,
                                     @Field("category") String category);
 
+    @FormUrlEncoded
+    @POST("/APIv1/users/edittoken.php")
+    public APIBaseResponse EditToken(@Field("userid") String userid,
+                                     @Field("token") String token);
+
     //SHOPS
     @Headers("Cache-Control: no-cache")
     @GET("/APIv1/shops/show.php")
@@ -91,4 +96,5 @@ public interface API {
                                     @Field("urlPhoto") String urlPhoto,
                                     @Field("photoFeed") String photoFeed,
                                     @Field("description") String description);
+
 }

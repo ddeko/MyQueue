@@ -1,7 +1,6 @@
 package com.myqueue.myqueue.Activities;
 
 import android.content.Intent;
-import android.support.v4.app.FragmentTransaction;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -86,7 +85,13 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         setActionbarListener(new OnActionbarListener() {
             @Override
             public void onLeftIconClick() {
-                onBackPressed();
+
+                if(isTaskRoot()) {
+                    Intent i = new Intent(WaitingListActivity.this, HomeActivity.class);
+                    startActivity(i);
+                }
+                else
+                    onBackPressed();
             }
 
             @Override
