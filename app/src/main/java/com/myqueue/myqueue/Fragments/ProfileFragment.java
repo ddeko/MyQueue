@@ -18,6 +18,7 @@ import com.myqueue.myqueue.APIs.TaskEditUserCategory;
 import com.myqueue.myqueue.APIs.TaskGetUser;
 import com.myqueue.myqueue.Activities.ProfileActivity;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Fragments.Dialogs.CategoryDialog;
 import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APIEditUserCategoryRequest;
 import com.myqueue.myqueue.Models.APIEditUserRequest;
@@ -88,6 +89,12 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
             replaceFragment(R.id.fragment_container, storeLocationFragment, true);
         }
+
+        else if(v == storeCategory)
+        {
+            CategoryDialog categoryDialog = new CategoryDialog(this);
+            categoryDialog.show(getBaseActivity().getSupportFragmentManager(), null);
+        }
     }
 
     @Override
@@ -155,6 +162,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
         updatebtn.setOnClickListener(this);
         storeAddress.setOnClickListener(this);
+        storeCategory.setOnClickListener(this);
     }
 
     @Override

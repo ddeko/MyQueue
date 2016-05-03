@@ -31,6 +31,8 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
 
     private LinearLayout changeStatusButton;
 
+    private LinearLayout AddUserDummy;
+
     public SessionManager sessions;
     public HashMap<String,String> userdata;
 
@@ -65,12 +67,21 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         QueueListAdapter queueListAdapter = new QueueListAdapter(getApplicationContext(), R.layout.item_queue, queueItems);
 
         queueListView.setAdapter(queueListAdapter);
+
+        if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
+            changeStatusButton.setVisibility(View.GONE);
+            AddUserDummy.setVisibility(View.GONE);
+        }else if(userdata.get(SessionManager.KEY_ISOWNER).equals("1")){
+            changeStatusButton.setVisibility(View.VISIBLE);
+            AddUserDummy.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void initView() {
 
         changeStatusButton = (LinearLayout) findViewById(R.id.changeStatusBtn);
+        AddUserDummy = (LinearLayout) findViewById(R.id.addUserDummy);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
@@ -78,6 +89,7 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         changeStatusButton.setOnClickListener(this);
+        AddUserDummy.setOnClickListener(this);
     }
 
     @Override
@@ -130,6 +142,8 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         {
             Intent i = new Intent(this, SetFullActivity.class);
             startActivity(i);
+        }else if(v==AddUserDummy){
+            startActivity(new Intent(this,AddDummyUserActivity.class));
         }
     }
 }

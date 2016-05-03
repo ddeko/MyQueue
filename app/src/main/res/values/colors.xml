@@ -31,6 +31,11 @@
     <color name="btnAddClick_normal">#131D24</color>
     <color name="btnAddClick_pressed">#213340</color>
 
+    <color name="blank_button">#00000000</color>
+    <color name="blank_button_active">#13000000</color>
+    <color name="list_item_normal">#ffffffff</color>
+    <color name="list_item_pressed">#ffe1e1e1</color>
+
     <color name="myDarkBg">#1A252E</color>
     <color name="myDarkBg2">#CC1A252E</color>
     <color name="tesOpacity">#CCFF0000</color>

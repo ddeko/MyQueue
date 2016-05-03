@@ -97,8 +97,44 @@
                     android:shadowDy="1"
                     android:shadowRadius="5"
                     android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- DR EDHO-->
+            <LinearLayout
+                android:id="@+id/addUserDummy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|left"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_oval_button_halftrans"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingRight="14dp"
+                android:paddingLeft="14dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="5dp" >
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add User"
+                    android:textColor="@color/light_font"
+                    android:layout_below="@+id/profilepicture"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="5"
+                    android:textSize="12sp" />
 
             </LinearLayout>
+            <!-- TILL HERE-->
 
         </RelativeLayout>
     </RelativeLayout>

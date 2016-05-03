@@ -1,15 +1,18 @@
 package com.myqueue.myqueue.APIs;
 
 import com.myqueue.myqueue.Models.APIBaseResponse;
+import com.myqueue.myqueue.Models.APICategoriesResponse;
 import com.myqueue.myqueue.Models.APIExploreResponse;
 import com.myqueue.myqueue.Models.APIFeedResponse;
 import com.myqueue.myqueue.Models.APILoginResponse;
+import com.myqueue.myqueue.Models.APIMaxQueueResponse;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Headers;
 import retrofit.http.POST;
+import retrofit.http.Query;
 
 /**
  * Created by 高橋六羽 on 2016/03/11.
@@ -96,5 +99,25 @@ public interface API {
                                     @Field("urlPhoto") String urlPhoto,
                                     @Field("photoFeed") String photoFeed,
                                     @Field("description") String description);
+
+    @FormUrlEncoded
+    @POST("/APIv1/shops/editstatus.php")
+    public APIBaseResponse ChangeStatusShop(@Field("userid") String userid,
+                                            @Field("isfull") int isfull);
+
+    @GET("/APIv1/queues/showlast.php")
+    public APIMaxQueueResponse getTotalQueue(@Query("shopid") String shopid);
+
+    @FormUrlEncoded
+    @POST("/APIv1/queues/adddummy.php")
+    public APIBaseResponse addDummy(@Field("shop_id") String shop_id,
+                                    @Field("dummyname") String dummyname,
+                                    @Field("dummyphone") String dummyphone);
+
+    //CATEGORIES
+    @Headers("Cache-Control: no-cache")
+    @GET("/APIv1/categories/show.php")
+    public APICategoriesResponse Category();
+
 
 }

@@ -345,7 +345,8 @@
                         android:textColorHint="#FFFFFF"
                         android:theme="@style/Theme.MyThemeTrans"
 
-                        android:layout_marginTop="7dp">
+                        android:layout_marginTop="7dp"
+                        android:focusable="false">
 
                         <EditText
                             android:id="@+id/txtCategoryShop"
@@ -356,6 +357,8 @@
                             android:textColorHint="#FFFFFF"
                             android:textSize="16sp"
                             android:hint="Category"
+                            android:editable="false"
+                            android:focusable="false"
                             android:singleLine="true"
                               />
 

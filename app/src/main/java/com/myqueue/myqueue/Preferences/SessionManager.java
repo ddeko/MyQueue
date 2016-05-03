@@ -200,4 +200,10 @@ public class SessionManager {
     public boolean isLoggedIn() {
         return pref.getBoolean(IS_LOGIN, false);
     }
+
+    //DR EDHOOOOOOOO
+    public void setIsFull(String isFull){
+        editor.putString(KEY_ISFULL,isFull);
+        editor.commit();
+    }//till here
 }
