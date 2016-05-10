@@ -10,14 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.myqueue.myqueue.APIs.TaskExplore;
+import com.myqueue.myqueue.APIs.TaskFilterCategory;
+import com.myqueue.myqueue.APIs.TaskFilterName;
+import com.myqueue.myqueue.Activities.BaseActivity;
 import com.myqueue.myqueue.Activities.BookActivity;
 import com.myqueue.myqueue.Activities.HomeActivity;
 import com.myqueue.myqueue.Activities.WaitingListActivity;
 import com.myqueue.myqueue.Adapter.ExploreListAdapter;
+import com.myqueue.myqueue.Fragments.Dialogs.FilterDialog;
 import com.myqueue.myqueue.Models.APIExploreResponse;
+import com.myqueue.myqueue.Models.APIFilterCategoryRequest;
+import com.myqueue.myqueue.Models.APIFilterNameRequest;
 import com.myqueue.myqueue.Models.ShopWithUser;
 import com.myqueue.myqueue.R;
 
@@ -29,12 +36,22 @@ import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 /**
  * Created by 高橋六羽 on 2016/03/21.
  */
-public class ExploreFragment extends Fragment {
+public class ExploreFragment extends Fragment implements View.OnClickListener{
 
     private ListView exploreListView;
+    private TextView filterBtn;
+<<<<<<< Updated upstream
+    private TextView resetBtn;
+=======
+>>>>>>> Stashed changes
     private Fragment fragment;
     private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     ExploreListAdapter exploreListAdapter;
+
+    public String filterCat;
+    public String filterName;
+
+    public int refreshState = 0;
 
     private List<ShopWithUser> exploreItems = new ArrayList<ShopWithUser>();
 
@@ -49,6 +66,16 @@ public class ExploreFragment extends Fragment {
         fragment = this;
 
         exploreListView = (ListView) v.findViewById(R.id.exploreList);
+        filterBtn = (TextView) v.findViewById(R.id.filter_btn);
+<<<<<<< Updated upstream
+        resetBtn = (TextView) v.findViewById(R.id.resetBtn);
+
+        filterBtn.setOnClickListener(this);
+        resetBtn.setOnClickListener(this);
+=======
+
+        filterBtn.setOnClickListener(this);
+>>>>>>> Stashed changes
 
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipe);
         mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
@@ -106,33 +133,102 @@ public class ExploreFragment extends Fragment {
 
     public void fetchData()
     {
-        mWaveSwipeRefreshLayout.setRefreshing(true);
-        TaskExplore explore = new TaskExplore(getActivity()) {
+        if(refreshState == 0) {
+            mWaveSwipeRefreshLayout.setRefreshing(true);
+            TaskExplore explore = new TaskExplore(getActivity()) {
 
-            @Override
-            public void onResult(APIExploreResponse response, String statusMessage, boolean isSuccess) {
+                @Override
+                public void onResult(APIExploreResponse response, String statusMessage, boolean isSuccess) {
 
-                if(isSuccess) {
-                    exploreItems.clear();
-                    List<ShopWithUser> exploreResponseItems = response.getShop();
+                    if (isSuccess) {
+                        exploreItems.clear();
+                        List<ShopWithUser> exploreResponseItems = response.getShop();
 
-                    for(ShopWithUser exploreResponseItem : exploreResponseItems) {
-                        exploreItems.add(exploreResponseItem);
-                        exploreListAdapter.notifyDataSetChanged();
+                        for (ShopWithUser exploreResponseItem : exploreResponseItems) {
+                            exploreItems.add(exploreResponseItem);
+                            exploreListAdapter.notifyDataSetChanged();
+                        }
+
+                        mWaveSwipeRefreshLayout.setRefreshing(false);
+                    } else {
+                        Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+
+                        mWaveSwipeRefreshLayout.setRefreshing(false);
                     }
 
-                    mWaveSwipeRefreshLayout.setRefreshing(false);
                 }
-                else
-                {
-                    Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+            };
+            explore.execute();
+        }
+        else if(refreshState == 1)
+        {
+            mWaveSwipeRefreshLayout.setRefreshing(true);
+            APIFilterCategoryRequest request = new APIFilterCategoryRequest();
+            request.setCategory_name(filterCat);
 
-                    mWaveSwipeRefreshLayout.setRefreshing(false);
+<<<<<<< Updated upstream
+=======
+            Toast.makeText(getActivity(), filterCat +" sda "+ request.getCategory_name()  , Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes
+
+            TaskFilterCategory filterCategory = new TaskFilterCategory(getActivity()) {
+                @Override
+                public void onResult(APIExploreResponse response, String statusMessage, boolean isSuccess) {
+                    if (isSuccess) {
+                        exploreItems.clear();
+                        List<ShopWithUser> exploreResponseItems = response.getShop();
+
+                        for (ShopWithUser exploreResponseItem : exploreResponseItems) {
+                            exploreItems.add(exploreResponseItem);
+                            exploreListAdapter.notifyDataSetChanged();
+                        }
+
+                        mWaveSwipeRefreshLayout.setRefreshing(false);
+                    } else {
+                        Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+
+                        mWaveSwipeRefreshLayout.setRefreshing(false);
+                    }
                 }
+            };
+<<<<<<< Updated upstream
+            filterCategory.execute(request);
+=======
+            filterCategory.execute();
+>>>>>>> Stashed changes
+        }
+        else
+        {
+            mWaveSwipeRefreshLayout.setRefreshing(true);
+            APIFilterNameRequest request = new APIFilterNameRequest();
+            request.setShop_name(filterName);
 
-            }
-        };
-        explore.execute();
+            TaskFilterName filterName = new TaskFilterName(getActivity()) {
+                @Override
+                public void onResult(APIExploreResponse response, String statusMessage, boolean isSuccess) {
+                    if (isSuccess) {
+                        exploreItems.clear();
+                        List<ShopWithUser> exploreResponseItems = response.getShop();
+
+                        for (ShopWithUser exploreResponseItem : exploreResponseItems) {
+                            exploreItems.add(exploreResponseItem);
+                            exploreListAdapter.notifyDataSetChanged();
+                        }
+
+                        mWaveSwipeRefreshLayout.setRefreshing(false);
+                    } else {
+                        Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+
+                        mWaveSwipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+            };
+<<<<<<< Updated upstream
+            filterName.execute(request);
+=======
+            filterName.execute();
+>>>>>>> Stashed changes
+        }
 
     }
 
@@ -142,4 +238,39 @@ public class ExploreFragment extends Fragment {
         mWaveSwipeRefreshLayout.setRefreshing(true);
         mWaveSwipeRefreshLayout.setRefreshing(false);
     }
+
+    @Override
+    public void onClick(View v) {
+        if(v==filterBtn)
+        {
+            FilterDialog filterDialog = new FilterDialog(this);
+            filterDialog.show(getActivity().getSupportFragmentManager(), null);
+        }
+<<<<<<< Updated upstream
+        else if(v == resetBtn)
+        {
+            setRefreshState(0);
+            fetchData();
+        }
+=======
+>>>>>>> Stashed changes
+    }
+
+    public void setFilterCategory(String category)
+    {
+        this.filterCat = "";
+        filterCat = category;
+    }
+
+    public void setFilterName(String category)
+    {
+        this.filterName = "";
+        filterName = category;
+    }
+
+    public void setRefreshState(int state)
+    {
+        this.refreshState = state;
+    }
+
 }

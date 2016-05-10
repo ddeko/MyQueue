@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="430dp"
     android:background="#DD1A252E">
 
     <RelativeLayout
@@ -27,7 +27,7 @@
                 android:id="@+id/view_filter_Header_Category"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Category"
+                android:text="Filter"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
                 android:gravity="center"
@@ -60,6 +60,48 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Search"
+            android:id="@+id/textView4"
+            android:textColor="@color/actionbar_color"
+            android:paddingLeft="8dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seacrhName"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:hint="Shop Name"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="#a6a6a6"
+                android:theme="@style/Theme.MyThemeTrans"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/transparent"
         android:id="@+id/Filterdialogcategory">
@@ -75,11 +117,25 @@
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Categories"
+            android:id="@+id/Categories"
+            android:textColor="@color/actionbar_color"
+            android:paddingLeft="8dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:background="@color/transparent">
+            android:background="@color/transparent"
+            android:layout_below="@+id/Categories"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
 
             <ListView
                 android:id="@+id/explore_filter_list_category"

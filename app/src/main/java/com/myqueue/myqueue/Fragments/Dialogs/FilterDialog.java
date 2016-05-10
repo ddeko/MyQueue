@@ -1,33 +1,26 @@
 package com.myqueue.myqueue.Fragments.Dialogs;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.myqueue.myqueue.APIs.TaskGetCategories;
 import com.myqueue.myqueue.Adapter.CategoryAdapter;
+import com.myqueue.myqueue.Fragments.ExploreFragment;
 import com.myqueue.myqueue.Fragments.ProfileFragment;
 import com.myqueue.myqueue.Models.APICategoriesResponse;
 import com.myqueue.myqueue.Models.Category;
@@ -36,13 +29,12 @@ import com.myqueue.myqueue.R;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 /**
  * Created by DedeEko on 4/17/2016.
  */
-public class CategoryDialog extends DialogFragment implements AdapterView.OnItemClickListener{
+public class FilterDialog extends DialogFragment implements AdapterView.OnItemClickListener{
 
 //    private ExploreFilterListener listener;
 
@@ -61,13 +53,14 @@ public class CategoryDialog extends DialogFragment implements AdapterView.OnItem
     private RelativeLayout filterdialogcategory;
 
     private TextView doneBtn;
+    private EditText searchText;
 
-    private ProfileFragment profileFragment;
+    private ExploreFragment exploreFragment;
 
 
-    public CategoryDialog(ProfileFragment Fragment)
+    public FilterDialog(ExploreFragment Fragment)
     {
-        this.profileFragment = Fragment;
+        this.exploreFragment = Fragment;
     }
 
     @NonNull
@@ -76,7 +69,7 @@ public class CategoryDialog extends DialogFragment implements AdapterView.OnItem
         dialog = new Dialog(getActivity(),R.style.MaterialDialogSheet);
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.view_category_window);
+        dialog.setContentView(R.layout.view_filter_window);
         dialog.setCanceledOnTouchOutside(true);
         dialog.getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         dialog.getWindow().setGravity(Gravity.BOTTOM);
@@ -92,6 +85,21 @@ public class CategoryDialog extends DialogFragment implements AdapterView.OnItem
 
         dialog.show();
 
+        doneBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+                exploreFragment.setFilterName(searchText.getText().toString());
+                exploreFragment.setRefreshState(2);
+
+                catadapter.notifyDataSetChanged();
+                exploreFragment.fetchData();
+
+                dialog.dismiss();
+            }
+        });
+
         return dialog;
     }
 
@@ -101,9 +109,9 @@ public class CategoryDialog extends DialogFragment implements AdapterView.OnItem
         super.onResume();
         getDialog().setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
-            public boolean onKey(android.content.DialogInterface dialog, int keyCode,
-                                 android.view.KeyEvent event) {
-                if ((keyCode == android.view.KeyEvent.KEYCODE_BACK)) {
+            public boolean onKey(DialogInterface dialog, int keyCode,
+                                 KeyEvent event) {
+                if ((keyCode == KeyEvent.KEYCODE_BACK)) {
                     //This is the filter
                     if (event.getAction() != KeyEvent.ACTION_DOWN)
                         return true;
@@ -123,8 +131,7 @@ public class CategoryDialog extends DialogFragment implements AdapterView.OnItem
         filterdialogcategory = (RelativeLayout)dialog.findViewById(R.id.Filterdialogcategory);
         doneBtn = (TextView)dialog.findViewById(R.id.view_filter_done);
         loading = (AVLoadingIndicatorView) dialog.findViewById(R.id.avloadingIndicatorView);
-
-        doneBtn.setVisibility(View.GONE);
+        searchText = (EditText) dialog.findViewById(R.id.seacrhName);
 
     }
 
@@ -186,9 +193,11 @@ public class CategoryDialog extends DialogFragment implements AdapterView.OnItem
 
         selectCategory = categorySorts.get(position).getFilterName();
 
-        profileFragment.setSelectedCategory(selectCategory);
+        exploreFragment.setFilterCategory(selectCategory);
+        exploreFragment.setRefreshState(1);
 
         catadapter.notifyDataSetChanged();
+        exploreFragment.fetchData();
 
         dialog.dismiss();
     }

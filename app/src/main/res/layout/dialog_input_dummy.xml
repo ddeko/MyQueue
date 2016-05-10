@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/headerbar"
+        android:background="@color/actionbar_dark_color">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add User Data"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/dataUserDummy"
+        android:layout_below="@+id/headerbar">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/dummyNameWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/actionbar_dark_color"
+            android:textColorHint="@color/actionbar_dark_color"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/dummyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Name"
+                android:textColor="@color/actionbar_dark_color"
+                android:textColorHint="@color/actionbar_dark_color"
+                android:textSize="16sp"
+                android:focusableInTouchMode="true" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_below="@+id/dummyNameWrapper"
+            android:id="@+id/dummyTelephoneWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/actionbar_dark_color"
+            android:textColorHint="@color/actionbar_dark_color"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="5dp"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/dummyTelephone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="Telephone Number"
+                android:textColor="@color/actionbar_dark_color"
+                android:textColorHint="@color/actionbar_dark_color"
+                android:textSize="16sp"
+                android:focusableInTouchMode="true" />
+        </android.support.design.widget.TextInputLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="#ffffff"
+        android:paddingTop="20dp"
+        android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_below="@+id/dataUserDummy">
+
+        <Button
+            android:id="@+id/btnAddDialog"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="Add Queue"
+            android:background="@drawable/btnbookclick"
+            android:textColor="#ffffff"
+            android:layout_weight="1.0" />
+
+        <Button
+            android:id="@+id/btnCancelDialog"
+            android:layout_width="0.0dip" android:layout_height="fill_parent"
+            android:text="Cancel"
+            android:textColor="#ffffff"
+            android:background="@drawable/selector_button_cancel"
+            android:layout_weight="1.0" />
+    </LinearLayout>
+</RelativeLayout>

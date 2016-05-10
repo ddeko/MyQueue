@@ -1,8 +1,11 @@
 package com.myqueue.myqueue.Activities;
 
 import android.graphics.Bitmap;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -14,9 +17,8 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.myqueue.myqueue.APIs.TaskAddDummy;
 import com.myqueue.myqueue.APIs.TaskTotalQueue;
+import com.myqueue.myqueue.Adapter.DialogDummyAdapter;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
-import com.myqueue.myqueue.Models.APIAddDummyRequest;
-import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APIMaxQueueRequest;
 import com.myqueue.myqueue.Models.APIMaxQueueResponse;
 import com.myqueue.myqueue.Preferences.SessionManager;
@@ -27,11 +29,12 @@ import java.util.HashMap;
 
 public class AddDummyUserActivity extends BaseActivity implements View.OnClickListener{
 
-    TextView txtTotalQueue;
-    Button btnBookDummy;
+    public static TextView txtTotalQueue;
+    public static Button btnBookDummy;
     ImageView imgProfile;
     TextView txtShopName;
     RoundedImage profPics;
+    int queuenumber=0;
 
     SessionManager session;
 
@@ -48,6 +51,7 @@ public class AddDummyUserActivity extends BaseActivity implements View.OnClickLi
         session = new SessionManager(this);
         userDataDetails = session.getUserDetails();
         shopDataDetails = session.getShopDetails();
+        DialogDummyAdapter.getInstance().initialize(this);
 
         if(shopDataDetails.get(SessionManager.KEY_ISFULL).toString().equals("1")){
             changeToFull();
@@ -86,7 +90,7 @@ public class AddDummyUserActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if(v==btnBookDummy){
-            addDummy();
+            DialogDummyAdapter.getInstance().showDialog(queuenumber);
         }
     }
 
@@ -110,11 +114,15 @@ public class AddDummyUserActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void updateUI() {
-
+    protected void onResume() {
+        super.onResume();
     }
 
-    private void changeToEmpty(){
+    @Override
+    public void updateUI() {
+    }
+
+    private void changeToEmpty() {
         txtTotalQueue.setText("SLOT AVAILBLE(NO NEED TO BOOK)");
         btnBookDummy.setVisibility(View.GONE);
     }
@@ -124,7 +132,7 @@ public class AddDummyUserActivity extends BaseActivity implements View.OnClickLi
         btnBookDummy.setVisibility(View.VISIBLE);
     }
 
-    private void getTotalQueue(){
+    public void getTotalQueue(){
         APIMaxQueueRequest request = new APIMaxQueueRequest();
         request.setShopid(userDataDetails.get(SessionManager.KEY_USERID));
 
@@ -134,32 +142,14 @@ public class AddDummyUserActivity extends BaseActivity implements View.OnClickLi
             public void onResult(APIMaxQueueResponse response, String statusMessage, boolean isSuccess) {
 
                 if(isSuccess) {
-                    txtTotalQueue.setText("TOTAL QUEUE : " + response.getCurrentnumber());
-                    btnBookDummy.setText("BOOK FOR QUEUE NUMBER : " + response.getCurrentnumber());
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
-                }
-            }
-        };
-        Total.execute(request);
-    }
-
-    private void addDummy(){
-        APIAddDummyRequest request = new APIAddDummyRequest();
-        request.setShop_id(userDataDetails.get(SessionManager.KEY_USERID));
-        request.setDummyname("UserDummy" + userDataDetails.get(SessionManager.KEY_USERID));
-        request.setDummyphone("08123456789");
-
-        TaskAddDummy Total = new TaskAddDummy(this) {
-
-            @Override
-            public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
-
-                if(isSuccess) {
-                    getTotalQueue();
-                    Toast.makeText(getApplicationContext(), "Successfully Adding Waiting List", Toast.LENGTH_SHORT).show();
+                    if(response.getCurrentnumber() == null){
+                        txtTotalQueue.setText("TOTAL QUEUE : " + 0);
+                        btnBookDummy.setText("BOOK FOR QUEUE NUMBER : " + 1);
+                    }else {
+                        txtTotalQueue.setText("TOTAL QUEUE : " + response.getCurrentnumber());
+                        btnBookDummy.setText("BOOK FOR QUEUE NUMBER : " + (Integer.parseInt(response.getCurrentnumber()) + 1));
+                        queuenumber = Integer.parseInt(response.getCurrentnumber());
+                    }
                 }
                 else
                 {

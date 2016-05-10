@@ -203,7 +203,19 @@ public class SessionManager {
 
     //DR EDHOOOOOOOO
     public void setIsFull(String isFull){
-        editor.putString(KEY_ISFULL,isFull);
+        editor.putString(KEY_ISFULL, isFull);
         editor.commit();
     }//till here
+
+    public void setKeyProfilephoto(String profilename)
+    {
+        editor.putString(KEY_PROFILEPHOTO, profilename);
+        editor.commit();
+    }
+
+    public void setKeyCoverphoto(String covername)
+    {
+        editor.putString(KEY_COVERPHOTO, covername);
+        editor.commit();
+    }
 }

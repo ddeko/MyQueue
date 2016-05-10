@@ -4,16 +4,16 @@ package com.myqueue.myqueue.Models;
  * Created by dedeeko on 2016/04/17.
  */
 public class ExploreSort {
-    private String id;
+    private int id;
     private int iconResource;
     private String filterName;
     private boolean isChecked;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

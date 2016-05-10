@@ -108,6 +108,12 @@ public interface API {
     @GET("/APIv1/queues/showlast.php")
     public APIMaxQueueResponse getTotalQueue(@Query("shopid") String shopid);
 
+    @GET("/APIv1/shops/showcategory.php")
+    public APIExploreResponse filterCategory(@Query("category") String category);
+
+    @GET("/APIv1/shops/showcategory.php")
+    public APIExploreResponse filterName(@Query("shopname") String shopname);
+
     @FormUrlEncoded
     @POST("/APIv1/queues/adddummy.php")
     public APIBaseResponse addDummy(@Field("shop_id") String shop_id,
@@ -119,5 +125,15 @@ public interface API {
     @GET("/APIv1/categories/show.php")
     public APICategoriesResponse Category();
 
+    @FormUrlEncoded
+    @POST("/APIv1/users/uploadprofilepicture.php")
+    public APIBaseResponse ChangeProfilePicture(@Field("userid") String userid,
+                                                @Field("photoProfile") String photoProfile,
+                                                @Field("urlPhotoProfile") String urlPhotoProfile);
 
+    @FormUrlEncoded
+    @POST("/APIv1/users/uploadcover.php")
+    public APIBaseResponse ChangeCoverPicture(@Field("userid") String userid,
+                                              @Field("coverProfile") String coverProfile,
+                                              @Field("urlCoverProfile") String urlCoverProfile);
 }

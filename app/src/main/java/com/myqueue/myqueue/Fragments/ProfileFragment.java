@@ -33,6 +33,8 @@ import com.myqueue.myqueue.APIs.TaskGetUser;
 import com.myqueue.myqueue.APIs.TaskPostFeed;
 import com.myqueue.myqueue.Activities.ProfileActivity;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
+import com.myqueue.myqueue.Fragments.Dialogs.CategoryDialog;
+import com.myqueue.myqueue.Fragments.Dialogs.FilterDialog;
 import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APIEditUserCategoryRequest;
 import com.myqueue.myqueue.Models.APIEditUserRequest;
@@ -83,6 +85,8 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
     private EditText userPhone;
     private EditText userEmail;
     private EditText userName;
+
+    private String selectedCategory;
 
     User loginuser;
     Shop loginshopdata;
@@ -142,6 +146,11 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         else if(v==btnChangeCover){
             CEK_PHOTO = 2;
             selectimage();
+        }
+        else if(v == storeCategory)
+        {
+            CategoryDialog categoryDialog = new CategoryDialog(this);
+            categoryDialog.show(getBaseActivity().getSupportFragmentManager(), null);
         }
 
     }
@@ -573,6 +582,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
 
         updatebtn.setOnClickListener(this);
         storeAddress.setOnClickListener(this);
+        storeCategory.setOnClickListener(this);
     }
 
     @Override
@@ -716,7 +726,21 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         fetchData();
     }
 
+<<<<<<< Updated upstream
     private void generateTimeStamp(){
         timeStamp= new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
     }
+
+=======
+>>>>>>> Stashed changes
+    public void setSelectedCategory(String category)
+    {
+        this.selectedCategory = "";
+
+        selectedCategory = category;
+        storeCategory.setText(selectedCategory);
+    }
+
+
+
 }

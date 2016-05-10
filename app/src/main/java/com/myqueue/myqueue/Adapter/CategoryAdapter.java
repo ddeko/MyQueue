@@ -34,7 +34,7 @@ public class CategoryAdapter extends BaseAdapter<ExploreSort> {
         else
             holder = (ViewHolder) convertView.getTag();
 
-        final ExploreSort filter = getItem(position);
+        ExploreSort filter = getItem(position);
 
         holder.text.setText(filter.getFilterName());
 
