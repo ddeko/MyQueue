@@ -63,7 +63,6 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         setActionBarTitle("Waiting List");
 
         sessions = new SessionManager(this);
-        sessions = new SessionManager(this);
 
         queueListView = (ListView) findViewById(R.id.listQueue);
         profilewait = (ImageView) findViewById(R.id.profileWait);
@@ -74,9 +73,11 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
             changeStatusButton.setVisibility(View.GONE);
             AddUserDummy.setVisibility(View.GONE);
+            btnDeleteBook.setVisibility(View.GONE);
         }else if(userdata.get(SessionManager.KEY_ISOWNER).equals("1")){
             changeStatusButton.setVisibility(View.VISIBLE);
             AddUserDummy.setVisibility(View.VISIBLE);
+            btnDeleteBook.setVisibility(View.VISIBLE);
         }
 
 

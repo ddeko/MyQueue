@@ -132,10 +132,17 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
 
             @Override
             public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
-                resultIntent = new Intent();
-                resultIntent.putExtra("resultkey", "result");
-                getActivity().setResult(Activity.RESULT_OK, resultIntent);
-                getActivity().finish();
+
+                if(isSuccess) {
+                    resultIntent = new Intent();
+                    resultIntent.putExtra("resultkey", "result");
+                    getActivity().setResult(Activity.RESULT_OK, resultIntent);
+                    getActivity().finish();
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+                }
             }
 
 
