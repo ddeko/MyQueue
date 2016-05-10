@@ -42,11 +42,7 @@ public abstract class TaskFilterName extends AsyncTask<APIFilterNameRequest, Voi
         APIFilterNameRequest param = APIFilterNameRequest[0];
 
         try {
-<<<<<<< Updated upstream
             response = api.filterName(param.getShop_name());
-=======
-            response = api.filterCategory(param.getShop_name());
->>>>>>> Stashed changes
             return true;
         }
         catch(RetrofitError error) {

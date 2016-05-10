@@ -79,9 +79,9 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
 
         dataShop = (ShopWithUser) getActivity().getIntent().getSerializableExtra("ShopWithUserItem");
 
-        if(dataShop.getIsfull().toString().equals("1")){
+        if(((BookActivity) getActivity()).getResponseInfo().getIsfull().equalsIgnoreCase("1")){
             Full();
-        }else if(dataShop.getIsfull().toString().equals("0")){
+        }else if(((BookActivity) getActivity()).getResponseInfo().getIsfull().equalsIgnoreCase("0")){
             notFull();
         }
 

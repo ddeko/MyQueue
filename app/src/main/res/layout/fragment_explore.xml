@@ -7,7 +7,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-<<<<<<< Updated upstream
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Clear Filter"
         android:id="@+id/resetBtn"
@@ -25,8 +24,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-=======
->>>>>>> Stashed changes
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="FILTER"
         android:id="@+id/filter_btn"

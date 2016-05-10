@@ -36,10 +36,9 @@
 
         </LinearLayout>
 
-
         <ImageView
-            android:layout_width="140dip"
-            android:layout_height="wrap_content"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
             android:id="@+id/fotoLogo"
             android:src="@drawable/no_user"
             android:background="@color/button_grey1"

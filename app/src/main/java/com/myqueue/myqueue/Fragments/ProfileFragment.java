@@ -725,14 +725,9 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         super.onViewStateRestored(savedInstanceState);
         fetchData();
     }
-
-<<<<<<< Updated upstream
     private void generateTimeStamp(){
         timeStamp= new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
     }
-
-=======
->>>>>>> Stashed changes
     public void setSelectedCategory(String category)
     {
         this.selectedCategory = "";
@@ -740,7 +735,4 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         selectedCategory = category;
         storeCategory.setText(selectedCategory);
     }
-
-
-
 }

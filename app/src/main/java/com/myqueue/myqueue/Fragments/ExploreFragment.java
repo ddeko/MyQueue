@@ -40,10 +40,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
 
     private ListView exploreListView;
     private TextView filterBtn;
-<<<<<<< Updated upstream
     private TextView resetBtn;
-=======
->>>>>>> Stashed changes
     private Fragment fragment;
     private WaveSwipeRefreshLayout mWaveSwipeRefreshLayout;
     ExploreListAdapter exploreListAdapter;
@@ -67,15 +64,10 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
 
         exploreListView = (ListView) v.findViewById(R.id.exploreList);
         filterBtn = (TextView) v.findViewById(R.id.filter_btn);
-<<<<<<< Updated upstream
         resetBtn = (TextView) v.findViewById(R.id.resetBtn);
 
         filterBtn.setOnClickListener(this);
         resetBtn.setOnClickListener(this);
-=======
-
-        filterBtn.setOnClickListener(this);
->>>>>>> Stashed changes
 
         mWaveSwipeRefreshLayout = (WaveSwipeRefreshLayout) v.findViewById(R.id.main_swipe);
         mWaveSwipeRefreshLayout.setWaveColor(getResources().getColor(R.color.actionBarColorARGB));
@@ -166,10 +158,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
             APIFilterCategoryRequest request = new APIFilterCategoryRequest();
             request.setCategory_name(filterCat);
 
-<<<<<<< Updated upstream
-=======
             Toast.makeText(getActivity(), filterCat +" sda "+ request.getCategory_name()  , Toast.LENGTH_SHORT).show();
->>>>>>> Stashed changes
 
             TaskFilterCategory filterCategory = new TaskFilterCategory(getActivity()) {
                 @Override
@@ -191,11 +180,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
                     }
                 }
             };
-<<<<<<< Updated upstream
             filterCategory.execute(request);
-=======
-            filterCategory.execute();
->>>>>>> Stashed changes
         }
         else
         {
@@ -223,11 +208,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
                     }
                 }
             };
-<<<<<<< Updated upstream
             filterName.execute(request);
-=======
-            filterName.execute();
->>>>>>> Stashed changes
         }
 
     }
@@ -235,6 +216,7 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onResume() {
         super.onResume();
+        fetchData();
         mWaveSwipeRefreshLayout.setRefreshing(true);
         mWaveSwipeRefreshLayout.setRefreshing(false);
     }
@@ -246,14 +228,11 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
             FilterDialog filterDialog = new FilterDialog(this);
             filterDialog.show(getActivity().getSupportFragmentManager(), null);
         }
-<<<<<<< Updated upstream
         else if(v == resetBtn)
         {
             setRefreshState(0);
             fetchData();
         }
-=======
->>>>>>> Stashed changes
     }
 
     public void setFilterCategory(String category)

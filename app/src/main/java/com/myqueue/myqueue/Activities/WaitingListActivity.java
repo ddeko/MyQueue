@@ -71,6 +71,14 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
 
         fetchData();
 
+        if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
+            changeStatusButton.setVisibility(View.GONE);
+            AddUserDummy.setVisibility(View.GONE);
+        }else if(userdata.get(SessionManager.KEY_ISOWNER).equals("1")){
+            changeStatusButton.setVisibility(View.VISIBLE);
+            AddUserDummy.setVisibility(View.VISIBLE);
+        }
+
 
     }
 
@@ -162,14 +170,6 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         else {
             queueListAdapter2 = new QueueListShopAdapter(getApplicationContext(), R.layout.item_queue, queueShopsItems);
             queueListView.setAdapter(queueListAdapter2);
-        }
-
-        if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
-            changeStatusButton.setVisibility(View.GONE);
-            AddUserDummy.setVisibility(View.GONE);
-        }else if(userdata.get(SessionManager.KEY_ISOWNER).equals("1")){
-            changeStatusButton.setVisibility(View.VISIBLE);
-            AddUserDummy.setVisibility(View.VISIBLE);
         }
 
         if(this.userdata.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("0")){

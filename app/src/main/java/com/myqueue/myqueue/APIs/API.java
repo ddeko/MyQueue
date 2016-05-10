@@ -111,7 +111,7 @@ public interface API {
     @GET("/APIv1/shops/showcategory.php")
     public APIExploreResponse filterCategory(@Query("category") String category);
 
-    @GET("/APIv1/shops/showcategory.php")
+    @GET("/APIv1/shops/showname.php")
     public APIExploreResponse filterName(@Query("shopname") String shopname);
 
     @FormUrlEncoded

@@ -52,7 +52,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     private OnActionbarListener actionbarListener;
     private TextView tvActionBarTitle;
     private TextView tvActionBarTitleCenter;
-    private TextView tvBadge;
     private ImageView leftIcon, rightIcon;
     protected RelativeLayout toolbarBackground;
 
@@ -160,7 +159,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
             actionBarClickListener();
             tvActionBarTitle = (TextView) actionBarView.findViewById(R.id.tv_title);
             tvActionBarTitleCenter = (TextView) actionBarView.findViewById(R.id.tv_title_2);
-            tvBadge = (TextView) actionBarView.findViewById(R.id.cart_badge);
             leftIcon = (ImageView) actionBarView.findViewById(R.id.iv_action_left);
             rightIcon = (ImageView) actionBarView.findViewById(R.id.iv_action_right);
             toolbarBackground = (RelativeLayout) actionBarView.findViewById(R.id.toolbar_background);
@@ -238,7 +236,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
     public void setActionBarTitle(String title) {
         if(tvActionBarTitle != null) {
             tvActionBarTitleCenter.setVisibility(View.GONE);
-            tvBadge.setVisibility(View.GONE);
             tvActionBarTitle.setText(title);
             tvActionBarTitle.setVisibility(View.VISIBLE);
             primaryLogo.setVisibility(View.GONE);
@@ -253,10 +250,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         }
     }
 
-    public void setActionBarCartBadge(String badge) {
-        tvBadge.setText(badge);
-        tvBadge.setVisibility(View.VISIBLE);
-    }
 
     public void setDefaultActionbarIcon() {
         rightIcon.setVisibility(View.VISIBLE);
@@ -264,7 +257,6 @@ public abstract class BaseActivity extends ActionBarActivity implements Activity
         primaryLogo.setVisibility(View.VISIBLE);
         tvActionBarTitle.setVisibility(View.GONE);
         setRightIcon(R.drawable.logoclock);
-        tvBadge.setVisibility(View.VISIBLE);
     }
 
 
