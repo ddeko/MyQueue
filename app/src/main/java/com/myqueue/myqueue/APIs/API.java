@@ -6,6 +6,8 @@ import com.myqueue.myqueue.Models.APIExploreResponse;
 import com.myqueue.myqueue.Models.APIFeedResponse;
 import com.myqueue.myqueue.Models.APILoginResponse;
 import com.myqueue.myqueue.Models.APIMaxQueueResponse;
+import com.myqueue.myqueue.Models.APIQueueShopResponse;
+import com.myqueue.myqueue.Models.APIQueueUserResponse;
 
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
@@ -23,20 +25,20 @@ public interface API {
     @FormUrlEncoded
     @POST("/APIv1/auth/signup.php")
     public APIBaseResponse Signup(@Field("email") String email,
-                                    @Field("password") String password,
-                                    @Field("name") String name,
-                                    @Field("phone") String phone,
-                                    @Field("isowner") String isowner);
+                                  @Field("password") String password,
+                                  @Field("name") String name,
+                                  @Field("phone") String phone,
+                                  @Field("isowner") String isowner);
 
     @FormUrlEncoded
     @POST("/APIv1/auth/login.php")
     public APILoginResponse Login(@Field("email") String email,
-                                    @Field("password") String password);
+                                  @Field("password") String password);
 
     @FormUrlEncoded
     @POST("/APIv1/auth/confirmation.php")
     public APIBaseResponse Confirm(@Field("userid") String userid,
-                                  @Field("confirmationcode") String confirmationcode);
+                                   @Field("confirmationcode") String confirmationcode);
 
     @FormUrlEncoded
     @POST("/APIv1/auth/resend.php")
@@ -57,9 +59,9 @@ public interface API {
     @FormUrlEncoded
     @POST("/APIv1/users/editwithcategory.php")
     public APIBaseResponse EditUserCategory(@Field("userid") String userid,
-                                    @Field("name") String name,
-                                    @Field("phone") String phone,
-                                    @Field("category") String category);
+                                            @Field("name") String name,
+                                            @Field("phone") String phone,
+                                            @Field("category") String category);
 
     @FormUrlEncoded
     @POST("/APIv1/users/edittoken.php")
@@ -105,8 +107,6 @@ public interface API {
     public APIBaseResponse ChangeStatusShop(@Field("userid") String userid,
                                             @Field("isfull") int isfull);
 
-    @GET("/APIv1/queues/showlast.php")
-    public APIMaxQueueResponse getTotalQueue(@Query("shopid") String shopid);
 
     @FormUrlEncoded
     @POST("/APIv1/queues/adddummy.php")
@@ -119,5 +119,21 @@ public interface API {
     @GET("/APIv1/categories/show.php")
     public APICategoriesResponse Category();
 
+    //QUEUES
+    @GET("/APIv1/queues/showlast.php")
+    public APIMaxQueueResponse getTotalQueue(@Query("shopid") String shopid);
 
+    @FormUrlEncoded
+    @POST("/APIv1/queues/add.php")
+    public APIBaseResponse addQueue(@Field("userid") String userid,
+                                    @Field("shopid") String shopid);
+
+    @GET("/APIv1/queues/showuser.php")
+    public APIQueueUserResponse getQueueUser(@Query("userid") String userid);
+
+    @GET("/APIv1/queues/showowner.php")
+    public APIQueueShopResponse getQueueShop(@Query("shopid") String shopid);
+
+    @GET("/APIv1/queues/delete.php")
+    public APIBaseResponse deleteQueue(@Query("userid") String userid);
 }

@@ -14,8 +14,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.myqueue.myqueue.APIs.TaskAddQueue;
+import com.myqueue.myqueue.APIs.TaskTotalQueue;
 import com.myqueue.myqueue.Activities.BookActivity;
+import com.myqueue.myqueue.Models.APIAddQueueRequest;
+import com.myqueue.myqueue.Models.APIBaseResponse;
+import com.myqueue.myqueue.Models.APIMaxQueueRequest;
+import com.myqueue.myqueue.Models.APIMaxQueueResponse;
 import com.myqueue.myqueue.Models.ShopWithUser;
 import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
@@ -26,6 +34,7 @@ import java.util.HashMap;
  * Created by 高橋六羽 on 2016/03/22.
  */
 public class BookScreenFragment  extends Fragment implements View.OnClickListener {
+    private boolean ISFULL;
 
     private Toolbar myActionBar;
     private ImageView shopProfPics;
@@ -66,7 +75,7 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
         numberQueueNow = (TextView)v.findViewById(R.id.bookNumberNow);
         numberYours = (TextView)v.findViewById(R.id.getQueueNumber);
         numberYours.setPaintFlags(numberYours.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG); // underline
-        bookNow = (Button)v.findViewById(R.id.btnBook);
+        bookNow = (Button)v.findViewById(R.id.btnNextQueue);
 
         dataShop = (ShopWithUser) getActivity().getIntent().getSerializableExtra("ShopWithUserItem");
 
@@ -75,8 +84,12 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
         }else if(dataShop.getIsfull().toString().equals("0")){
             notFull();
         }
-        bookNow.setOnClickListener(this);
 
+        Glide.with(getActivity()).load(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getProfilephoto()).into(shopProfPics);
+        ShopName.setText(((BookActivity) getActivity()).getResponseInfo().getUser().get(0).getName());
+        ShopAddress.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() + " " + ((BookActivity) getActivity()).getResponseInfo().getNumber());
+        bookNow.setOnClickListener(this);
+        getTotalQueue();
         return v;
     }
 
@@ -88,10 +101,8 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if(v == bookNow){
-            resultIntent = new Intent();
-            resultIntent.putExtra("resultkey", "result");
-            getActivity().setResult(Activity.RESULT_OK, resultIntent);
-            getActivity().finish();
+            addQueue();
+
         }
     }
 
@@ -99,15 +110,61 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
         seatAvailable.setVisibility(View.VISIBLE);
         shopStat.setText("SHOP STATUS");
         numberQueueNow.setText("-");
-        numberYours.setVisibility(View.GONE);
-        bookNow.setVisibility(View.GONE);
+        numberYours.setVisibility(View.INVISIBLE);
+        bookNow.setVisibility(View.INVISIBLE);
+        ISFULL = true;
     }
 
     private void Full(){
-        seatAvailable.setVisibility(View.GONE);
+        seatAvailable.setVisibility(View.INVISIBLE);
         shopStat.setText("YOURS WILL BE");
-        numberQueueNow.setText("27");
+        numberQueueNow.setText("-");
         numberYours.setVisibility(View.VISIBLE);
         bookNow.setVisibility(View.VISIBLE);
+        ISFULL = false;
+    }
+
+    private void addQueue(){
+        APIAddQueueRequest request = new APIAddQueueRequest();
+        request.setShopid(((BookActivity) getActivity()).getResponseInfo().getUser_id());
+        request.setUserid(userDataDetails.get(SessionManager.KEY_USERID));
+        TaskAddQueue book = new TaskAddQueue(getActivity()) {
+
+            @Override
+            public void onResult(APIBaseResponse response, String statusMessage, boolean isSuccess) {
+                resultIntent = new Intent();
+                resultIntent.putExtra("resultkey", "result");
+                getActivity().setResult(Activity.RESULT_OK, resultIntent);
+                getActivity().finish();
+            }
+
+
+        };
+        book.execute(request);
+    }
+
+    private void getTotalQueue(){
+        APIMaxQueueRequest request = new APIMaxQueueRequest();
+        request.setShopid(((BookActivity) getActivity()).getResponseInfo().getUser_id());
+
+        TaskTotalQueue Total = new TaskTotalQueue(getActivity()) {
+
+            @Override
+            public void onResult(APIMaxQueueResponse response, String statusMessage, boolean isSuccess) {
+
+                if(isSuccess) {
+                    numberQueueNow.setText(response.getCurrentnumber());
+                    if(!ISFULL)
+                        if(response.getCurrentnumber()!=null)
+                            numberYours.setText(String.valueOf(Integer.parseInt(response.getCurrentnumber())+1));
+
+                }
+                else
+                {
+                    Toast.makeText(getActivity(), statusMessage, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        Total.execute(request);
     }
 }
