@@ -4,7 +4,7 @@
     tools:context="com.myqueue.myqueue.detail_shop">
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnBook"
+        android:id="@+id/btnNextQueue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="16dp"

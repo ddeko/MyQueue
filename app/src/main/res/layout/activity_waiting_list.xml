@@ -144,5 +144,14 @@
         android:layout_height="match_parent"
         android:id="@+id/listQueue"
         android:layout_below="@+id/layoutProfile" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btnNextQueue"
+        android:background="@drawable/btnbookclick"
+        android:layout_alignParentBottom="true"
+        android:text="TO NEXT QUEUE"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
 
 </RelativeLayout>

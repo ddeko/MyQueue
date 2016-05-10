@@ -57,7 +57,7 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
         coverImage = (ImageView)v.findViewById(R.id.shopdetailpic);
         addressText = (TextView)v.findViewById(R.id.txtAlamatShop);
         nameText = (TextView)v.findViewById(R.id.txtNamaShop);
-        toBookbtn = (FloatingActionButton)v.findViewById(R.id.btnBook);
+        toBookbtn = (FloatingActionButton)v.findViewById(R.id.btnNextQueue);
         toBookbtn.setOnClickListener(this);
 
         addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() + " " + ((BookActivity) getActivity()).getResponseInfo().getNumber());

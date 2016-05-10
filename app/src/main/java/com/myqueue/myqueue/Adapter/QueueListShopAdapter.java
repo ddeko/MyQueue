@@ -8,27 +8,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.myqueue.myqueue.Activities.BookActivity;
-import com.myqueue.myqueue.Models.QueueListItem;
+import com.myqueue.myqueue.Models.QueueShop;
 import com.myqueue.myqueue.Models.QueueUser;
 import com.myqueue.myqueue.R;
 
 import java.util.List;
 
-
 /**
- * Created by 遥か連 on 3/16/2016.
+ * Created by leowirasanto on 5/9/2016.
  */
-public class QueueListAdapter extends ArrayAdapter<QueueUser> {
+public class QueueListShopAdapter extends ArrayAdapter<QueueShop> {
 
     Context context;
     int resLayout;
-    List<QueueUser> listQueue;
+    List<QueueShop> listQueue;
 
     TextView txtQueueNumber;
     ImageView imgShopLogo;
 
-    public QueueListAdapter(Context context, int resLayout, List<QueueUser> listQueue){
+    public QueueListShopAdapter(Context context, int resLayout, List<QueueShop> listQueue){
         super(context,resLayout,listQueue);
         this.context=context;
         this.resLayout=resLayout;
@@ -42,10 +40,10 @@ public class QueueListAdapter extends ArrayAdapter<QueueUser> {
         txtQueueNumber = (TextView)v.findViewById(R.id.txtQueueNumber);
         imgShopLogo = (ImageView)v.findViewById(R.id.imgLogoShop);
 
-        QueueUser navLisQueue = listQueue.get(position);
+        QueueShop navLisQueue = listQueue.get(position);
 
         txtQueueNumber.setText(navLisQueue.getNo());
-        Glide.with(getContext()).load(navLisQueue.getShop().get(0).getUser().get(0).getProfilephoto()).placeholder(R.drawable.no_user).into(imgShopLogo);
+        Glide.with(getContext()).load(navLisQueue.getUser().get(0).getProfilephoto()).placeholder(R.drawable.no_user).into(imgShopLogo);
 
 
         return v;
