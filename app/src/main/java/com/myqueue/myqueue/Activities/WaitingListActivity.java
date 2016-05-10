@@ -17,20 +17,15 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.myqueue.myqueue.APIs.TaskDeleteQueue;
 import com.myqueue.myqueue.APIs.TaskQueueShop;
 import com.myqueue.myqueue.APIs.TaskQueueUser;
-import com.myqueue.myqueue.APIs.TaskTotalQueue;
 import com.myqueue.myqueue.Adapter.QueueListAdapter;
 import com.myqueue.myqueue.Adapter.QueueListShopAdapter;
 import com.myqueue.myqueue.Callbacks.OnActionbarListener;
 import com.myqueue.myqueue.Models.APIBaseResponse;
 import com.myqueue.myqueue.Models.APIDeleteQueueRequest;
-import com.myqueue.myqueue.Models.APIMaxQueueRequest;
-import com.myqueue.myqueue.Models.APIMaxQueueResponse;
 import com.myqueue.myqueue.Models.APIQueueShopRequest;
 import com.myqueue.myqueue.Models.APIQueueShopResponse;
 import com.myqueue.myqueue.Models.APIQueueUserRequest;
 import com.myqueue.myqueue.Models.APIQueueUserResponse;
-import com.myqueue.myqueue.Models.Feed;
-import com.myqueue.myqueue.Models.QueueListItem;
 import com.myqueue.myqueue.Models.QueueShop;
 import com.myqueue.myqueue.Models.QueueUser;
 import com.myqueue.myqueue.Preferences.SessionManager;
@@ -40,8 +35,6 @@ import com.myqueue.myqueue.Views.RoundedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import jp.co.recruit_lifestyle.android.widget.WaveSwipeRefreshLayout;
 
 public class WaitingListActivity extends BaseActivity implements View.OnClickListener{
 
@@ -76,25 +69,9 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         profilewait = (ImageView) findViewById(R.id.profileWait);
         coverwait = (ImageView) findViewById(R.id.coverWait);
 
-
         fetchData();
 
-        if(this.userdata.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("0")){
-            queueListAdapter = new QueueListAdapter(getApplicationContext(), R.layout.item_queue, queueUsersItems);
-            queueListView.setAdapter(queueListAdapter);
-        }
-        else {
-            queueListAdapter2 = new QueueListShopAdapter(getApplicationContext(), R.layout.item_queue, queueShopsItems);
-            queueListView.setAdapter(queueListAdapter2);
-        }
 
-        if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
-            changeStatusButton.setVisibility(View.GONE);
-            AddUserDummy.setVisibility(View.GONE);
-        }else if(userdata.get(SessionManager.KEY_ISOWNER).equals("1")){
-            changeStatusButton.setVisibility(View.VISIBLE);
-            AddUserDummy.setVisibility(View.VISIBLE);
-        }
     }
 
     public void deleteBook(){
@@ -116,6 +93,7 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
             }
         };
         deleteQueue.execute(request);
+
     }
 
     @Override
@@ -178,11 +156,29 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
                 });
 
         if(this.userdata.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("0")){
+            queueListAdapter = new QueueListAdapter(getApplicationContext(), R.layout.item_queue, queueUsersItems);
+            queueListView.setAdapter(queueListAdapter);
+        }
+        else {
+            queueListAdapter2 = new QueueListShopAdapter(getApplicationContext(), R.layout.item_queue, queueShopsItems);
+            queueListView.setAdapter(queueListAdapter2);
+        }
+
+        if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
+            changeStatusButton.setVisibility(View.GONE);
+            AddUserDummy.setVisibility(View.GONE);
+        }else if(userdata.get(SessionManager.KEY_ISOWNER).equals("1")){
+            changeStatusButton.setVisibility(View.VISIBLE);
+            AddUserDummy.setVisibility(View.VISIBLE);
+        }
+
+        if(this.userdata.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("0")){
             getQueueUser();
         }
         else {
             getQueueShop();
         }
+
     }
 
     private void getQueueUser(){
@@ -203,7 +199,7 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
                         queueUsersItems.add(queueUser);
                         queueListAdapter.notifyDataSetChanged();
                     }
-
+                    queueListAdapter.notifyDataSetChanged();
 
                 }
                 else
@@ -233,6 +229,7 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
                         queueShopsItems.add(queueShop);
                         queueListAdapter2.notifyDataSetChanged();
                     }
+                    queueListAdapter2.notifyDataSetChanged();
                 }
                 else
                 {

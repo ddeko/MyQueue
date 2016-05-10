@@ -135,5 +135,5 @@ public interface API {
     public APIQueueShopResponse getQueueShop(@Query("shopid") String shopid);
 
     @GET("/APIv1/queues/delete.php")
-    public APIBaseResponse deleteQueue(@Query("userid") String userid);
+    public APIBaseResponse deleteQueue(@Query("shopid") String shopid);
 }
