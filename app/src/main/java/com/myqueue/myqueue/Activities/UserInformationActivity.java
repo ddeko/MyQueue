@@ -57,7 +57,6 @@ public class UserInformationActivity extends BaseActivity{
     private RoundedImage cropCircle;
     private Button updatebtn;
 
-    ProfileActivity activity;
 
     LinearLayout btnChangeProfile;
     LinearLayout btnChangeCover;
@@ -143,8 +142,7 @@ public class UserInformationActivity extends BaseActivity{
             storePhone.setText(userData.getPhone());
             storeEmail.setText(userData.getEmail());
             storeCategory.setText(shopData.getCategory());
-            if(activity.shopData.get(SessionManager.KEY_ADDRESS)!=null)
-                storeAddress.setText(shopData.getAddress() +" "+ shopData.getNumber());
+            storeAddress.setText(shopData.getAddress() +" "+ shopData.getNumber());
 
         }
         else
