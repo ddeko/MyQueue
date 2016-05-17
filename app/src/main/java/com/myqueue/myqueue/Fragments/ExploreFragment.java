@@ -158,7 +158,6 @@ public class ExploreFragment extends Fragment implements View.OnClickListener{
             APIFilterCategoryRequest request = new APIFilterCategoryRequest();
             request.setCategory_name(filterCat);
 
-            Toast.makeText(getActivity(), filterCat +" sda "+ request.getCategory_name()  , Toast.LENGTH_SHORT).show();
 
             TaskFilterCategory filterCategory = new TaskFilterCategory(getActivity()) {
                 @Override

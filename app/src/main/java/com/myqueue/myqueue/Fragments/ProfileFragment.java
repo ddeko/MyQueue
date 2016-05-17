@@ -571,8 +571,7 @@ public class ProfileFragment extends BaseFragment implements View.OnClickListene
         customerContainer = (LinearLayout) v.findViewById(R.id.customer_data_container);
         shopOwnerContainer = (LinearLayout) v.findViewById(R.id.shop_data_container);
 
-//        profilePhoto = (ImageView)v.findViewById(R.id.profilepicture);
-//        coverPhoto = (ImageView)v.findViewById(R.id.coverPicture);
+
 
         btnChangeProfile = (LinearLayout)v.findViewById(R.id.bagianTextChangePP);
         btnChangeCover = (LinearLayout)v.findViewById(R.id.bagianTextChangeCover);

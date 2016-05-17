@@ -18,7 +18,6 @@ public abstract class TaskFilterName extends AsyncTask<APIFilterNameRequest, Voi
     private Context context;
     private RestAdapter restAdapter;
     private APIExploreResponse response;
-    private TaskBaseLoading mProgressTBD;
     private String errorMessage;
 
     public TaskFilterName(Context context) {
@@ -26,13 +25,13 @@ public abstract class TaskFilterName extends AsyncTask<APIFilterNameRequest, Voi
         this.response = null;
         this.errorMessage = "";
         this.context = context;
-        mProgressTBD = new TaskBaseLoading(context);
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mProgressTBD.show();
+
     }
 
     @Override
@@ -58,8 +57,6 @@ public abstract class TaskFilterName extends AsyncTask<APIFilterNameRequest, Voi
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if (mProgressTBD.isShowing())
-            mProgressTBD.dismiss();
 
         boolean success = response.getStatus()==1?true:false;
 

@@ -17,7 +17,6 @@ public abstract class TaskFilterCategory extends AsyncTask<APIFilterCategoryRequ
     private Context context;
     private RestAdapter restAdapter;
     private APIExploreResponse response;
-    private TaskBaseLoading mProgressTBD;
     private String errorMessage;
 
     public TaskFilterCategory(Context context) {
@@ -25,13 +24,12 @@ public abstract class TaskFilterCategory extends AsyncTask<APIFilterCategoryRequ
         this.response = null;
         this.errorMessage = "";
         this.context = context;
-        mProgressTBD = new TaskBaseLoading(context);
+
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mProgressTBD.show();
     }
 
     @Override
@@ -57,8 +55,6 @@ public abstract class TaskFilterCategory extends AsyncTask<APIFilterCategoryRequ
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if (mProgressTBD.isShowing())
-            mProgressTBD.dismiss();
 
         boolean success = response.getStatus()==1?true:false;
 

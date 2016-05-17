@@ -62,6 +62,9 @@
             android:name=".Activities.ProfileActivity"
             android:label=""></activity>
 
+        <activity android:name=".Activities.UserInformationActivity"
+            android:label=""></activity>
+
         <activity
         android:name=".Activities.SetFullActivity"
         android:label=""></activity>

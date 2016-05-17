@@ -26,8 +26,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.myqueue.myqueue.Activities.BookActivity;
+import com.myqueue.myqueue.Preferences.SessionManager;
 import com.myqueue.myqueue.R;
 import com.myqueue.myqueue.Views.CustomMapView;
+
+import java.util.HashMap;
 
 /**
  * Created by 高橋六羽 on 2016/03/22.
@@ -46,6 +49,9 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
     private double currentLatitude;
     private double currentLongitude;
 
+    SessionManager sessions;
+    public HashMap<String,String> userDataDetails;
+    public HashMap<String,String> shopDataDetails;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -58,6 +64,15 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
         addressText = (TextView)v.findViewById(R.id.txtAlamatShop);
         nameText = (TextView)v.findViewById(R.id.txtNamaShop);
         toBookbtn = (FloatingActionButton)v.findViewById(R.id.btnNextQueue);
+
+        sessions = new SessionManager(getContext());
+        userDataDetails = sessions.getUserDetails();
+        shopDataDetails = sessions.getShopDetails();
+        if(userDataDetails.get(SessionManager.KEY_ISOWNER).toString().equals("1")){
+            toBookbtn.setVisibility(View.GONE);
+        }else if(userDataDetails.get(SessionManager.KEY_ISOWNER).toString().equals("0")){
+            toBookbtn.setVisibility(View.VISIBLE);
+        }
         toBookbtn.setOnClickListener(this);
 
         addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() + " " + ((BookActivity) getActivity()).getResponseInfo().getNumber());

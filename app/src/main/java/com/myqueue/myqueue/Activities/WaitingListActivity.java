@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +27,7 @@ import com.myqueue.myqueue.Models.APIQueueShopRequest;
 import com.myqueue.myqueue.Models.APIQueueShopResponse;
 import com.myqueue.myqueue.Models.APIQueueUserRequest;
 import com.myqueue.myqueue.Models.APIQueueUserResponse;
+import com.myqueue.myqueue.Models.Feed;
 import com.myqueue.myqueue.Models.QueueShop;
 import com.myqueue.myqueue.Models.QueueUser;
 import com.myqueue.myqueue.Preferences.SessionManager;
@@ -52,6 +54,9 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
 
     private LinearLayout AddUserDummy;
 
+    public boolean isOwner = false;
+
+
     public SessionManager sessions;
     public HashMap<String,String> userdata;
 
@@ -62,13 +67,20 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         setRightIcon(0);
         setActionBarTitle("Waiting List");
 
+
+
         sessions = new SessionManager(this);
 
-        queueListView = (ListView) findViewById(R.id.listQueue);
-        profilewait = (ImageView) findViewById(R.id.profileWait);
-        coverwait = (ImageView) findViewById(R.id.coverWait);
+
 
         fetchData();
+
+        userdata = sessions.getUserDetails();
+
+        if(userdata.get(SessionManager.KEY_ISOWNER).equalsIgnoreCase("1"))
+        {
+            isOwner = true;
+        }
 
         if(userdata.get(SessionManager.KEY_ISOWNER).equals("0")){
             changeStatusButton.setVisibility(View.GONE);
@@ -111,6 +123,9 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         changeStatusButton = (LinearLayout) findViewById(R.id.changeStatusBtn);
         AddUserDummy = (LinearLayout) findViewById(R.id.addUserDummy);
         btnDeleteBook = (Button) findViewById(R.id.btnNextQueue);
+        queueListView = (ListView) findViewById(R.id.listQueue);
+        profilewait = (ImageView) findViewById(R.id.profileWait);
+        coverwait = (ImageView) findViewById(R.id.coverWait);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setContentInsetsAbsolute(0, 0);
@@ -120,6 +135,28 @@ public class WaitingListActivity extends BaseActivity implements View.OnClickLis
         btnDeleteBook.setOnClickListener(this);
         changeStatusButton.setOnClickListener(this);
         AddUserDummy.setOnClickListener(this);
+
+        queueListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> newsitemcurrent, View v, int position,
+                                    long id) {
+                if(isOwner==false)
+                {
+                    Intent i = new Intent(WaitingListActivity.this, UserInformationActivity.class);
+                    i.putExtra("queue", (QueueUser) newsitemcurrent.getItemAtPosition(position));
+                    i.putExtra("isowner", isOwner);
+                    startActivity(i);
+                }
+                else if(isOwner==true)
+                {
+                    Intent i = new Intent(WaitingListActivity.this, UserInformationActivity.class);
+                    i.putExtra("queue", (QueueShop) newsitemcurrent.getItemAtPosition(position));
+                    i.putExtra("isowner", isOwner);
+                    startActivity(i);
+                }
+
+            }
+        });
     }
 
     @Override
