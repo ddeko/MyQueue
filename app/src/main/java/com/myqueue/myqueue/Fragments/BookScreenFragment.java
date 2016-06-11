@@ -101,8 +101,11 @@ public class BookScreenFragment  extends Fragment implements View.OnClickListene
     @Override
     public void onClick(View v) {
         if(v == bookNow){
-            addQueue();
-
+            if(userDataDetails.get(SessionManager.KEY_USERID).toString().equals("Guest")){
+                Toast.makeText(getActivity(), "Login terlebih dahulu untuk melakukan fitur ini", Toast.LENGTH_SHORT).show();
+            }else{
+                addQueue();
+            }
         }
     }
 

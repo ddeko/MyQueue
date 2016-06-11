@@ -35,6 +35,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     EditText loginEmail;
     EditText loginPassword;
     LinearLayout loginButton;
+    LinearLayout loginGuest;
     TextView signupButton;
     TextView forgotButton;
     TextInputLayout loginEmailInput;
@@ -56,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginEmail = (EditText) findViewById(R.id.login_email);
         loginPassword = (EditText) findViewById(R.id.login_password);
         loginButton = (LinearLayout) findViewById(R.id.login_button);
+        loginGuest = (LinearLayout) findViewById(R.id.login_button_guest);
         signupButton = (TextView) findViewById(R.id.signUp_button);
         forgotButton = (TextView) findViewById(R.id.forgotPass_button);
         loginEmailInput = (TextInputLayout)findViewById(R.id.emailWrapper);
@@ -68,6 +70,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         loginButton.setOnClickListener(this);
         signupButton.setOnClickListener(this);
         forgotButton.setOnClickListener(this);
+        loginGuest.setOnClickListener(this);
 
     }
 
@@ -150,6 +153,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 };
                 forgot.execute(loginEmail.getText().toString());
             }
+        }
+        else if(v == loginGuest){
+            User U = new User();
+            U.setUser_id("Guest");
+            U.setEmail("Login as Guest");
+            U.setPassword("-");
+            U.setToken("-");
+            U.setName("Guest");
+            U.setPhone("-");
+            U.setProfilephoto(null);
+            U.setCoverphoto("-");
+            U.setIsowner("0");
+            U.setIsverified("-");
+            sessions.createLoginSession(U);
+            startActivity(new Intent(this,HomeActivity.class));
         }
     }
 

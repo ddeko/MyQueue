@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
@@ -43,8 +44,6 @@ import net.yanzm.mth.MaterialTabHost;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import co.mobiwise.fastgcm.GCMManager;
 
 /**
  * Created by leowirasanto on 3/6/2016.
@@ -153,8 +152,12 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
 
             @Override
             public void onRightIconClick() {
-                Intent i = new Intent(HomeActivity.this, WaitingListActivity.class);
-                startActivity(i);
+                if(userdata.get(SessionManager.KEY_USERID).toString().equals("Guest")) {
+                    Toast.makeText(HomeActivity.this, "Harap Login terlebih dahulu untuk melihat fitur ini", Toast.LENGTH_SHORT).show();
+                }else {
+                    Intent i = new Intent(HomeActivity.this, WaitingListActivity.class);
+                    startActivity(i);
+                }
             }
         });
     }
@@ -312,45 +315,86 @@ public class HomeActivity extends BaseActivity implements ViewPager.OnPageChange
                 })
                 .build();
 
-        result = new DrawerBuilder()
-                .withActivity(this)
-                .withTranslucentStatusBar(true)
-                .withAccountHeader(headerResult)
-                .withToolbar(toolbar)
-                .addDrawerItems(
-                        new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
-                        new PrimaryDrawerItem().withName("Profile").withIcon(FontAwesome.Icon.faw_user).withIdentifier(2),
-                        //new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
-                        new SectionDrawerItem().withName("Others"),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
-                        //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
-                        new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
-                        new SecondaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
-                )
-                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
-                    @Override
-                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
-                        if (drawerItem != null) {
-                            Intent intent = null;
-                            if (drawerItem.getIdentifier() == 2) {
-                                Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
-                                startActivity(i);
-                            } else if (drawerItem.getIdentifier() == 8) {
-                                sessions.logoutUser();
-                                unregisterGCM();
-                            }
-                            if (intent != null) {
+        if(userdata.get(SessionManager.KEY_USERID).toString().equals("Guest")) {
 
+
+            result = new DrawerBuilder()
+                    .withActivity(this)
+                    .withTranslucentStatusBar(true)
+                    .withAccountHeader(headerResult)
+                    .withToolbar(toolbar)
+                    .addDrawerItems(
+                            new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
+                            //new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
+                            new SectionDrawerItem().withName("Others"),
+                            new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
+                            new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
+                            //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
+                            new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
+                            new SecondaryDrawerItem().withName("Login as User").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
+                    )
+                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        @Override
+                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            if (drawerItem != null) {
+                                Intent intent = null;
+                                if (drawerItem.getIdentifier() == 8) {
+                                    sessions.logoutUser();
+                                    unregisterGCM();
+                                }
+                                if (intent != null) {
+
+                                }
                             }
+                            return false;
                         }
-                        return false;
-                    }
-                })
-                .withSelectedItem(-1)
-                .withSavedInstance(savedInstanceState)
-                .build();
+                    })
+                    .withSelectedItem(-1)
+                    .withSavedInstance(savedInstanceState)
+                    .build();
+        }
+        else{
 
+
+            result = new DrawerBuilder()
+                    .withActivity(this)
+                    .withTranslucentStatusBar(true)
+                    .withAccountHeader(headerResult)
+                    .withToolbar(toolbar)
+                    .addDrawerItems(
+                            new PrimaryDrawerItem().withName(R.string.drawer_item_home).withIcon(FontAwesome.Icon.faw_home).withIdentifier(1),
+                            new PrimaryDrawerItem().withName("Profile").withIcon(FontAwesome.Icon.faw_user).withIdentifier(2),
+                            //new PrimaryDrawerItem().withName(R.string.drawer_item_custom).withIcon(FontAwesome.Icon.faw_eye).withIdentifier(3),
+                            new SectionDrawerItem().withName("Others"),
+                            new SecondaryDrawerItem().withName(R.string.drawer_item_settings).withIcon(FontAwesome.Icon.faw_cog).withIdentifier(4),
+                            new SecondaryDrawerItem().withName(R.string.drawer_item_help).withIcon(FontAwesome.Icon.faw_question).withIdentifier(5),
+                            //new SecondaryDrawerItem().withName(R.string.drawer_item_open_source).withIcon(FontAwesome.Icon.faw_github).withIdentifier(6),
+                            new SecondaryDrawerItem().withName(R.string.drawer_item_contact).withIcon(FontAwesome.Icon.faw_bullhorn).withIdentifier(7),
+                            new SecondaryDrawerItem().withName("Logout").withIcon(FontAwesome.Icon.faw_sign_out).withIdentifier(8)
+                    )
+                    .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                        @Override
+                        public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                            if (drawerItem != null) {
+                                Intent intent = null;
+                                if (drawerItem.getIdentifier() == 2) {
+                                    Intent i = new Intent(HomeActivity.this, ProfileActivity.class);
+                                    startActivity(i);
+                                } else if (drawerItem.getIdentifier() == 8) {
+                                    sessions.logoutUser();
+                                    unregisterGCM();
+                                }
+                                if (intent != null) {
+
+                                }
+                            }
+                            return false;
+                        }
+                    })
+                    .withSelectedItem(-1)
+                    .withSavedInstance(savedInstanceState)
+                    .build();
+        }
 
     }
 

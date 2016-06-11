@@ -73,6 +73,7 @@ public class DetailShopFragment extends Fragment implements View.OnClickListener
         }else if(userDataDetails.get(SessionManager.KEY_ISOWNER).toString().equals("0")){
             toBookbtn.setVisibility(View.VISIBLE);
         }
+
         toBookbtn.setOnClickListener(this);
 
         addressText.setText(((BookActivity) getActivity()).getResponseInfo().getAddress() + " " + ((BookActivity) getActivity()).getResponseInfo().getNumber());

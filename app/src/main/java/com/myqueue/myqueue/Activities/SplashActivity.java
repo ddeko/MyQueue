@@ -62,48 +62,61 @@ public class SplashActivity extends AppCompatActivity {
     {
         HashMap<String,String> userdata = sessions.getUserDetails();
 
-        APILoginRequest request = new APILoginRequest();
-        request.setEmail(userdata.get(SessionManager.KEY_EMAIL));
-        request.setPassword(userdata.get(SessionManager.KEY_PASSWORD));
+        if (userdata.get(SessionManager.KEY_USERID).toString().equals("Guest")) {
+            User U = new User();
+            U.setUser_id("Guest");
+            U.setEmail("Login as Guest");
+            U.setPassword("-");
+            U.setToken("-");
+            U.setName("Guest");
+            U.setPhone("-");
+            U.setProfilephoto(null);
+            U.setCoverphoto("-");
+            U.setIsowner("0");
+            U.setIsverified("-");
+            sessions.createLoginSession(U);
+            startActivity(new Intent(this,HomeActivity.class));
+        } else {
 
-        TaskGetUser getUser = new TaskGetUser(this) {
+            APILoginRequest request = new APILoginRequest();
+            request.setEmail(userdata.get(SessionManager.KEY_EMAIL));
+            request.setPassword(userdata.get(SessionManager.KEY_PASSWORD));
 
-            @Override
-            public void onResult(APILoginResponse response, String statusMessage, boolean isSuccess) {
+            TaskGetUser getUser = new TaskGetUser(this) {
 
-                if(isSuccess)
-                {
-                    Intent i = new Intent();
-                    loginuser = response.getUser().get(0);
-                    if(response.getShop().size()!=0)
+                @Override
+                public void onResult(APILoginResponse response, String statusMessage, boolean isSuccess) {
 
-                        loginshopdata = response.getShop().get(0);
+                    if (isSuccess) {
+                        Intent i = new Intent();
+                        loginuser = response.getUser().get(0);
+                        if (response.getShop().size() != 0)
+
+                            loginshopdata = response.getShop().get(0);
 
                         sessions.createLoginSession(loginuser);
-                        if(loginuser.getIsowner().equalsIgnoreCase("1")) {
+                        if (loginuser.getIsowner().equalsIgnoreCase("1")) {
                             sessions.setShopData(loginshopdata);
 
-                            if(loginshopdata==null)
+                            if (loginshopdata == null)
                                 i = new Intent(SplashActivity.this, ProfileActivity.class);
                             else
                                 i = new Intent(SplashActivity.this, HomeActivity.class);
-                        }
-                        else
+                        } else
                             i = new Intent(SplashActivity.this, HomeActivity.class);
 
-                    startActivity(i);
+                        startActivity(i);
 
                         // close this activity
                         finish();
-                }
-                else
-                {
-                    Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
-                }
+                    } else {
+                        Toast.makeText(getApplicationContext(), statusMessage, Toast.LENGTH_SHORT).show();
+                    }
 
-            }
-        };
-        getUser.execute(request);
+                }
+            };
+            getUser.execute(request);
+        }
     }
 
 }
