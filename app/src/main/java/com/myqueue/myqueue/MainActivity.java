@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         Log.d("testing", "testing");
+        Log.d("testing", "testing");
+        Log.d("testing", "testing");
+        Log.d("testing", "testing");
     }
 
     @Override
