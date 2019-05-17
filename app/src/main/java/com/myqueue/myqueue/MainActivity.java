@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
 //                sb.show();
             }
         });
+        Log.d("testing", "testing");
     }
 
     @Override
