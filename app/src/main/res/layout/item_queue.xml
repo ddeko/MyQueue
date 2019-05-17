@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingTop="10dp">
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/list_item_background"
+        android:id="@+id/layoutQueue">
+
+        <ImageView
+            android:layout_width="15dp"
+            android:layout_height="match_parent"
+            android:background="@color/btnAddClick_normal"
+            android:id="@+id/divider"/>
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:id="@+id/imgLogoShop"
+            android:layout_toRightOf="@+id/divider"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/no_user" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textYourNumber"
+            android:layout_toRightOf="@+id/imgLogoShop"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Number Now "
+                android:textColor="@color/white"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/yournumbernow"
+                android:paddingRight="5dp"
+                android:layout_centerVertical="true"/>
+
+            <ImageView
+                android:paddingLeft="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:id="@+id/rightarrow"
+                android:background="@drawable/rightarrow"
+                android:layout_toRightOf="@+id/yournumbernow"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:id="@+id/layoutNumberQueue"
+            android:layout_alignParentRight="true"
+            android:background="@color/btnAddClick_normal">
+
+            <TextView
+                android:id="@+id/txtQueueNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="30"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_queuenumber"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

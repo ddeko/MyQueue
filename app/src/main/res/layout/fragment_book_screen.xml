@@ -1,0 +1,144 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/newsfeed_form_bg"
+    tools:context="mockupc.mockupc.BookScreenActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/layoutActionBar"
+        android:id="@+id/layoutProfile"
+        android:background="@color/cover_bg_flat">
+
+        <ImageView
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:id="@+id/ShopProfilePics"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/no_user" />
+
+        <TextView
+            android:id="@+id/ShopName"
+            android:paddingTop="15dp"
+            android:layout_below="@+id/ShopProfilePics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="KFC SETURAN"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:paddingTop="5dp"
+            android:id="@+id/ShopAddress"
+            android:layout_below="@+id/ShopName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jl. Tambak Bayan 5 8A, Babarsari"
+            android:textColor="@color/white"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_below="@+id/layoutProfile"
+        android:id="@+id/layoutBookNumber"
+        android:layout_above="@+id/btnNextQueue"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/cover_bg_flat"
+            android:layout_alignParentTop="true"
+            android:id="@+id/barBookNumber"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Current Waiting List : "
+                android:textColor="@color/white"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_centerVertical="true"
+                android:id="@+id/currentWaitingList"
+                android:paddingRight="5dp"/>
+
+            <TextView
+                android:id="@+id/bookNumberNow"
+                android:layout_toRightOf="@+id/currentWaitingList"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textColor="@color/white"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_below="@id/barBookNumber"
+            android:id="@+id/layoutText"
+            android:background="@color/cover_bg_flat"
+            android:visibility="visible">
+            <TextView
+                android:id="@+id/yourNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SHOP STATUS"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_booktext"
+                android:layout_centerInParent="true"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_below="@id/layoutText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/getQueueNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-"
+                android:textStyle="bold"
+                android:textColor="@color/cover_bg_flat"
+                android:textSize="@dimen/text_size"
+                android:layout_centerInParent="true"
+                android:visibility="invisible"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/seatavailable"
+                android:text="Not Full (Slot Available)"
+                android:textStyle="bold"
+                android:textColor="@color/cover_bg_flat"
+                android:layout_centerInParent="true"
+                android:visibility="visible"
+                android:textSize="28sp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btnNextQueue"
+        android:background="@drawable/btnbookclick"
+        android:layout_alignParentBottom="true"
+        android:text="BOOK NOW"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+</RelativeLayout>

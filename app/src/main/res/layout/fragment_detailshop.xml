@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.myqueue.myqueue.detail_shop">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:orientation="vertical"
+            android:id="@+id/map_wrapper">
+
+            <com.myqueue.myqueue.Views.CustomMapView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/store_map"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true" />
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:background="@color/titleColor">
+            <TextView
+                android:textColor="@color/white"
+                android:textSize="21dip"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/txtNamaShop"
+                android:text="KFC SETURAN"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dip"/>
+
+        </LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dip"
+            android:src="@drawable/coverpics"
+            android:scaleType="fitXY"
+            android:id="@+id/shopdetailpic" />
+        <RelativeLayout
+            android:layout_height="fill_parent"
+            android:layout_width="match_parent"
+            android:background="@color/myDarkBg">
+            <TextView
+                android:textSize="15dip"
+                android:padding="10dip"
+                android:textColor="@color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/txtAlamatShop"
+                android:text="Jl. Seturan Raya, Depok, Kec. Sleman, DIY 55281"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnNextQueue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/nextbtn"
+        android:visibility="visible"
+        android:layout_marginTop="230dip"/>
+
+</RelativeLayout>

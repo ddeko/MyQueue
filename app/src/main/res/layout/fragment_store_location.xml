@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.myqueue.myqueue.storescreen"
+    android:id="@+id/storelayout"
+    android:background="#1A252E"
+    >
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView"
+        android:paddingBottom="15dp"
+        android:layout_below="@+id/layoutActionBar">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:orientation="vertical"
+                android:id="@+id/map_wrapper">
+
+                <com.myqueue.myqueue.Views.CustomMapView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/store_map"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/map_wrapper"
+                android:orientation="vertical"
+                android:id="@+id/textViewField"
+                android:paddingLeft="28dp"
+                android:paddingRight="28dp"
+                android:paddingTop="20dp">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/streetNameWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="5dp"
+                    android:focusable="false"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    android:theme="@style/Theme.MyThemeTrans">
+
+                    <EditText
+                        android:id="@+id/txtStreetNameStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="Street Name"
+                        android:focusable="false"
+                        android:focusableInTouchMode="true" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/houseNumberWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="12dp"
+                    app:errorTextAppearance="@style/error_appearance"
+
+                    android:theme="@style/Theme.MyThemeTrans">
+                    <EditText
+                        android:id="@+id/txtHouseNumberStore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="House Number/Landmark" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_gravity="center"
+                    android:id="@+id/cityWrapper"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#ffffff"
+                    android:textColorHint="#FFFFFF"
+                    android:layout_marginTop="12dp"
+
+                    android:theme="@style/Theme.MyThemeTrans"
+                    android:visibility="gone">
+                    <EditText
+                        android:id="@+id/txtCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#FFFFFF"
+                        android:textSize="16sp"
+                        android:hint="City"
+                        android:text="Yogyakarta"
+                          />
+                </android.support.design.widget.TextInputLayout>
+
+
+            </LinearLayout>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:text="Update Shop Address"
+                android:id="@+id/btnUpdateStore"
+                android:background="@drawable/shape_oval_button"
+                android:textColor="#1A252E"
+                android:focusable="false"
+                android:layout_below="@+id/textViewField"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
+</RelativeLayout>

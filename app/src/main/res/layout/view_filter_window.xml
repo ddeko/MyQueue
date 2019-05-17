@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="430dp"
+    android:background="#DD1A252E">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/actionbar_color"
+        android:gravity="center_vertical"
+        android:id="@+id/top_nav_bar_layout"
+        android:layout_marginBottom="1dp">
+
+        <LinearLayout
+            android:id="@+id/view_filter_window_buttons_header"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:gravity="center_vertical"
+            android:layout_toLeftOf="@+id/view_filter_done"
+            android:visibility="visible" >
+
+            <TextView
+                android:id="@+id/view_filter_Header_Category"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Filter"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:gravity="center"
+                android:textSize="22sp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@drawable/selector_button_blank_no_corners" />
+
+        </LinearLayout>
+
+
+
+        <TextView
+            android:id="@+id/view_filter_done"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:text="Done"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingRight="15dp"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textColor="@color/myDarkBg"
+            android:background="@drawable/selector_button_blank_no_corners"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Search"
+            android:id="@+id/textView4"
+            android:textColor="@color/actionbar_color"
+            android:paddingLeft="8dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/seacrhName"
+                android:layout_below="@+id/textView4"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:hint="Shop Name"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:paddingLeft="5dp"
+                android:textColor="@color/white"
+                android:textColorHint="#a6a6a6"
+                android:theme="@style/Theme.MyThemeTrans"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:id="@+id/Filterdialogcategory">
+
+
+        <com.wang.avi.AVLoadingIndicatorView
+            android:id="@+id/avloadingIndicatorView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:visibility="gone"
+            app:indicator="BallClipRotatePulse"
+            app:indicator_color="@color/actionbar_color"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Categories"
+            android:id="@+id/Categories"
+            android:textColor="@color/actionbar_color"
+            android:paddingLeft="8dp"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/transparent"
+            android:layout_below="@+id/Categories"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <ListView
+                android:id="@+id/explore_filter_list_category"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:choiceMode="singleChoice"
+                android:clickable="true"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:listSelector="@drawable/list_item_front_selector"
+                android:divider="#131D24"
+                android:dividerHeight="1dp" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

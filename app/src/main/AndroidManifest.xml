@@ -1,20 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.myqueue.myqueue" >
+    package="com.myqueue.myqueue">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="your.package.name.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="your.package.name.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
+
+        <service android:name=".Utils.CustomGCMService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
         <activity
-            android:name=".SignupActivity"
-            android:theme="@style/Theme.MyThemeTrans">
+            android:name=".Activities.SplashActivity"
+            android:theme="@style/Theme.MyTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:theme="@style/Theme.MyThemeTrans" />
+        <activity
+            android:name=".Activities.SignupActivity"
+            android:label="" />
+        <activity
+            android:name=".Activities.HomeActivity"
+            android:label="" />
+        <activity
+            android:name=".Activities.NewsFeedFormActivity"
+            android:label=""></activity>
+
+        <activity
+            android:name=".Activities.WaitingListActivity"
+            android:label=""></activity>
+        <activity
+            android:name=".Activities.BookActivity"
+            android:label=""></activity>
+        <activity
+            android:name=".Activities.ConfirmationActivity"
+            android:label=""></activity>
+        <activity
+            android:name=".Activities.ProfileActivity"
+            android:label=""></activity>
+
+        <activity android:name=".Activities.UserInformationActivity"
+            android:label=""></activity>
+
+        <activity
+        android:name=".Activities.SetFullActivity"
+        android:label=""></activity>
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDfeI-weQOj3Bw13UT3lXJ7mkLJDfjaf34" />
+
+        <activity android:name=".Activities.AddDummyUserActivity" >
         </activity>
 
     </application>

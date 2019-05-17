@@ -1,0 +1,157 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/newsfeed_form_bg"
+    tools:context="mockupc.mockupc.WaitingListActivity">
+
+    <LinearLayout
+        android:id="@+id/layoutActionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/view_default_actionbar"/>/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@+id/layoutActionBar"
+        android:id="@+id/layoutProfile">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:id="@+id/coverWait"
+            android:scaleType="fitXY"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/coverpics" />
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout4"
+            android:layout_width="match_parent"
+            android:layout_height="200dip"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:layout_alignParentRight="false"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="false"
+            android:layout_alignParentTop="false"
+            android:layout_centerInParent="true">
+
+            <RelativeLayout
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="false"
+                android:background="@drawable/shape_circle"
+                android:id="@+id/relativeLayout3"
+                android:layout_centerInParent="true">
+
+                <ImageView
+                    android:id="@+id/profileWait"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_gravity="center"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentBottom="false"
+                    android:layout_centerInParent="true"
+                    android:adjustViewBounds="false" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/changeStatusBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|right"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_oval_button_halftrans"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingRight="14dp"
+                android:paddingLeft="14dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginRight="5dp" >
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Change Shop Status"
+                    android:textColor="@color/light_font"
+                    android:layout_below="@+id/profilepicture"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="5"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <!-- DR EDHO-->
+            <LinearLayout
+                android:id="@+id/addUserDummy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="bottom|left"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="false"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentBottom="true"
+                android:gravity="center_vertical"
+                android:background="@drawable/shape_oval_button_halftrans"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:paddingRight="14dp"
+                android:paddingLeft="14dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="5dp" >
+
+                <TextView
+                    android:layout_gravity="center"
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Add User"
+                    android:textColor="@color/light_font"
+                    android:layout_below="@+id/profilepicture"
+                    android:shadowColor="@color/text_shadow"
+                    android:shadowDx="1"
+                    android:shadowDy="1"
+                    android:shadowRadius="5"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <!-- TILL HERE-->
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listQueue"
+        android:layout_below="@+id/layoutProfile" />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/btnNextQueue"
+        android:background="@drawable/btnbookclick"
+        android:layout_alignParentBottom="true"
+        android:text="TO NEXT QUEUE"
+        android:textColor="@color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"/>
+
+</RelativeLayout>

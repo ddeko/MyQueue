@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=""
     android:background="@drawable/bg">
 
@@ -29,7 +30,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:id="@+id/linearLayout">
+            android:id="@+id/linearLayout"
+            android:layout_marginTop="8dp">
 
             <LinearLayout
                 android:orientation="vertical"
@@ -44,7 +46,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textColor="#ffffff"
-                    android:textColorHint="#FFFFFF">
+                    android:textColorHint="#FFFFFF"
+                    app:errorTextAppearance="@style/error_appearance">
 
                     <EditText
                         android:id="@+id/login_email"
@@ -54,7 +57,7 @@
                         android:hint="Email Address"
                         android:textColor="#ffffff"
                         android:textColorHint="#FFFFFF"
-                        android:textSize="21sp" />
+                        android:textSize="21sp"/>
                 </android.support.design.widget.TextInputLayout>
 
 
@@ -62,9 +65,10 @@
                     android:id="@+id/passwordWrapper"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="10dp"
                     android:textColor="#ffffff"
-                    android:textColorHint="#FFFFFF">
+                    android:textColorHint="#FFFFFF"
+                    app:errorTextAppearance="@style/error_appearance">
 
                     <EditText
                         android:id="@+id/login_password"
@@ -103,15 +107,37 @@
                     android:textSize="24sp" />
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- DR EDHOOOOOOOOOOOOOOOOOO-->
+            <LinearLayout
+                android:id="@+id/login_button_guest"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:layout_gravity="center"
-                android:text="────────── or ──────────"
-                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:background="@drawable/selector_button_primaryguest"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Login as Guest"
+                    android:id="@+id/textViewguest"
+                    android:textColor="#ffffff"
+                    android:textSize="24sp" />
+            </LinearLayout>
+            <!--SAMPE SINI-->
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:id="@+id/imageView3"
+                android:src="@drawable/or"
                 android:layout_marginTop="15dp"
-                android:textSize="16sp" />
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,9 +145,9 @@
                 android:text="Sign Up"
                 android:id="@+id/signUp_button"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
                 android:textSize="18sp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"
+                android:padding="12dp" />
 
         </LinearLayout>
 

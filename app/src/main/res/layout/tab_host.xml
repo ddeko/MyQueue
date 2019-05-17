@@ -1,33 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/homelayout">
 
-    <LinearLayout
-        android:id="@+id/layoutActionBar"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
-
-        <include
-            android:id="@+id/toolbar"
-            layout="@layout/toolbar"/>
-        <net.yanzm.mth.MaterialTabHost
+          <net.yanzm.mth.MaterialTabHost
             android:id="@android:id/tabhost"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:layout_below="@+id/top_nav_bar_layout"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            app:colorTabIndicator="@color/actionbar_color"
+              android:elevation="10dp" />
 
+        <LinearLayout
+            android:id="@+id/top_nav_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:elevation="20dp">
+
+            <include layout="@layout/view_default_actionbar"
+                android:id="@+id/include" />
+
+        </LinearLayout>
 
 
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
-
+            android:layout_height="match_parent"
+            android:layout_below="@android:id/tabhost"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:contextClickable="false"
+            android:elevation="10dp" />
 
 </RelativeLayout>
